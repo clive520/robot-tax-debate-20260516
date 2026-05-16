@@ -170,6 +170,17 @@ audio {
   height: 36px;
 }
 
+.audio-box {
+  display: grid;
+  gap: 6px;
+  min-width: min(360px, 100%);
+}
+
+.audio-box span {
+  color: var(--muted);
+  font-size: .86rem;
+}
+
 .content p {
   margin: 0 0 1em;
 }

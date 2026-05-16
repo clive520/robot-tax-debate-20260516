@@ -1,11 +1,11 @@
 const audioMap = {
-  "正方申論": "audio/positive-opening.wav",
-  "反方申論": "audio/negative-opening.wav",
-  "正方駁論": "audio/positive-rebuttal.wav",
-  "反方駁論": "audio/negative-rebuttal.wav",
-  "反方結辯": "audio/negative-closing.wav",
-  "正方結辯": "audio/positive-closing.wav",
-  "Claude 評審結果": "audio/judge.wav"
+  "正方申論": "audio/positive-opening.mp3",
+  "反方申論": "audio/negative-opening.mp3",
+  "正方駁論": "audio/positive-rebuttal.mp3",
+  "反方駁論": "audio/negative-rebuttal.mp3",
+  "反方結辯": "audio/negative-closing.mp3",
+  "正方結辯": "audio/positive-closing.mp3",
+  "Claude 評審結果": "audio/judge.mp3"
 };
 
 const roleMap = {
@@ -16,6 +16,12 @@ const roleMap = {
   "反方駁論": ["negative", "反方 Gemini"],
   "反方結辯": ["negative", "反方 Gemini"],
   "Claude 評審結果": ["judge", "裁判 Claude"]
+};
+
+const voiceMap = {
+  positive: "正方聲音：YunJhe 男聲",
+  negative: "反方聲音：HsiaoChen 女聲",
+  judge: "評審聲音：HsiaoYu 女聲"
 };
 
 function escapeHtml(text) {
@@ -141,7 +147,7 @@ function cardFor(section) {
         <span class="badge">${roleLabel}</span>
         <h3>${escapeHtml(section.title)}</h3>
       </div>
-      ${audio ? `<audio controls preload="metadata" src="${audio}"></audio>` : ""}
+      ${audio ? `<div class="audio-box"><span>${voiceMap[roleClass]}</span><audio controls preload="metadata" src="${audio}"></audio></div>` : ""}
     </div>
     <div class="content">${renderMarkdownBlock(section.body.join("\n"))}</div>
   `;
