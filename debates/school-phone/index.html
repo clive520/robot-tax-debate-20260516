@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小學生帶手機上學辯論紀錄</title>
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="school-phone-page">
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">AI Debate Archive</p>
+      <h1>學校是否應全面禁止學生帶手機到學校</h1>
+      <p class="lede">正方 Codex、反方 Gemini、裁判 Claude。完整辯論稿與評分結果，並附各段語音播放。</p>
+    </div>
+    <aside class="score-card">
+      <span>裁判結果</span>
+      <strong>正方勝</strong>
+      <p>Codex 63.5 / 80<br>Gemini 59.5 / 80</p>
+    </aside>
+  </header>
+
+  <nav class="tabs" aria-label="頁面區塊">
+    <a href="../../">入口首頁</a>
+    <a href="#debate">辯論紀錄</a>
+    <a href="#judge">裁判評分</a>
+    <a href="debate.md">Markdown 原檔</a>
+  </nav>
+
+  <main>
+    <section id="debate" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Round Log</p>
+        <h2>雙方發言</h2>
+      </div>
+      <div id="debate-sections" class="stack" aria-live="polite"></div>
+    </section>
+
+    <section id="judge" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Judgement</p>
+        <h2>Claude 評審結果</h2>
+      </div>
+      <div id="judge-section" class="stack" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Generated on 2026-05-16. Audio voices: YunJhe for Codex, HsiaoChen for Gemini, HsiaoYu for Claude.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
