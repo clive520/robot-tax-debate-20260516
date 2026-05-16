@@ -1,3 +1,4 @@
 imageio-ffmpeg
 mutagen
 pillow
+faster-whisper
