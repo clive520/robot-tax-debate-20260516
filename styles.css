@@ -37,6 +37,12 @@ body {
   color: #fff;
 }
 
+.euthanasia-page .site-header {
+  background:
+    linear-gradient(rgba(32, 33, 36, .62), rgba(32, 33, 36, .28)),
+    url("https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1800&q=80") center / cover;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   font-size: .78rem;
@@ -352,6 +358,12 @@ footer {
   background:
     linear-gradient(rgba(28, 36, 48, .08), rgba(28, 36, 48, .16)),
     url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80") center / cover;
+}
+
+.debate-card-euthanasia .debate-card-media {
+  background:
+    linear-gradient(rgba(28, 36, 48, .10), rgba(28, 36, 48, .20)),
+    url("https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=900&q=80") center / cover;
 }
 
 .debate-card-body {
