@@ -1,0 +1,195 @@
+const audioMap = {
+  "正方申論": "audio/positive-opening.mp3",
+  "反方申論": "audio/negative-opening.mp3",
+  "正方駁論": "audio/positive-rebuttal.mp3",
+  "反方駁論": "audio/negative-rebuttal.mp3",
+  "反方結辯": "audio/negative-closing.mp3",
+  "正方結辯": "audio/positive-closing.mp3",
+  "Codex / OpenAI 裁判評分": "audio/judge.mp3"
+};
+
+const roleMap = {
+  "正方申論": ["positive", "正方 Claude"],
+  "正方駁論": ["positive", "正方 Claude"],
+  "正方結辯": ["positive", "正方 Claude"],
+  "反方申論": ["negative", "反方 Gemini"],
+  "反方駁論": ["negative", "反方 Gemini"],
+  "反方結辯": ["negative", "反方 Gemini"],
+  "Codex / OpenAI 裁判評分": ["judge", "裁判 Codex / OpenAI"]
+};
+
+const voiceMap = {
+  positive: "正方聲音：HsiaoYu",
+  negative: "反方聲音：HsiaoChen",
+  judge: "裁判聲音：YunJhe"
+};
+
+function escapeHtml(text) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function inlineMarkdown(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function renderTable(lines) {
+  const rows = lines
+    .filter((line) => !/^\|\s*-+/.test(line))
+    .map((line) => line.trim().slice(1, -1).split("|").map((cell) => inlineMarkdown(cell.trim())));
+  const head = rows.shift() || [];
+  const body = rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("");
+  return `<div class="table-wrap"><table><thead><tr>${head.map((cell) => `<th>${cell}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+function renderMarkdownBlock(markdown) {
+  const lines = markdown.split(/\r?\n/);
+  const html = [];
+  let paragraph = [];
+  let table = [];
+  let quote = [];
+  let list = [];
+
+  const flushParagraph = () => {
+    if (paragraph.length) {
+      html.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
+      paragraph = [];
+    }
+  };
+  const flushTable = () => {
+    if (table.length) {
+      html.push(renderTable(table));
+      table = [];
+    }
+  };
+  const flushQuote = () => {
+    if (quote.length) {
+      html.push(`<blockquote>${quote.map((line) => `<p>${inlineMarkdown(line)}</p>`).join("")}</blockquote>`);
+      quote = [];
+    }
+  };
+  const flushList = () => {
+    if (list.length) {
+      html.push(`<ol>${list.map((line) => `<li>${inlineMarkdown(line)}</li>`).join("")}</ol>`);
+      list = [];
+    }
+  };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) {
+      flushParagraph();
+      flushTable();
+      flushQuote();
+      flushList();
+      continue;
+    }
+    if (line.startsWith("|")) {
+      flushParagraph();
+      flushQuote();
+      flushList();
+      table.push(line);
+      continue;
+    }
+    if (line.startsWith(">")) {
+      flushParagraph();
+      flushTable();
+      flushList();
+      quote.push(line.replace(/^>\s?/, ""));
+      continue;
+    }
+    if (/^\d+\.\s+/.test(line)) {
+      flushParagraph();
+      flushTable();
+      flushQuote();
+      list.push(line.replace(/^\d+\.\s+/, ""));
+      continue;
+    }
+    if (line.startsWith("#### ")) {
+      flushParagraph();
+      flushTable();
+      flushQuote();
+      flushList();
+      html.push(`<h4>${inlineMarkdown(line.slice(5))}</h4>`);
+      continue;
+    }
+    if (line.startsWith("### ")) {
+      flushParagraph();
+      flushTable();
+      flushQuote();
+      flushList();
+      html.push(`<h3>${inlineMarkdown(line.slice(4))}</h3>`);
+      continue;
+    }
+    if (line === "---") {
+      flushParagraph();
+      flushTable();
+      flushQuote();
+      flushList();
+      continue;
+    }
+    paragraph.push(line);
+  }
+  flushParagraph();
+  flushTable();
+  flushQuote();
+  flushList();
+  return html.join("");
+}
+
+function parseSections(markdown) {
+  const sections = [];
+  const lines = markdown.split(/\r?\n/);
+  let current = null;
+
+  for (const line of lines) {
+    const match = line.match(/^##\s+(.+)$/);
+    if (match) {
+      if (current) sections.push(current);
+      current = { title: match[1], body: [] };
+    } else if (current) {
+      current.body.push(line);
+    }
+  }
+  if (current) sections.push(current);
+  return sections;
+}
+
+function cardFor(section) {
+  const [roleClass, roleLabel] = roleMap[section.title] || ["judge", "紀錄"];
+  const audio = audioMap[section.title];
+  const article = document.createElement("article");
+  article.className = `card ${roleClass}`;
+  article.innerHTML = `
+    <div class="card-head">
+      <div>
+        <span class="badge">${roleLabel}</span>
+        <h3>${escapeHtml(section.title)}</h3>
+      </div>
+      ${audio ? `<div class="audio-box"><span>${voiceMap[roleClass]}</span><audio controls preload="metadata" src="${audio}"></audio></div>` : ""}
+    </div>
+    <div class="content">${renderMarkdownBlock(section.body.join("\n"))}</div>
+  `;
+  return article;
+}
+
+fetch("debate.md")
+  .then((response) => response.text())
+  .then((markdown) => {
+    const sections = parseSections(markdown);
+    const debate = document.querySelector("#debate-sections");
+    const judge = document.querySelector("#judge-section");
+    sections.forEach((section) => {
+      const card = cardFor(section);
+      if (section.title.includes("裁判")) {
+        judge.appendChild(card);
+      } else {
+        debate.appendChild(card);
+      }
+    });
+  })
+  .catch(() => {
+    document.querySelector("#debate-sections").innerHTML = `<article class="card"><p>無法載入 debate.md。</p></article>`;
+  });

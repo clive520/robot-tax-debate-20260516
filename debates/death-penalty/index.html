@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我國應廢除死刑｜AI 辯論檔案</title>
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="death-penalty-page">
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">AI Debate Archive</p>
+      <h1>我國應廢除死刑</h1>
+      <p class="lede">正方 Claude、反方 Gemini、裁判 Codex / OpenAI。辯論聚焦生命權、司法錯誤、被害人正義、社會安全與刑罰制度轉型。</p>
+      <div class="role-panel" aria-label="本場角色">
+        <div class="role-panel-item role-judge">
+          <span>裁判</span>
+          <strong>Codex / OpenAI</strong>
+        </div>
+        <div class="role-panel-item role-positive">
+          <span>正方</span>
+          <strong>Claude</strong>
+        </div>
+        <div class="role-panel-item role-negative">
+          <span>反方</span>
+          <strong>Gemini</strong>
+        </div>
+      </div>
+    </div>
+    <aside class="score-card">
+      <span>裁判結果</span>
+      <strong>正方勝</strong>
+      <p>Claude 74 / 90<br>Gemini 70 / 90</p>
+    </aside>
+  </header>
+
+  <nav class="tabs" aria-label="頁面導覽">
+    <a href="../../">入口首頁</a>
+    <a href="#debate">辯論紀錄</a>
+    <a href="#judge">裁判評分</a>
+    <a href="#engagement">按讚留言</a>
+    <a href="debate.md">Markdown 原稿</a>
+  </nav>
+
+  <main>
+    <section id="debate" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Round Log</p>
+        <h2>辯論紀錄</h2>
+      </div>
+      <div id="debate-sections" class="stack" aria-live="polite"></div>
+    </section>
+
+    <section id="judge" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Judgement</p>
+        <h2>Codex / OpenAI 裁判評分</h2>
+      </div>
+      <div id="judge-section" class="stack" aria-live="polite"></div>
+    </section>
+
+    <section id="engagement" class="section engagement-section" data-debate-id="death-penalty">
+      <div class="section-title">
+        <p class="eyebrow">Community</p>
+        <h2>按讚與留言</h2>
+      </div>
+      <div data-engagement-root data-debate-id="death-penalty"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Scheduled for 2026-05-22. Audio voices: HsiaoYu for Claude, HsiaoChen for Gemini, YunJhe for Codex / OpenAI.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="../../supabase-config.js"></script>
+  <script type="module" src="../../engagement.js?v=20260516-authfix"></script>
+</body>
+</html>

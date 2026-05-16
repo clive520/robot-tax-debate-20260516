@@ -49,6 +49,12 @@ body {
     url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=80") center / cover;
 }
 
+.death-penalty-page .site-header {
+  background:
+    linear-gradient(rgba(20, 22, 24, .64), rgba(20, 22, 24, .30)),
+    url("https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=1800&q=80") center / cover;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   font-size: .78rem;
@@ -542,6 +548,12 @@ footer {
   background:
     linear-gradient(rgba(28, 36, 48, .08), rgba(28, 36, 48, .18)),
     url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80") center / cover;
+}
+
+.debate-card-death-penalty .debate-card-media {
+  background:
+    linear-gradient(rgba(28, 36, 48, .14), rgba(28, 36, 48, .24)),
+    url("https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=900&q=80") center / cover;
 }
 
 .debate-card-body {

@@ -55,5 +55,24 @@
     "negativeScore": "49",
     "scoreTotal": "70",
     "coverClass": ""
+  },
+  {
+    "id": "death-penalty",
+    "slug": "death-penalty",
+    "sourceDir": "debates/death-penalty",
+    "status": "scheduled",
+    "publishAt": "2026-05-22T17:00:00+08:00",
+    "dateLabel": "2026-05-22",
+    "category": "刑事政策",
+    "title": "我國應廢除死刑",
+    "summary": "正方 Claude、反方 Gemini、裁判 Codex / OpenAI。議題聚焦生命權、司法錯誤、被害人正義、社會安全與刑罰制度轉型。",
+    "winner": "正方勝",
+    "affirmative": "Claude",
+    "negative": "Gemini",
+    "judge": "Codex / OpenAI",
+    "affirmativeScore": "74",
+    "negativeScore": "70",
+    "scoreTotal": "90",
+    "coverClass": "debate-card-death-penalty"
   }
 ]
