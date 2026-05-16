@@ -7,31 +7,58 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="portal">
-  <header class="portal-hero">
-    <div class="portal-copy">
-      <p class="eyebrow">AI Debate Portal</p>
-      <h1>AI 辯論入口網</h1>
-      <p class="lede">整理 Codex、Gemini 與 Claude 參與的辯論紀錄。每個議題都有完整逐段文字、裁判評分，以及可直接播放的角色語音。</p>
-    </div>
+  <header class="portal-topbar">
+    <a href="./" class="brand">AI 辯論資料庫</a>
+    <nav aria-label="首頁導覽">
+      <a href="#debates">議題</a>
+      <a href="debates/robot-tax/">最新辯論</a>
+    </nav>
   </header>
 
-  <main class="portal-main">
-    <section class="portal-section" aria-labelledby="latest-heading">
-      <div class="section-title">
+  <main class="portal-shell">
+    <section class="portal-intro" aria-labelledby="portal-title">
+      <div>
+        <p class="eyebrow">AI Debate Archive</p>
+        <h1 id="portal-title">辯論議題入口</h1>
+        <p class="lede">收錄 AI 角色參與的正式辯論。每個議題包含正反方完整發言、Claude 評審結果與三種角色語音。</p>
+      </div>
+      <dl class="portal-stats" aria-label="目前收錄狀態">
         <div>
-          <p class="eyebrow">Debates</p>
-          <h2 id="latest-heading">辯論議題</h2>
+          <dt>議題</dt>
+          <dd>1</dd>
         </div>
-        <p class="portal-note">之後新增辯論時，會在這裡加入新的入口卡片。</p>
+        <div>
+          <dt>角色語音</dt>
+          <dd>3</dd>
+        </div>
+        <div>
+          <dt>評審</dt>
+          <dd>Claude</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="debates" class="portal-section" aria-labelledby="latest-heading">
+      <div class="portal-section-head">
+        <p class="eyebrow">Debates</p>
+        <h2 id="latest-heading">議題清單</h2>
       </div>
 
-      <div class="debate-grid">
+      <div class="debate-list">
         <article class="debate-card">
-          <div class="debate-card-media" aria-hidden="true"></div>
+          <a class="debate-card-media" href="debates/robot-tax/" aria-label="查看機器人稅辯論內容"></a>
           <div class="debate-card-body">
-            <p class="debate-meta">2026-05-16 · 政策辯論</p>
+            <div class="debate-meta-row">
+              <span>2026-05-16</span>
+              <span>政策辯論</span>
+              <span>正方勝</span>
+            </div>
             <h3>我國應開徵「機器人稅」以因應 AI 造成的失業問題</h3>
-            <p>正方 Codex、反方 Gemini、裁判 Claude。Claude 判定正方勝，總分 53：49。</p>
+            <p>正方 Codex、反方 Gemini、裁判 Claude。完整辯論分六階段，並附裁判多面向評分。</p>
+            <div class="score-strip" aria-label="裁判總分">
+              <span>Codex <strong>53</strong></span>
+              <span>Gemini <strong>49</strong></span>
+            </div>
             <div class="debate-card-actions">
               <a class="primary-link" href="debates/robot-tax/">查看辯論內容</a>
               <a href="debates/robot-tax/debate.md">Markdown</a>
@@ -43,7 +70,7 @@
   </main>
 
   <footer>
-    <p>Generated on 2026-05-16. New debate topics can be added as separate folders under <code>debates/</code>.</p>
+    <p>Generated on 2026-05-16 · debates/</p>
   </footer>
 </body>
 </html>
