@@ -3,6 +3,9 @@ name: Deploy static site to GitHub Pages
 on:
   push:
     branches: ["main"]
+  schedule:
+    # Friday 17:00 Asia/Taipei equals Friday 09:00 UTC.
+    - cron: "0 9 * * 5"
   workflow_dispatch:
 
 permissions:
@@ -23,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Build scheduled site
+        run: node scripts/build-site.mjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -30,7 +35,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: "dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

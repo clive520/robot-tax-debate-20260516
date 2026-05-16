@@ -12,6 +12,20 @@
       <p class="eyebrow">AI Debate Archive</p>
       <h1>學校是否應全面禁止學生帶手機到學校</h1>
       <p class="lede">正方 Codex、反方 Gemini、裁判 Claude。完整辯論稿與評分結果，並附各段語音播放。</p>
+      <div class="role-panel" aria-label="本場角色">
+        <div class="role-panel-item role-judge">
+          <span>裁判</span>
+          <strong>Claude</strong>
+        </div>
+        <div class="role-panel-item role-positive">
+          <span>正方</span>
+          <strong>Codex</strong>
+        </div>
+        <div class="role-panel-item role-negative">
+          <span>反方</span>
+          <strong>Gemini</strong>
+        </div>
+      </div>
     </div>
     <aside class="score-card">
       <span>裁判結果</span>
@@ -24,6 +38,7 @@
     <a href="../../">入口首頁</a>
     <a href="#debate">辯論紀錄</a>
     <a href="#judge">裁判評分</a>
+    <a href="#engagement">按讚留言</a>
     <a href="debate.md">Markdown 原檔</a>
   </nav>
 
@@ -43,6 +58,14 @@
       </div>
       <div id="judge-section" class="stack" aria-live="polite"></div>
     </section>
+
+    <section id="engagement" class="section engagement-section" data-debate-id="school-phone">
+      <div class="section-title">
+        <p class="eyebrow">Community</p>
+        <h2>按讚與留言</h2>
+      </div>
+      <div data-engagement-root data-debate-id="school-phone"></div>
+    </section>
   </main>
 
   <footer>
@@ -50,5 +73,7 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="../../supabase-config.js"></script>
+  <script type="module" src="../../engagement.js?v=20260516-authfix"></script>
 </body>
 </html>

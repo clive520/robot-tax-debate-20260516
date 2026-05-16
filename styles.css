@@ -100,6 +100,34 @@ h1 {
   color: rgba(255,255,255,.86);
 }
 
+.role-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.role-panel-item {
+  min-width: 132px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.34);
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(10px);
+}
+
+.role-panel-item span {
+  display: block;
+  font-size: .82rem;
+  color: rgba(255,255,255,.78);
+}
+
+.role-panel-item strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 1.08rem;
+  color: #fff;
+}
+
 .tabs {
   position: sticky;
   top: 0;
@@ -236,6 +264,137 @@ th {
   background: #eee7dc;
 }
 
+.engagement-card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.engagement-card h3 {
+  font-size: 1.35rem;
+}
+
+.engagement-card code {
+  background: #f1ece3;
+  padding: 2px 5px;
+}
+
+.engagement-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.engagement-toolbar p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.auth-actions,
+.comment-form-actions,
+.like-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.engagement-card button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.engagement-card button:disabled {
+  cursor: not-allowed;
+  opacity: .62;
+}
+
+.engagement-card .button-main,
+.comment-form button[type="submit"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.like-row {
+  margin-top: 18px;
+}
+
+.like-row span,
+.comment-form-actions span,
+.comment-meta time {
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.comment-form {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.comment-form label {
+  font-weight: 800;
+}
+
+.comment-form textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 12px;
+  font: inherit;
+}
+
+.comment-form-actions {
+  justify-content: space-between;
+}
+
+.comment-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.comment-item {
+  position: relative;
+  border: 1px solid var(--line);
+  background: #fbfcfa;
+  padding: 14px;
+}
+
+.comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.comment-item p {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+}
+
+.comment-delete {
+  margin-top: 10px;
+  border-color: #d8b8be;
+  color: var(--negative);
+}
+
+.empty-comments {
+  margin: 0;
+  color: var(--muted);
+}
+
 footer {
   border-top: 1px solid var(--line);
   padding: 24px clamp(18px, 5vw, 72px);
@@ -313,7 +472,7 @@ footer {
 
 .portal-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   margin: 0;
   border: 1px solid var(--line);
@@ -349,6 +508,13 @@ footer {
 .debate-list {
   display: grid;
   gap: 16px;
+}
+
+.portal-empty {
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 24px;
+  color: var(--muted);
 }
 
 .debate-card {
@@ -462,6 +628,10 @@ footer {
 
   .card-head {
     align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .engagement-toolbar {
     flex-direction: column;
   }
 

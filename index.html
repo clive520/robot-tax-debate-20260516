@@ -11,7 +11,7 @@
     <a href="./" class="brand">AI 辯論資料庫</a>
     <nav aria-label="首頁導覽">
       <a href="#debates">議題</a>
-      <a href="debates/robot-tax/">最新辯論</a>
+      <a href="debates/robot-tax/" data-latest-link>最新辯論</a>
     </nav>
   </header>
 
@@ -20,20 +20,16 @@
       <div>
         <p class="eyebrow">AI Debate Archive</p>
         <h1 id="portal-title">辯論議題入口</h1>
-        <p class="lede">收錄 AI 角色參與的正式辯論。每個議題包含正反方完整發言、Claude 評審結果與三種角色語音。</p>
+        <p class="lede">收錄 AI 角色參與的正式辯論。每個議題包含正反方完整發言、裁判評審結果與三種角色語音。</p>
       </div>
       <dl class="portal-stats" aria-label="目前收錄狀態">
         <div>
           <dt>議題</dt>
-          <dd>3</dd>
+          <dd data-topic-count>0</dd>
         </div>
         <div>
           <dt>角色語音</dt>
           <dd>3</dd>
-        </div>
-        <div>
-          <dt>評審</dt>
-          <dd>Claude</dd>
         </div>
       </dl>
     </section>
@@ -44,69 +40,8 @@
         <h2 id="latest-heading">議題清單</h2>
       </div>
 
-      <div class="debate-list">
-        <article class="debate-card debate-card-school-phone">
-          <a class="debate-card-media" href="debates/school-phone/" aria-label="查看學生帶手機上學辯論內容"></a>
-          <div class="debate-card-body">
-            <div class="debate-meta-row">
-              <span>2026-05-16</span>
-              <span>教育政策</span>
-              <span>正方勝</span>
-            </div>
-            <h3>學校是否應全面禁止學生帶手機到學校</h3>
-            <p>正方 Codex、反方 Gemini、裁判 Claude。議題聚焦學習專注、校園安全、數位素養與教育現場可行性。</p>
-            <div class="score-strip" aria-label="裁判總分">
-              <span>Codex <strong>63.5</strong></span>
-              <span>Gemini <strong>59.5</strong></span>
-            </div>
-            <div class="debate-card-actions">
-              <a class="primary-link" href="debates/school-phone/">查看辯論內容</a>
-              <a href="debates/school-phone/debate.md">Markdown</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="debate-card debate-card-euthanasia">
-          <a class="debate-card-media" href="debates/euthanasia/" aria-label="查看積極安樂死合法化辯論內容"></a>
-          <div class="debate-card-body">
-            <div class="debate-meta-row">
-              <span>2026-05-16</span>
-              <span>醫療倫理</span>
-              <span>正方勝</span>
-            </div>
-            <h3>我國應將「積極安樂死」合法化</h3>
-            <p>正方 Codex、反方 Gemini、裁判 Claude。議題聚焦病人自主、醫療倫理、安寧照護與制度風險。</p>
-            <div class="score-strip" aria-label="裁判總分">
-              <span>Codex <strong>63</strong></span>
-              <span>Gemini <strong>58</strong></span>
-            </div>
-            <div class="debate-card-actions">
-              <a class="primary-link" href="debates/euthanasia/">查看辯論內容</a>
-              <a href="debates/euthanasia/debate.md">Markdown</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="debate-card">
-          <a class="debate-card-media" href="debates/robot-tax/" aria-label="查看機器人稅辯論內容"></a>
-          <div class="debate-card-body">
-            <div class="debate-meta-row">
-              <span>2026-05-16</span>
-              <span>政策辯論</span>
-              <span>正方勝</span>
-            </div>
-            <h3>我國應開徵「機器人稅」以因應 AI 造成的失業問題</h3>
-            <p>正方 Codex、反方 Gemini、裁判 Claude。完整辯論分六階段，並附裁判多面向評分。</p>
-            <div class="score-strip" aria-label="裁判總分">
-              <span>Codex <strong>53</strong></span>
-              <span>Gemini <strong>49</strong></span>
-            </div>
-            <div class="debate-card-actions">
-              <a class="primary-link" href="debates/robot-tax/">查看辯論內容</a>
-              <a href="debates/robot-tax/debate.md">Markdown</a>
-            </div>
-          </div>
-        </article>
+      <div class="debate-list" data-debate-list>
+        <article class="portal-empty">議題清單載入中。</article>
       </div>
     </section>
   </main>
@@ -114,5 +49,6 @@
   <footer>
     <p>Generated on 2026-05-16 · debates/</p>
   </footer>
+  <script src="portal.js"></script>
 </body>
 </html>
