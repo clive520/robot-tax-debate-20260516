@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import json
 import re
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -16,8 +17,8 @@ PODCAST_ORDER = [
     {
         "title": "正方申論",
         "speaker": "正方 Claude",
-        "voice": "zh-TW-HsiaoYuNeural",
-        "rate": "-2%",
+        "voice": "zh-TW-YunJheNeural",
+        "rate": "-1%",
         "pitch": "-1Hz",
     },
     {
@@ -30,8 +31,8 @@ PODCAST_ORDER = [
     {
         "title": "正方駁論",
         "speaker": "正方 Claude",
-        "voice": "zh-TW-HsiaoYuNeural",
-        "rate": "-2%",
+        "voice": "zh-TW-YunJheNeural",
+        "rate": "-1%",
         "pitch": "-1Hz",
     },
     {
@@ -51,8 +52,8 @@ PODCAST_ORDER = [
     {
         "title": "正方結辯",
         "speaker": "正方 Claude",
-        "voice": "zh-TW-HsiaoYuNeural",
-        "rate": "-2%",
+        "voice": "zh-TW-YunJheNeural",
+        "rate": "-1%",
         "pitch": "-1Hz",
     },
 ]
@@ -73,28 +74,32 @@ def plain_text(markdown: str) -> str:
     return text.strip()
 
 
-def split_caption_text(text: str, max_chars: int) -> list[str]:
+def split_caption_text(text: str, phrase_chars: int) -> list[str]:
     normalized = re.sub(r"\s+", "", text)
+    sentences = [
+        part.strip()
+        for part in re.split(r"(?<=[。！？])", normalized)
+        if part.strip()
+    ]
     chunks: list[str] = []
-    current = ""
-    soft_breaks = set("，、；：。！？")
 
-    for char in normalized:
-        if len(current) + 1 > max_chars:
-            chunks.append(current)
-            current = char
+    for sentence in sentences:
+        if len(sentence) <= phrase_chars:
+            chunks.append(sentence)
             continue
 
-        current += char
-        if len(current) >= max_chars:
-            chunks.append(current)
-            current = ""
-        elif char in soft_breaks and len(current) >= 8:
-            chunks.append(current)
-            current = ""
+        phrase = ""
+        for part in re.split(r"(?<=[，、；：])", sentence):
+            if not part:
+                continue
+            if phrase and len(phrase) + len(part) > phrase_chars:
+                chunks.append(phrase)
+                phrase = part
+            else:
+                phrase += part
+        if phrase:
+            chunks.append(phrase)
 
-    if current:
-        chunks.append(current)
     return chunks
 
 
@@ -149,7 +154,7 @@ def concatenate_audio(segment_paths: list[Path], output: Path) -> None:
         list_path.unlink(missing_ok=True)
 
 
-async def build_synced_podcast(slug: str, max_chars: int) -> None:
+async def build_synced_podcast(slug: str, phrase_chars: int) -> None:
     debate_dir = ROOT / "debates" / slug
     markdown = debate_dir / "debate.md"
     podcast_dir = debate_dir / "podcast"
@@ -157,6 +162,8 @@ async def build_synced_podcast(slug: str, max_chars: int) -> None:
     segment_dir = podcast_dir / "caption-segments"
     podcast_dir.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
+    if segment_dir.exists():
+        shutil.rmtree(segment_dir)
     segment_dir.mkdir(parents=True, exist_ok=True)
 
     sections = parse_sections(markdown.read_text(encoding="utf-8"))
@@ -165,7 +172,7 @@ async def build_synced_podcast(slug: str, max_chars: int) -> None:
         body = sections.get(config["title"])
         if body is None:
             raise RuntimeError(f"Missing section: {config['title']}")
-        chunks = split_caption_text(plain_text(body), max_chars)
+        chunks = split_caption_text(plain_text(body), phrase_chars)
         for chunk in chunks:
             planned.append({
                 "section": config["title"],
@@ -195,7 +202,8 @@ async def build_synced_podcast(slug: str, max_chars: int) -> None:
 
     manifest = {
         "slug": slug,
-        "max_chars": max_chars,
+        "split_strategy": "sentence_or_phrase",
+        "phrase_chars": phrase_chars,
         "caption_count": len(planned),
         "max_caption_chars": max(int(item["char_count"]) for item in planned),
         "duration": MP3(podcast).info.length,
@@ -212,9 +220,14 @@ async def build_synced_podcast(slug: str, max_chars: int) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("slug", help="Debate slug, for example death-penalty")
-    parser.add_argument("--max-chars", type=int, default=15)
+    parser.add_argument(
+        "--phrase-chars",
+        type=int,
+        default=42,
+        help="Soft phrase length for very long sentences. Captions split by sentence punctuation first.",
+    )
     args = parser.parse_args()
-    asyncio.run(build_synced_podcast(args.slug, args.max_chars))
+    asyncio.run(build_synced_podcast(args.slug, args.phrase_chars))
 
 
 if __name__ == "__main__":
