@@ -3,6 +3,7 @@ import math
 import re
 import shutil
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -217,7 +218,7 @@ def draw_background(draw: ImageDraw.ImageDraw, base: Image.Image, cue: dict[str,
 
 
 def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
-    x, y = 1080, 398
+    x, y = 1080, 300
     bob = int(math.sin(frame_index / 5) * 5)
     draw.rounded_rectangle((x - 72, y + 100 + bob, x + 72, y + 248 + bob), radius=36, fill=(219, 211, 195, 238))
     draw.ellipse((x - 82, y - 62 + bob, x + 82, y + 102 + bob), fill=(239, 231, 214, 255))
@@ -233,7 +234,7 @@ def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
 
 
 def draw_visual(draw: ImageDraw.ImageDraw, cue: dict[str, object], frame_index: int) -> None:
-    x0, y0, x1, y1 = 68, 214, 705, 512
+    x0, y0, x1, y1 = 68, 194, 705, 482
     draw.rounded_rectangle((x0, y0, x1, y1), radius=26, fill=(0, 0, 0, 82), outline=(255, 255, 255, 92), width=2)
     visual = str(cue["visual"])
     color = (245, 232, 202, 224)
@@ -307,21 +308,19 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
     draw.text((86, 130), "Podcast Video｜AI Debate Archive", fill=(236, 226, 208, 230), font=meta_font)
 
     draw_visual(draw, cue, frame_index)
-    draw.rounded_rectangle((86, 442, 680, 492), radius=20, fill=(0, 0, 0, 106))
-    draw.text((112, 452), str(cue["kicker"]), fill=(242, 212, 154, 255), font=kicker_font)
+    draw.rounded_rectangle((86, 412, 680, 462), radius=20, fill=(0, 0, 0, 106))
+    draw.text((112, 422), str(cue["kicker"]), fill=(242, 212, 154, 255), font=kicker_font)
 
-    draw.rounded_rectangle((118, 540, 955, 616), radius=28, fill=(0, 0, 0, 142), outline=(255, 255, 255, 72), width=2)
+    draw.rounded_rectangle((118, 494, 955, 570), radius=28, fill=(0, 0, 0, 142), outline=(255, 255, 255, 72), width=2)
     lines = wrap_text(draw, str(cue["label"]), label_font, 760)
-    draw.text((150, 558), lines[0], fill=(255, 255, 255, 255), font=label_font)
-    draw.text((150, 514), f"目前段落：{current_section}", fill=(255, 244, 220, 215), font=small_font)
+    draw.text((150, 512), lines[0], fill=(255, 255, 255, 255), font=label_font)
+    draw.text((150, 468), f"目前段落：{current_section}", fill=(255, 244, 220, 215), font=small_font)
 
     progress = (frame_index / FPS) / duration
-    draw.rounded_rectangle((80, 654, 1200, 666), radius=6, fill=(255, 255, 255, 54))
-    draw.rounded_rectangle((80, 654, 80 + int(1120 * progress), 666), radius=6, fill=(238, 210, 151, 230))
+    draw.rounded_rectangle((84, 176, 800, 188), radius=6, fill=(255, 255, 255, 54))
+    draw.rounded_rectangle((84, 176, 84 + int(716 * progress), 188), radius=6, fill=(238, 210, 151, 230))
 
     draw_host(draw, frame_index)
-    draw.rounded_rectangle((742, 636, 1200, 678), radius=18, fill=(0, 0, 0, 78))
-    draw.text((768, 646), "逐字字幕請使用 YouTube 載入的 SRT", fill=(255, 255, 255, 230), font=small_font)
 
     img.convert("RGB").save(path, quality=92)
 
@@ -331,9 +330,8 @@ def make_video(slug: str) -> None:
     podcast = debate_dir / "podcast" / "debate-podcast.mp3"
     markdown = debate_dir / "debate.md"
     output_dir = debate_dir / "video" / "output"
-    frame_dir = output_dir / f"frames-{int(time.time())}"
     output_dir.mkdir(parents=True, exist_ok=True)
-    frame_dir.mkdir(parents=True)
+    frame_dir = Path(tempfile.mkdtemp(prefix=f"{slug}-frames-{int(time.time())}-"))
 
     source = markdown.read_text(encoding="utf-8")
     sections = parse_sections(source)
