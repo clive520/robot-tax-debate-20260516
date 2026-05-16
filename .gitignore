@@ -1,4 +1,5 @@
 dist/
 debates/*/video/output/
+debates/*/podcast/caption-segments/
 __pycache__/
 scripts/__pycache__/

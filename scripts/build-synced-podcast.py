@@ -1,0 +1,221 @@
+import argparse
+import asyncio
+import json
+import re
+import subprocess
+import tempfile
+from pathlib import Path
+
+import edge_tts
+import imageio_ffmpeg
+from mutagen.mp3 import MP3
+
+
+ROOT = Path(__file__).resolve().parents[1]
+PODCAST_ORDER = [
+    {
+        "title": "正方申論",
+        "speaker": "正方 Claude",
+        "voice": "zh-TW-HsiaoYuNeural",
+        "rate": "-2%",
+        "pitch": "-1Hz",
+    },
+    {
+        "title": "反方申論",
+        "speaker": "反方 Gemini",
+        "voice": "zh-TW-HsiaoChenNeural",
+        "rate": "+3%",
+        "pitch": "+2Hz",
+    },
+    {
+        "title": "正方駁論",
+        "speaker": "正方 Claude",
+        "voice": "zh-TW-HsiaoYuNeural",
+        "rate": "-2%",
+        "pitch": "-1Hz",
+    },
+    {
+        "title": "反方駁論",
+        "speaker": "反方 Gemini",
+        "voice": "zh-TW-HsiaoChenNeural",
+        "rate": "+3%",
+        "pitch": "+2Hz",
+    },
+    {
+        "title": "反方結辯",
+        "speaker": "反方 Gemini",
+        "voice": "zh-TW-HsiaoChenNeural",
+        "rate": "+3%",
+        "pitch": "+2Hz",
+    },
+    {
+        "title": "正方結辯",
+        "speaker": "正方 Claude",
+        "voice": "zh-TW-HsiaoYuNeural",
+        "rate": "-2%",
+        "pitch": "-1Hz",
+    },
+]
+
+
+def parse_sections(markdown: str) -> dict[str, str]:
+    matches = re.finditer(r"(?ms)^##\s+(.+?)\r?\n(.*?)(?=^##\s+|\Z)", markdown)
+    return {match.group(1).strip(): match.group(2).strip() for match in matches}
+
+
+def plain_text(markdown: str) -> str:
+    text = re.sub(r"(?m)^#+\s*", "", markdown)
+    text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)
+    text = re.sub(r"(?m)^\|.*\|$", " ", text)
+    text = re.sub(r"(?m)^\s*[-:| ]+\s*$", " ", text)
+    text = re.sub(r"\d+\.\s*", "", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def split_caption_text(text: str, max_chars: int) -> list[str]:
+    normalized = re.sub(r"\s+", "", text)
+    chunks: list[str] = []
+    current = ""
+    soft_breaks = set("，、；：。！？")
+
+    for char in normalized:
+        if len(current) + 1 > max_chars:
+            chunks.append(current)
+            current = char
+            continue
+
+        current += char
+        if len(current) >= max_chars:
+            chunks.append(current)
+            current = ""
+        elif char in soft_breaks and len(current) >= 8:
+            chunks.append(current)
+            current = ""
+
+    if current:
+        chunks.append(current)
+    return chunks
+
+
+def srt_time(seconds: float) -> str:
+    ms = int(round(seconds * 1000))
+    hours, ms = divmod(ms, 3_600_000)
+    minutes, ms = divmod(ms, 60_000)
+    secs, ms = divmod(ms, 1000)
+    return f"{hours:02}:{minutes:02}:{secs:02},{ms:03}"
+
+
+def write_srt(items: list[dict[str, object]], path: Path) -> None:
+    lines: list[str] = []
+    for index, item in enumerate(items, start=1):
+        lines.extend([
+            str(index),
+            f"{srt_time(float(item['start']))} --> {srt_time(float(item['end']))}",
+            str(item["text"]),
+            "",
+        ])
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+async def synthesize_segment(item: dict[str, object], output: Path) -> None:
+    communicate = edge_tts.Communicate(
+        str(item["text"]),
+        voice=str(item["voice"]),
+        rate=str(item["rate"]),
+        pitch=str(item["pitch"]),
+    )
+    await communicate.save(str(output))
+
+
+def concatenate_audio(segment_paths: list[Path], output: Path) -> None:
+    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".txt", delete=False) as handle:
+        list_path = Path(handle.name)
+        for segment in segment_paths:
+            handle.write(f"file '{segment.resolve().as_posix()}'\n")
+
+    try:
+        subprocess.run([
+            ffmpeg,
+            "-y",
+            "-f", "concat",
+            "-safe", "0",
+            "-i", str(list_path),
+            "-c", "copy",
+            str(output),
+        ], check=True)
+    finally:
+        list_path.unlink(missing_ok=True)
+
+
+async def build_synced_podcast(slug: str, max_chars: int) -> None:
+    debate_dir = ROOT / "debates" / slug
+    markdown = debate_dir / "debate.md"
+    podcast_dir = debate_dir / "podcast"
+    output_dir = debate_dir / "video" / "output"
+    segment_dir = podcast_dir / "caption-segments"
+    podcast_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    segment_dir.mkdir(parents=True, exist_ok=True)
+
+    sections = parse_sections(markdown.read_text(encoding="utf-8"))
+    planned: list[dict[str, object]] = []
+    for config in PODCAST_ORDER:
+        body = sections.get(config["title"])
+        if body is None:
+            raise RuntimeError(f"Missing section: {config['title']}")
+        chunks = split_caption_text(plain_text(body), max_chars)
+        for chunk in chunks:
+            planned.append({
+                "section": config["title"],
+                "speaker": config["speaker"],
+                "voice": config["voice"],
+                "rate": config["rate"],
+                "pitch": config["pitch"],
+                "text": chunk,
+                "char_count": len(chunk),
+            })
+
+    for index, item in enumerate(planned, start=1):
+        path = segment_dir / f"{index:04}.mp3"
+        await synthesize_segment(item, path)
+        item["file"] = path.relative_to(ROOT).as_posix()
+        item["duration"] = MP3(path).info.length
+        print(f"{index:04}/{len(planned)} {item['duration']:.2f}s {item['text']}")
+
+    cursor = 0.0
+    for item in planned:
+        item["start"] = cursor
+        cursor += float(item["duration"])
+        item["end"] = cursor
+
+    podcast = podcast_dir / "debate-podcast.mp3"
+    concatenate_audio([ROOT / str(item["file"]) for item in planned], podcast)
+
+    manifest = {
+        "slug": slug,
+        "max_chars": max_chars,
+        "caption_count": len(planned),
+        "max_caption_chars": max(int(item["char_count"]) for item in planned),
+        "duration": MP3(podcast).info.length,
+        "items": planned,
+    }
+    manifest_path = podcast_dir / "captions-source.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_srt(planned, output_dir / "captions.srt")
+    print(f"Wrote {podcast}")
+    print(f"Wrote {manifest_path}")
+    print(f"Wrote {output_dir / 'captions.srt'}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("slug", help="Debate slug, for example death-penalty")
+    parser.add_argument("--max-chars", type=int, default=15)
+    args = parser.parse_args()
+    asyncio.run(build_synced_podcast(args.slug, args.max_chars))
+
+
+if __name__ == "__main__":
+    main()

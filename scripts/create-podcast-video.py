@@ -1,4 +1,5 @@
 import argparse
+import json
 import math
 import re
 import shutil
@@ -161,13 +162,16 @@ def make_srt_captions(sections: dict[str, str], duration: float) -> list[dict[st
     return captions
 
 
-def write_srt(captions: list[dict[str, object]], path: Path) -> None:
+def write_srt(captions: list[dict[str, object]], path: Path, include_speaker: bool = True) -> None:
     lines = []
     for index, caption in enumerate(captions, start=1):
+        text = str(caption["text"])
+        if include_speaker and caption.get("speaker"):
+            text = f"{caption['speaker']}：{text}"
         lines.extend([
             str(index),
             f"{srt_time(float(caption['start']))} --> {srt_time(float(caption['end']))}",
-            f"{caption['speaker']}：{caption['text']}",
+            text,
             "",
         ])
     path.write_text("\n".join(lines), encoding="utf-8")
@@ -292,6 +296,13 @@ def caption_section_at(captions: list[dict[str, object]], second: float) -> str:
     return str(captions[-1]["section"])
 
 
+def load_synced_captions(path: Path) -> list[dict[str, object]] | None:
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return list(data["items"])
+
+
 def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue: dict[str, object], current_section: str) -> None:
     img = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 255))
     draw = ImageDraw.Draw(img)
@@ -336,9 +347,10 @@ def make_video(slug: str) -> None:
     source = markdown.read_text(encoding="utf-8")
     sections = parse_sections(source)
     duration = MP3(podcast).info.length
-    captions = make_srt_captions(sections, duration)
+    synced_manifest = debate_dir / "podcast" / "captions-source.json"
+    captions = load_synced_captions(synced_manifest) or make_srt_captions(sections, duration)
     srt_path = output_dir / "captions.srt"
-    write_srt(captions, srt_path)
+    write_srt(captions, srt_path, include_speaker=not synced_manifest.exists())
 
     topic = source.splitlines()[0].lstrip("# ").strip()
     total_frames = math.ceil(duration)
