@@ -566,6 +566,17 @@ footer {
   color: var(--muted);
 }
 
+.portal-schedule {
+  display: inline-flex;
+  align-items: center;
+  margin: 20px 0 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(68, 126, 112, .28);
+  background: rgba(68, 126, 112, .08);
+  color: #244f48;
+  font-weight: 800;
+}
+
 .portal-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
