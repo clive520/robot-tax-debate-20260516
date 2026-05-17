@@ -10,6 +10,7 @@ const publicFiles = [
   "index.html",
   "styles.css",
   "portal.js",
+  "site-auth.js",
   "engagement.js",
   "supabase-config.js"
 ];

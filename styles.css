@@ -146,6 +146,10 @@ h1 {
   backdrop-filter: blur(12px);
 }
 
+.tabs .site-auth {
+  margin-left: auto;
+}
+
 .tabs a {
   color: var(--ink);
   text-decoration: none;
@@ -584,6 +588,30 @@ footer {
   font-size: .95rem;
 }
 
+.site-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.site-auth button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 7px 11px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.site-auth button:disabled {
+  cursor: not-allowed;
+  opacity: .62;
+}
+
 .portal-shell {
   width: min(1180px, calc(100% - 36px));
   margin: 0 auto;
@@ -781,6 +809,10 @@ footer {
     overflow-x: auto;
   }
 
+  .tabs .site-auth {
+    margin-left: 0;
+  }
+
   .card-head {
     align-items: flex-start;
     flex-direction: column;
@@ -797,6 +829,10 @@ footer {
   .portal-topbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .site-auth {
+    flex-wrap: wrap;
   }
 
   .portal-intro {

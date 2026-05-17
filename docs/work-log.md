@@ -961,3 +961,26 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 待重新建置、提交並部署到 GitHub Pages。部署後仍需在 Supabase SQL Editor 重新執行 `supabase/schema.sql`，新點閱與段落認同功能才會正式寫入資料庫。
+
+### community：新增全站上方登入狀態
+**目的**
+改善 Google 登入入口藏在文章底部互動區的問題，讓首頁導覽與每篇辯論頁上方都能直接登入，登入後清楚顯示目前使用者。
+
+**變更檔案**
+
+- `site-auth.js`
+- `scripts/build-site.mjs`
+- `index.html`
+- `styles.css`
+- `debates/death-penalty/index.html`
+- `debates/euthanasia/index.html`
+- `debates/robot-tax/index.html`
+- `debates/school-phone/index.html`
+- `docs/supabase-auth-setup.md`
+- `docs/work-log.md`
+
+**變更說明**
+新增共用 `site-auth.js`，使用既有 Supabase 設定讀取登入狀態，未登入時顯示「Google 登入」，登入後顯示目前登入名稱並提供登出。首頁 `portal-topbar` 與辯論頁 sticky tabs 都加入 `data-site-auth` 元件；建置腳本同步將 `site-auth.js` 複製到 GitHub Pages 輸出。
+
+**目前狀態**
+待重新建置、提交並部署到 GitHub Pages 後，使用者可在頁面上方直接登入。
