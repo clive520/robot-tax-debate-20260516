@@ -1035,3 +1035,22 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 已產生 `migration/debates.seed.json`，尚未將 SQL 套用到 Supabase，也尚未把 seed 匯入資料庫。下一步是審閱 `supabase/content-schema.sql`，確認後再建立匯入 SQL 或匯入腳本。
+
+### database：新增內容資料匯入 SQL
+**目的**
+讓第一批資料庫內容遷移可以在 Supabase SQL Editor 中執行，不需要手動逐筆新增四篇辯論、段落、評分與媒體資料。
+
+**變更檔案**
+
+- `scripts/build-content-import-sql.mjs`
+- `scripts/build-content-migration-sql.mjs`
+- `migration/import-content-seed.sql`
+- `migration/apply-content-database.sql`
+- `migration/README.md`
+- `docs/work-log.md`
+
+**變更說明**
+新增 seed-to-SQL 產生器，將 `migration/debates.seed.json` 轉成可重複執行的匯入 SQL。匯入邏輯會以 `slug` upsert `debates` 主資料，並針對 seed 中的四篇辯論重建其段落、評分與媒體資料。另新增合併版 `migration/apply-content-database.sql`，可一次建立內容資料表並匯入四篇既有辯論。
+
+**目前狀態**
+尚未套用到 Supabase。下一步可將 `migration/apply-content-database.sql` 貼到 Supabase SQL Editor 執行，完成內容資料表與四篇資料的首次建立。
