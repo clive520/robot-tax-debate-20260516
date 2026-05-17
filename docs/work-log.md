@@ -877,3 +877,20 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 `robot-tax` Podcast 音訊長度約 20:32，SRT 共 223 格；影片預覽圖已抽查 30 秒畫面，OpenAI 發言牌、段落標示、主題視覺與底部字幕安全區正常。網站頁已加入影音區，目前先提供本機 Podcast 音訊播放與 YouTube / Spotify 待上架提示。待使用者上傳平台後，再回填正式 YouTube 與 Spotify iframe。
+
+### media：回填 robot-tax YouTube 與 Spotify 內嵌連結
+**目的**
+將使用者完成上架的「我國應開徵『機器人稅』以因應 AI 造成的失業問題」YouTube 影片與 Spotify Podcast 連結接入網站，讓讀者可在辯論頁直接播放影音內容。
+
+**變更檔案**
+
+- `debates/robot-tax/index.html`
+- `debates/robot-tax/publishing/episode-notes.md`
+- `docs/episode-publishing.md`
+- `docs/work-log.md`
+
+**變更說明**
+回填 YouTube 影片 `https://youtu.be/pk4GX52L4Eg` 與 Spotify 單集 `https://open.spotify.com/episode/2lIiQIygj7SPy6qWGyQAgr?si=4243qtZjT-OXxN_BjV0HEQ`，並將頁面影音區改為 YouTube iframe、Spotify iframe 與本機音訊備援播放並列。同步更新單集上架筆記與總表狀態為 `published`。
+
+**目前狀態**
+待重新建置、提交並部署到 GitHub Pages 後，線上 `robot-tax` 頁面即可直接播放 YouTube 與 Spotify。
