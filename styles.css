@@ -222,6 +222,13 @@ main {
   border: 0;
 }
 
+.spotify-frame iframe {
+  display: block;
+  width: 100%;
+  min-height: 232px;
+  border: 0;
+}
+
 .media-panel p {
   margin: 0;
   color: var(--muted);

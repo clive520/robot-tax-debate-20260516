@@ -102,7 +102,7 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 ## EP002：學校是否應全面禁止學生帶手機到學校
 
 - Slug：`school-phone`
-- 狀態：`ready`
+- 狀態：`published`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/school-phone/`
 - 預計發布時間：直接發布
 - 正方：Codex
@@ -112,13 +112,13 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - YouTube 縮圖：`debates/school-phone/publishing/youtube-thumbnail.png`
 - YouTube 影片檔：`debates/school-phone/video/output/podcast-video.mp4`
 - YouTube 字幕檔：`debates/school-phone/video/output/captions.srt`
-- YouTube URL：待上架
-- YouTube Embed URL：待上架
+- YouTube URL：`https://youtu.be/iyMHcrXCWHc`
+- YouTube Embed URL：`https://www.youtube.com/embed/iyMHcrXCWHc`
 - Podcast 標題：`學校是否應全面禁止學生帶手機到學校`
 - Podcast 音訊檔：`debates/school-phone/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/school-phone/publishing/podcast-cover.png`
-- Podcast 平台：網站直接播放；Spotify for Creators 待上架
-- Podcast 狀態：網站音訊 ready，Spotify 待上架
-- Podcast URL：待上架
-- Podcast Embed URL：待上架
-- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。網站頁已加入影音區，先提供網頁 Podcast 音訊播放；YouTube 與 Spotify 上架後再回填平台內嵌播放器。
+- Podcast 平台：Spotify for Creators；網站保留本機音訊備援播放
+- Podcast 狀態：`published`
+- Podcast URL：`https://open.spotify.com/episode/0iT1XMTXzNsXTUIczrQW8q?si=6Bkr6XsERk6pKpeA60luAQ`
+- Podcast Embed URL：`https://open.spotify.com/embed/episode/0iT1XMTXzNsXTUIczrQW8q?utm_source=generator`
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
