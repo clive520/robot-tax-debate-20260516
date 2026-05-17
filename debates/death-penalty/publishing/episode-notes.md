@@ -4,7 +4,7 @@
 
 - 狀態：scheduled
 - 上架方式：先以手動 / Chrome 半自動上架
-- 目前阻礙：YouTube 正式影片已排程完成；Podcast 音訊尚未上架，需確認 Podcast 平台
+- 目前阻礙：YouTube 與 Spotify for Creators 均已排程完成，Podcast 公開 URL 待發布後回填
 
 ## YouTube
 
@@ -50,6 +50,10 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - 音訊檔：`debates/death-penalty/podcast/debate-podcast.mp3`
 - 封面：`debates/death-penalty/publishing/podcast-cover.png`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/`
+- 平台：Spotify for Creators
+- 節目名稱：`AI 辯論所`
+- 狀態：已排程，2026-05-22 17:00（GMT+8）
+- 清單確認：Spotify 後台顯示 `Scheduled`，日期 `2026/5/22`，格式 `音訊`，長度 `08:32`
 
 ### Podcast 說明
 
@@ -69,6 +73,6 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 2. YouTube 縮圖是否套用。`done`
 3. YouTube SRT 字幕是否上傳並能預覽。`done`
 4. YouTube 影片是否加入「AI 辯論所」播放清單或 Podcast 播放清單。
-5. Podcast 平台是否完成 MP3 上傳。
-6. Podcast 封面是否套用。
-7. YouTube URL 與 Podcast URL 是否回填到 `docs/episode-publishing.md`。YouTube `done`，Podcast `pending`
+5. Podcast 平台是否完成 MP3 上傳。`done`
+6. Podcast 封面是否套用。`done`
+7. YouTube URL 與 Podcast URL 是否回填到 `docs/episode-publishing.md`。YouTube `done`，Podcast URL 待公開後回填

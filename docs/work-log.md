@@ -707,3 +707,19 @@ YouTube 影片已排程且字幕存在。Codex 嘗試上傳自訂縮圖時，Chr
 
 **目前狀態**
 正式影片已排程於 2026-05-22 17:00（GMT+0800）公開，連結為 `https://youtu.be/1sd9BKkhHWQ`。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可由使用者刪除。Podcast 音訊尚未上架，需確認使用的平台與帳號後繼續。
+
+### publishing：建立 Spotify for Creators 節目並排程 EP001 Podcast
+**目的**
+依照使用者選定的「Spotify for Creators + YouTube」上架策略，建立 Podcast 節目並將「我國應廢除死刑」音訊排程發布。
+
+**變更檔案**
+
+- `docs/episode-publishing.md`
+- `debates/death-penalty/publishing/episode-notes.md`
+- `docs/work-log.md`
+
+**變更說明**
+已透過 Chrome 進入 Spotify for Creators，建立節目 `AI 辯論所`，填入節目簡介、創作者名稱、分類 `新聞評論`、語言 `中文 (繁體)`，並上傳 Podcast 封面 `debates/death-penalty/publishing/podcast-cover.png`。接著建立第一支單集，使用音訊檔 `debates/death-penalty/podcast/debate-podcast.mp3`，填入標題 `我國應廢除死刑` 與 Podcast 說明，保留 Spotify 留言功能開啟，並設定排程發布。
+
+**目前狀態**
+Spotify for Creators 單集清單已確認出現 `我國應廢除死刑`，狀態為 `Scheduled`，日期為 2026-05-22，格式為音訊，長度為 08:32。排程時間設定為 2026-05-22 17:00（GMT+8）。Podcast 公開 URL 需等平台發布後再回填。

@@ -90,5 +90,7 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 
 - Podcast 音訊檔：`debates/death-penalty/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/death-penalty/publishing/podcast-cover.png`
-- Podcast URL：待上架
-- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 已重新上傳正式 YouTube 影片，影片連結為 `https://youtu.be/1sd9BKkhHWQ`，排程於 2026-05-22 17:00（GMT+0800）公開，已加入 `AI 辯論所` 播放清單，並已上傳自訂縮圖與「中文（台灣）」SRT 字幕。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可刪除。
+- Podcast 平台：Spotify for Creators
+- Podcast 狀態：已排程，2026-05-22 17:00（GMT+8）
+- Podcast URL：待公開後回填
+- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 已重新上傳正式 YouTube 影片，影片連結為 `https://youtu.be/1sd9BKkhHWQ`，排程於 2026-05-22 17:00（GMT+0800）公開，已加入 `AI 辯論所` 播放清單，並已上傳自訂縮圖與「中文（台灣）」SRT 字幕。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可刪除。同日已在 Spotify for Creators 建立 `AI 辯論所` 節目，並將本集音訊 `debate-podcast.mp3` 排程於 2026-05-22 17:00（GMT+8）發布，清單狀態顯示 `Scheduled`。
