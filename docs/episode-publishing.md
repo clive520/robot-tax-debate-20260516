@@ -74,7 +74,7 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - YouTube 縮圖：`debates/death-penalty/publishing/youtube-thumbnail.png`
 - YouTube 影片檔：`debates/death-penalty/video/output/podcast-video.mp4`
 - YouTube 字幕檔：`debates/death-penalty/video/output/captions.srt`
-- YouTube URL：`https://youtu.be/x9jDcUm1r64`
+- YouTube URL：`https://youtu.be/1sd9BKkhHWQ`
 - Podcast 標題：`我國應廢除死刑`
 - Podcast 說明：
 
@@ -91,4 +91,4 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast 音訊檔：`debates/death-penalty/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/death-penalty/publishing/podcast-cover.png`
 - Podcast URL：待上架
-- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 重新連線 Chrome 後，確認 YouTube 影片已排程於 2026-05-22，影片連結為 `https://youtu.be/x9jDcUm1r64`，字幕已存在「中文（台灣）」時間碼內容。Codex 嘗試上傳自訂縮圖時被 Chrome Extension 檔案權限擋下，需在 Chrome Extension 設定中啟用 Allow access to file URLs 後再重試縮圖或其他本機檔案上傳。
+- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 已重新上傳正式 YouTube 影片，影片連結為 `https://youtu.be/1sd9BKkhHWQ`，排程於 2026-05-22 17:00（GMT+0800）公開，已加入 `AI 辯論所` 播放清單，並已上傳自訂縮圖與「中文（台灣）」SRT 字幕。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可刪除。

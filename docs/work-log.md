@@ -691,3 +691,19 @@ YouTube 影片已排程且字幕存在。Codex 嘗試上傳自訂縮圖時，Chr
 
 **目前狀態**
 重新上傳流程暫停在 YouTube「選取檔案」步驟。需由使用者手動到 `chrome://extensions`，進入 Codex Extension 詳細資料，啟用「Allow access to file URLs」後再重試。
+
+### publishing：重新上傳並排程 EP001 YouTube 正式影片
+**目的**
+依照使用者說明，先前 `https://youtu.be/x9jDcUm1r64` 為測試用影片，不沿用該影片，重新上傳一支正式 YouTube 影片並完成排程。
+
+**變更檔案**
+
+- `docs/episode-publishing.md`
+- `debates/death-penalty/publishing/episode-notes.md`
+- `docs/work-log.md`
+
+**變更說明**
+在使用者啟用 Chrome Extension 本機檔案權限後，Codex 成功透過 YouTube Studio 重新上傳 `debates/death-penalty/video/output/podcast-video.mp4`。已填入標題 `AI辯論所_EP04：我國應廢除死刑`、說明文字、自訂縮圖 `youtube-thumbnail.png`，加入 `AI 辯論所` 播放清單，設定非兒童專屬，並上傳「中文（台灣）」SRT 字幕。YouTube 初步檢查顯示著作權與社群規範皆未發現問題。
+
+**目前狀態**
+正式影片已排程於 2026-05-22 17:00（GMT+0800）公開，連結為 `https://youtu.be/1sd9BKkhHWQ`。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可由使用者刪除。Podcast 音訊尚未上架，需確認使用的平台與帳號後繼續。
