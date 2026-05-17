@@ -1,6 +1,7 @@
 const debateList = document.querySelector("[data-debate-list]");
 const topicCount = document.querySelector("[data-topic-count]");
 const latestLink = document.querySelector("[data-latest-link]");
+const supabaseConfig = window.DEBATE_SUPABASE_CONFIG;
 
 function escapeHtml(value) {
   return String(value)
@@ -16,6 +17,14 @@ function scoreLabel(debate) {
     <div class="score-strip" aria-label="裁判總分">
       <span>${escapeHtml(debate.affirmative)} <strong>${escapeHtml(debate.affirmativeScore)}</strong></span>
       <span>${escapeHtml(debate.negative)} <strong>${escapeHtml(debate.negativeScore)}</strong></span>
+    </div>
+  `;
+}
+
+function debateStats(debate) {
+  return `
+    <div class="debate-card-stats" aria-label="讀者互動統計">
+      <span>累積點閱 <strong data-card-view-count="${escapeHtml(debate.slug)}">--</strong></span>
     </div>
   `;
 }
@@ -36,6 +45,7 @@ function debateCard(debate) {
         </div>
         <h3>${escapeHtml(debate.title)}</h3>
         <p>${escapeHtml(debate.summary)}</p>
+        ${debateStats(debate)}
         ${scoreLabel(debate)}
         <div class="debate-card-actions">
           <a class="primary-link" href="${href}">查看辯論內容</a>
@@ -63,6 +73,41 @@ function renderDebates(debates) {
   }
 
   debateList.innerHTML = items.map(debateCard).join("");
+  loadPortalViewCounts(items);
+}
+
+function createSupabaseClient() {
+  if (!supabaseConfig?.url || !supabaseConfig?.anonKey || !window.supabase?.createClient) {
+    return null;
+  }
+  return window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
+}
+
+function formatCount(value) {
+  return new Intl.NumberFormat("zh-Hant-TW").format(value);
+}
+
+async function loadPortalViewCounts(debates) {
+  const client = createSupabaseClient();
+  if (!client || !debates.length) return;
+
+  const debateIds = debates.map((debate) => debate.slug);
+  const { data, error } = await client
+    .from("debate_daily_views")
+    .select("debate_id, view_count")
+    .in("debate_id", debateIds);
+
+  if (error || !data) return;
+
+  const totals = data.reduce((result, row) => {
+    result[row.debate_id] = (result[row.debate_id] || 0) + Number(row.view_count || 0);
+    return result;
+  }, {});
+
+  debateIds.forEach((debateId) => {
+    const countNode = document.querySelector(`[data-card-view-count="${CSS.escape(debateId)}"]`);
+    if (countNode) countNode.textContent = formatCount(totals[debateId] || 0);
+  });
 }
 
 fetch("debates.json", { cache: "no-store" })

@@ -765,6 +765,24 @@ footer {
   gap: 10px;
 }
 
+.debate-card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.debate-card-stats span {
+  border: 1px solid var(--line);
+  background: #fbfcfa;
+  color: var(--muted);
+  padding: 8px 12px;
+}
+
+.debate-card-stats strong {
+  color: var(--ink);
+  font-size: 1.18rem;
+}
+
 .score-strip span {
   border-left: 4px solid var(--accent);
   background: #eef5f2;
