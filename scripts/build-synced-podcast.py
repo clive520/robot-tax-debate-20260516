@@ -67,6 +67,10 @@ DEBATE_CONFIGS = {
         "positive_speaker": "正方 Codex",
         "negative_speaker": "反方 Gemini",
     },
+    "robot-tax": {
+        "positive_speaker": "正方 Codex",
+        "negative_speaker": "反方 Gemini",
+    },
     "death-penalty": {
         "positive_speaker": "正方 Claude",
         "negative_speaker": "反方 Gemini",

@@ -196,6 +196,61 @@ DEBATE_CONFIGS = {
             },
         ],
     },
+    "robot-tax": {
+        "topic": "我國應開徵「機器人稅」以因應 AI 造成的失業問題",
+        "positive_speaker": "正方 Codex",
+        "negative_speaker": "反方 Gemini",
+        "visual_cues": [
+            {
+                "section": "正方申論",
+                "label": "讓技術紅利回流社會",
+                "kicker": "轉型成本",
+                "visual": "files",
+                "dark": (30, 42, 50),
+                "accent": (92, 142, 152),
+            },
+            {
+                "section": "反方申論",
+                "label": "創新不該被懲罰",
+                "kicker": "產業競爭力",
+                "visual": "devices",
+                "dark": (42, 38, 48),
+                "accent": (142, 106, 170),
+            },
+            {
+                "section": "正方駁論",
+                "label": "公平與效率可以並存",
+                "kicker": "責任型創新",
+                "visual": "court",
+                "dark": (32, 48, 54),
+                "accent": (88, 146, 120),
+            },
+            {
+                "section": "反方駁論",
+                "label": "定義模糊會誤傷升級",
+                "kicker": "政策執行",
+                "visual": "meeting",
+                "dark": (48, 40, 42),
+                "accent": (158, 102, 88),
+            },
+            {
+                "section": "反方結辯",
+                "label": "用既有稅制支持轉職",
+                "kicker": "替代方案",
+                "visual": "dialogue",
+                "dark": (42, 45, 48),
+                "accent": (136, 126, 84),
+            },
+            {
+                "section": "正方結辯",
+                "label": "誰受益，誰分攤",
+                "kicker": "社會契約",
+                "visual": "shield",
+                "dark": (34, 42, 55),
+                "accent": (92, 118, 164),
+            },
+        ],
+    },
 }
 
 

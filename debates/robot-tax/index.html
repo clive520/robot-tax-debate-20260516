@@ -36,6 +36,7 @@
 
   <nav class="tabs" aria-label="頁面區塊">
     <a href="../../">入口首頁</a>
+    <a href="#media">影音收聽</a>
     <a href="#debate">辯論紀錄</a>
     <a href="#judge">裁判評分</a>
     <a href="#engagement">按讚留言</a>
@@ -43,6 +44,37 @@
   </nav>
 
   <main>
+    <section id="media" class="section media-section">
+      <div class="section-title">
+        <p class="eyebrow">Watch & Listen</p>
+        <h2>YouTube 與 Podcast</h2>
+      </div>
+      <div class="media-grid">
+        <article class="media-panel">
+          <div class="media-panel-head">
+            <span>YouTube</span>
+            <strong>Podcast 影片版</strong>
+          </div>
+          <div class="podcast-placeholder" aria-label="YouTube 待上架資訊">
+            <p class="eyebrow">Ready</p>
+            <h3>影片已製作完成</h3>
+            <p>YouTube 影片檔與 SRT 字幕已輸出，待正式上傳後會在這裡替換為可播放的 YouTube 內嵌播放器。</p>
+          </div>
+        </article>
+        <article class="media-panel podcast-panel">
+          <div class="media-panel-head">
+            <span>Podcast</span>
+            <strong>網頁直接播放</strong>
+          </div>
+          <div class="podcast-player">
+            <p>本集 Podcast 只收錄正方與反方辯論，不包含裁判評分。</p>
+            <audio controls preload="metadata" src="podcast/debate-podcast.mp3"></audio>
+          </div>
+          <p>Spotify 單集公開後，會再替換為平台提供的 Podcast 內嵌播放器。</p>
+        </article>
+      </div>
+    </section>
+
     <section id="debate" class="section">
       <div class="section-title">
         <p class="eyebrow">Round Log</p>

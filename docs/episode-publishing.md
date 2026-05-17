@@ -146,3 +146,27 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast URL：`https://open.spotify.com/episode/0vbCTCbCxpRPo8njxQgmgc?si=MDkD7l4_T7mmQXe1sYShBw`
 - Podcast Embed URL：`https://open.spotify.com/embed/episode/0vbCTCbCxpRPo8njxQgmgc?utm_source=generator`
 - 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
+
+## EP004：我國應開徵「機器人稅」以因應 AI 造成的失業問題
+
+- Slug：`robot-tax`
+- 狀態：`ready`
+- 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/robot-tax/`
+- 預計發布時間：直接發布
+- 正方：Codex
+- 反方：Gemini
+- 裁判：Claude
+- YouTube 標題：`AI辯論所_EP01：我國應開徵「機器人稅」以因應 AI 造成的失業問題`
+- YouTube 縮圖：`debates/robot-tax/publishing/youtube-thumbnail.png`
+- YouTube 影片檔：`debates/robot-tax/video/output/podcast-video.mp4`
+- YouTube 字幕檔：`debates/robot-tax/video/output/captions.srt`
+- YouTube URL：待上架
+- YouTube Embed URL：待上架
+- Podcast 標題：`我國應開徵「機器人稅」以因應 AI 造成的失業問題`
+- Podcast 音訊檔：`debates/robot-tax/podcast/debate-podcast.mp3`
+- Podcast 封面：`debates/robot-tax/publishing/podcast-cover.png`
+- Podcast 平台：Spotify for Creators 待上架；網站可保留本機音訊備援播放
+- Podcast 狀態：`ready`
+- Podcast URL：待上架
+- Podcast Embed URL：待上架
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 由使用者上架；待取得平台連結後回填網站內嵌播放器。

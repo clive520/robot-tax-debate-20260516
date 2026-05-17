@@ -853,3 +853,27 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 待重新建置、提交並部署到 GitHub Pages 後，線上 `euthanasia` 頁面即可直接播放 YouTube 與 Spotify。
+
+### media：產出 robot-tax Podcast、影片與上架素材
+**目的**
+接續補齊「我國應開徵『機器人稅』以因應 AI 造成的失業問題」的 Podcast 音訊、YouTube 影片、字幕、縮圖、Podcast 封面與上架文案。這一集的 YouTube 與 Spotify 將由使用者上傳，網站先保留待上架提示與本機音訊播放。
+
+**變更檔案**
+
+- `scripts/build-synced-podcast.py`
+- `scripts/create-podcast-video.py`
+- `scripts/create-robot-tax-publishing-art.py`
+- `debates/robot-tax/index.html`
+- `debates/robot-tax/podcast/debate-podcast.mp3`
+- `debates/robot-tax/podcast/captions-source.json`
+- `debates/robot-tax/publishing/youtube-thumbnail.png`
+- `debates/robot-tax/publishing/podcast-cover.png`
+- `debates/robot-tax/publishing/episode-notes.md`
+- `docs/episode-publishing.md`
+- `docs/work-log.md`
+
+**變更說明**
+將 Podcast 與影片產生腳本補上 `robot-tax` 的正方 Codex、反方 Gemini 角色設定，並加入轉型成本、產業競爭力、責任型創新、政策執行與社會契約等段落視覺提示。重新產出同步 Podcast 音訊、字幕來源、YouTube SRT、Podcast 影片、三張影片預覽圖、YouTube 縮圖與 Podcast 封面。新增單集上架包，提供 YouTube 與 Spotify 可直接貼上的標題與說明文字。
+
+**目前狀態**
+`robot-tax` Podcast 音訊長度約 20:32，SRT 共 223 格；影片預覽圖已抽查 30 秒畫面，OpenAI 發言牌、段落標示、主題視覺與底部字幕安全區正常。網站頁已加入影音區，目前先提供本機 Podcast 音訊播放與 YouTube / Spotify 待上架提示。待使用者上傳平台後，再回填正式 YouTube 與 Spotify iframe。
