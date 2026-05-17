@@ -4,7 +4,7 @@
 
 - 狀態：published
 - 上架方式：直接發布，不設定延後公開日期
-- 目前阻礙：無；YouTube 與 Spotify 已公開，網站已回填內嵌播放器
+- 目前阻礙：無；YouTube 已公開，Spotify 改為固定連到節目頁
 
 ## YouTube
 
@@ -45,10 +45,10 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/euthanasia/
 - 音訊檔：`debates/euthanasia/podcast/debate-podcast.mp3`
 - 封面：`debates/euthanasia/publishing/podcast-cover.png`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/euthanasia/`
-- 平台：Spotify for Creators；網站保留本機音訊備援播放
+- 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
 - 狀態：published
-- Podcast URL：`https://open.spotify.com/episode/0vbCTCbCxpRPo8njxQgmgc?si=MDkD7l4_T7mmQXe1sYShBw`
-- Podcast Embed URL：`https://open.spotify.com/embed/episode/0vbCTCbCxpRPo8njxQgmgc?utm_source=generator`
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
 
 ### Podcast 說明
 

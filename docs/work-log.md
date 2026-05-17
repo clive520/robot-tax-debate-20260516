@@ -894,3 +894,28 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 待重新建置、提交並部署到 GitHub Pages 後，線上 `robot-tax` 頁面即可直接播放 YouTube 與 Spotify。
+
+### media：統一 Spotify 節目頁連結策略
+**目的**
+解決 Spotify 單集在正式公開前不一定能取得穩定 URL 的問題。網站改為所有集數皆連到 Spotify「AI 辯論所」節目頁，讓讀者可查看所有 Podcast 集數，也讓未來排程集數不必等待單集連結。
+
+**變更檔案**
+
+- `debates/death-penalty/index.html`
+- `debates/school-phone/index.html`
+- `debates/euthanasia/index.html`
+- `debates/robot-tax/index.html`
+- `debates/death-penalty/publishing/episode-notes.md`
+- `debates/school-phone/publishing/episode-notes.md`
+- `debates/euthanasia/publishing/episode-notes.md`
+- `debates/robot-tax/publishing/episode-notes.md`
+- `docs/debate-workflow.md`
+- `docs/publishing-workflow.md`
+- `docs/episode-publishing.md`
+- `docs/work-log.md`
+
+**變更說明**
+移除已發布集數頁面中的 Spotify 單集 iframe，並將四篇辯論頁的 Podcast 區統一改為「本機音訊備援播放 + Spotify 節目頁連結」。節目頁固定為 `https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`。同步更新上架總表、單集上架筆記與流程文件，明確規定未來網站不嵌入 Spotify 單集播放器。
+
+**目前狀態**
+待重新建置、提交並部署到 GitHub Pages 後，線上四篇辯論頁的 Spotify 區塊都會導向同一個節目頁。

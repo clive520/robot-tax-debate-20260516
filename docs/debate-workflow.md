@@ -90,8 +90,8 @@
 10. 製作辯論網頁，清楚區分正方、反方與裁判。
 11. 為正方、反方、裁判分別產生不同聲音的語音檔。
 12. 製作 Podcast 版音訊，只保留正方與反方辯論，不包含裁判評分。
-13. 上架或排程 YouTube 與 Podcast，取得可公開的影片 / 單集資訊。
-14. 在該篇辯論網頁內嵌 YouTube 與 Podcast 播放器；若 Podcast 尚未公開，先顯示排程狀態。
+13. 上架或排程 YouTube 與 Podcast，取得可公開的影片資訊，並記錄 Spotify 節目頁。
+14. 在該篇辯論網頁內嵌 YouTube 播放器；Podcast 區保留本機音訊播放，並固定連到 Spotify「AI 辯論所」節目頁，不嵌入 Spotify 單集播放器。
 15. 更新首頁入口卡片或發布資料。
 16. 本機檢查畫面、網頁音訊、Podcast 音訊與影音內嵌區。
 17. Commit 並 push 到 GitHub。
@@ -379,7 +379,7 @@ Codex / OpenAI、Gemini、Claude、xAI Grok、DeepSeek、Microsoft Copilot。
 6. 全站音訊播放器，支援連續播放整場辯論。
 7. 使用者投票，讓讀者也能選出心中的勝方。
 8. Podcast 自動合成、章節時間戳、YouTube 說明文字與封面圖產生。
-9. Podcast 平台公開後自動回填單集 embed code。
+9. Podcast 平台公開後可記錄單集網址，但網站維持連到 Spotify 節目頁，避免排程單集尚未產生網址時無法預填。
 
 ## 十四、參考來源
 

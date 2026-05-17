@@ -10,8 +10,8 @@
 2. 使用者登入 YouTube Studio 與 Podcast 平台。
 3. Codex 使用 Chrome 協助上傳、填寫標題、說明、封面、字幕與分類。
 4. 使用者在平台端做最後確認與發布。
-5. Codex 回填影片網址、Podcast 網址與上架狀態。
-6. Codex 將 YouTube 與 Podcast 播放器內嵌到該集網站頁面。
+5. Codex 回填影片網址、Spotify 節目頁與上架狀態。
+6. Codex 將 YouTube 播放器內嵌到該集網站頁面；Podcast 區保留本機音訊播放，並固定連到 Spotify 節目頁。
 
 等流程穩定後，再評估是否改為 API 或 RSS 自動化。
 
@@ -77,8 +77,8 @@ Podcast 平台以 Spotify for Creators 或其他支援 RSS 的主機為主。初
 7. 設定發布日期或排程。
 8. 預覽單集頁面。
 9. 由使用者確認發布。
-10. 發布後回填 Podcast URL。
-11. 若平台提供單集 embed code，將 Podcast 播放器內嵌到該集網站頁面的影音區；若單集尚未公開，先顯示排程狀態與預計發布時間。
+10. 記錄 Spotify 節目頁 URL；單集 URL 可在公開後補記，但不是網站必要欄位。
+11. 網站不嵌入 Spotify 單集播放器。Podcast 區固定提供本機音訊備援播放，並放置 Spotify「AI 辯論所」節目頁連結，讓讀者可查看所有集數。
 
 Spotify 官方說明：若節目由 Spotify 託管，可以在設定中更新節目封面，也可在單集頁面更新 episode cover art；部分平台不一定顯示單集封面。參考：<https://support.spotify.com/us/creators/article/uploading-cover-art/>
 
@@ -143,19 +143,19 @@ YouTube Podcast 播放清單或 Podcast 平台封面：
 每次上架後，必須更新：
 
 1. `docs/episode-publishing.md`
-2. 該集 `debates/<slug>/podcast/podcast-notes.md`
-3. 該集 `debates/<slug>/index.html` 的 YouTube / Podcast 內嵌區
+2. 該集 `debates/<slug>/podcast/podcast-notes.md` 或 `debates/<slug>/publishing/episode-notes.md`
+3. 該集 `debates/<slug>/index.html` 的 YouTube 內嵌區與 Podcast 節目頁連結
 4. `docs/work-log.md`
 
-若 YouTube 或 Podcast 平台尚未發布，只填「待上架」或「已排程」，不要填推測網址。
+若 YouTube 尚未發布，只填「待上架」或「已排程」，不要填推測網址。Spotify 一律先填節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`。
 
 ## 九、網站內嵌規則
 
 每一篇辯論頁面都應在辯論紀錄前方加入「YouTube 與 Podcast」影音區：
 
 1. YouTube 影片已取得網址時，使用 `iframe` 內嵌 YouTube 播放器。
-2. Podcast 單集已取得公開網址與平台 embed code 時，使用平台提供的播放器內嵌。
-3. Podcast 尚未公開時，不推測 embed URL；先顯示「已排程」與發布時間。
+2. Podcast 區不使用 Spotify 單集 iframe，因為排程單集在公開前不一定能取得穩定 URL。
+3. Podcast 區固定保留本機音訊播放，並放置 Spotify「AI 辯論所」節目頁連結：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`。
 4. 影音區應放在辯論紀錄之前，讓讀者進入文章後能先選擇觀看或收聽。
-5. 內嵌後需本機預覽確認桌面與手機寬度下播放器不超出頁面。
-6. 公開 URL 產生後，需回填 `docs/episode-publishing.md`、該集 `episode-notes.md` 與網站頁面。
+5. 內嵌或連結更新後需本機預覽確認桌面與手機寬度下播放器與連結不超出頁面。
+6. YouTube 公開 URL 產生後，需回填 `docs/episode-publishing.md`、該集 `episode-notes.md` 與網站頁面；Spotify 單集 URL 可補記，但網站維持使用節目頁。

@@ -93,11 +93,11 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 
 - Podcast 音訊檔：`debates/death-penalty/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/death-penalty/publishing/podcast-cover.png`
-- Podcast 平台：Spotify for Creators
+- Podcast 平台：Spotify for Creators；網站使用節目頁連結，不嵌入單集播放器
 - Podcast 狀態：已排程，2026-05-22 17:00（GMT+8）
-- Podcast URL：待公開後回填
-- Podcast Embed URL：待公開後回填
-- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 已重新上傳正式 YouTube 影片，影片連結為 `https://youtu.be/1sd9BKkhHWQ`，排程於 2026-05-22 17:00（GMT+0800）公開，已加入 `AI 辯論所` 播放清單，並已上傳自訂縮圖與「中文（台灣）」SRT 字幕。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可刪除。同日已在 Spotify for Creators 建立 `AI 辯論所` 節目，並將本集音訊 `debate-podcast.mp3` 排程於 2026-05-22 17:00（GMT+8）發布，清單狀態顯示 `Scheduled`。
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
+- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 已重新上傳正式 YouTube 影片，影片連結為 `https://youtu.be/1sd9BKkhHWQ`，排程於 2026-05-22 17:00（GMT+0800）公開，已加入 `AI 辯論所` 播放清單，並已上傳自訂縮圖與「中文（台灣）」SRT 字幕。先前測試影片 `https://youtu.be/x9jDcUm1r64` 可刪除。同日已在 Spotify for Creators 建立 `AI 辯論所` 節目，並將本集音訊 `debate-podcast.mp3` 排程於 2026-05-22 17:00（GMT+8）發布，清單狀態顯示 `Scheduled`。網站策略已調整為固定連到 Spotify 節目頁，避免未來排程單集尚未產生網址時無法預填。
 
 ## EP002：學校是否應全面禁止學生帶手機到學校
 
@@ -117,11 +117,11 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast 標題：`學校是否應全面禁止學生帶手機到學校`
 - Podcast 音訊檔：`debates/school-phone/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/school-phone/publishing/podcast-cover.png`
-- Podcast 平台：Spotify for Creators；網站保留本機音訊備援播放
+- Podcast 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
 - Podcast 狀態：`published`
-- Podcast URL：`https://open.spotify.com/episode/0iT1XMTXzNsXTUIczrQW8q?si=6Bkr6XsERk6pKpeA60luAQ`
-- Podcast Embed URL：`https://open.spotify.com/embed/episode/0iT1XMTXzNsXTUIczrQW8q?utm_source=generator`
-- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 已公開上架，網站頁保留 YouTube 內嵌播放器與本機 Podcast 音訊備援播放；Spotify 改為固定連到 `AI 辯論所` 節目頁，避免未來排程單集尚未產生網址時無法預填。
 
 ## EP003：我國應將「積極安樂死」合法化
 
@@ -141,11 +141,11 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast 標題：`我國應將「積極安樂死」合法化`
 - Podcast 音訊檔：`debates/euthanasia/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/euthanasia/publishing/podcast-cover.png`
-- Podcast 平台：Spotify for Creators；網站保留本機音訊備援播放
+- Podcast 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
 - Podcast 狀態：`published`
-- Podcast URL：`https://open.spotify.com/episode/0vbCTCbCxpRPo8njxQgmgc?si=MDkD7l4_T7mmQXe1sYShBw`
-- Podcast Embed URL：`https://open.spotify.com/embed/episode/0vbCTCbCxpRPo8njxQgmgc?utm_source=generator`
-- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 已公開上架，網站頁保留 YouTube 內嵌播放器與本機 Podcast 音訊備援播放；Spotify 改為固定連到 `AI 辯論所` 節目頁，避免未來排程單集尚未產生網址時無法預填。
 
 ## EP004：我國應開徵「機器人稅」以因應 AI 造成的失業問題
 
@@ -165,8 +165,8 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast 標題：`我國應開徵「機器人稅」以因應 AI 造成的失業問題`
 - Podcast 音訊檔：`debates/robot-tax/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/robot-tax/publishing/podcast-cover.png`
-- Podcast 平台：Spotify for Creators；網站保留本機音訊備援播放
+- Podcast 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
 - Podcast 狀態：`published`
-- Podcast URL：`https://open.spotify.com/episode/2lIiQIygj7SPy6qWGyQAgr?si=4243qtZjT-OXxN_BjV0HEQ`
-- Podcast Embed URL：`https://open.spotify.com/embed/episode/2lIiQIygj7SPy6qWGyQAgr?utm_source=generator`
-- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 已公開上架，網站頁保留 YouTube 內嵌播放器與本機 Podcast 音訊備援播放；Spotify 改為固定連到 `AI 辯論所` 節目頁，避免未來排程單集尚未產生網址時無法預填。

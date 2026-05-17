@@ -4,7 +4,7 @@
 
 - 狀態：published
 - 上架方式：直接發布，不設定延後公開日期
-- 目前阻礙：無；YouTube 與 Spotify 已公開，網站已回填內嵌播放器
+- 目前阻礙：無；YouTube 已公開，Spotify 改為固定連到節目頁
 
 ## YouTube
 
@@ -45,10 +45,10 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/robot-tax/
 - 音訊檔：`debates/robot-tax/podcast/debate-podcast.mp3`
 - 封面：`debates/robot-tax/publishing/podcast-cover.png`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/robot-tax/`
-- 平台：Spotify for Creators；網站保留本機音訊備援播放
+- 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
 - 狀態：published
-- Podcast URL：`https://open.spotify.com/episode/2lIiQIygj7SPy6qWGyQAgr?si=4243qtZjT-OXxN_BjV0HEQ`
-- Podcast Embed URL：`https://open.spotify.com/embed/episode/2lIiQIygj7SPy6qWGyQAgr?utm_source=generator`
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
 
 ### Podcast 說明
 
