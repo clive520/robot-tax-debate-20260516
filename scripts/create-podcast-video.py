@@ -222,7 +222,7 @@ def draw_background(draw: ImageDraw.ImageDraw, base: Image.Image, cue: dict[str,
 
 
 def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
-    x, y = 1080, 244
+    x, y = 1080, 230
     bob = int(math.sin(frame_index / 5) * 5)
     draw.rounded_rectangle((x - 72, y + 100 + bob, x + 72, y + 248 + bob), radius=36, fill=(219, 211, 195, 238))
     draw.ellipse((x - 82, y - 62 + bob, x + 82, y + 102 + bob), fill=(239, 231, 214, 255))
@@ -238,7 +238,7 @@ def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
 
 
 def draw_section_badge(draw: ImageDraw.ImageDraw, current_section: str, current_speaker: str) -> None:
-    x0, y0, x1, y1 = 934, 496, 1232, 604
+    x0, y0, x1, y1 = 934, 494, 1232, 602
     title_font = load_font(17, bold=True)
     speaker_font = load_font(25, bold=True)
     section_font = load_font(34, bold=True)
