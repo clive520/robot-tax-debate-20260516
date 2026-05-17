@@ -222,7 +222,7 @@ def draw_background(draw: ImageDraw.ImageDraw, base: Image.Image, cue: dict[str,
 
 
 def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
-    x, y = 1080, 300
+    x, y = 1080, 244
     bob = int(math.sin(frame_index / 5) * 5)
     draw.rounded_rectangle((x - 72, y + 100 + bob, x + 72, y + 248 + bob), radius=36, fill=(219, 211, 195, 238))
     draw.ellipse((x - 82, y - 62 + bob, x + 82, y + 102 + bob), fill=(239, 231, 214, 255))
@@ -235,6 +235,19 @@ def draw_host(draw: ImageDraw.ImageDraw, frame_index: int) -> None:
         draw.arc((x - 22, y + 36 + bob, x + 22, y + 62 + bob), 0, 180, fill=(96, 50, 56, 255), width=4)
     draw.arc((x - 58, y - 34 + bob, x + 58, y + 64 + bob), 202, 338, fill=(140, 104, 62, 255), width=8)
     draw.rounded_rectangle((x - 120, y + 220 + bob, x + 120, y + 258 + bob), radius=19, fill=(63, 73, 78, 235))
+
+
+def draw_section_badge(draw: ImageDraw.ImageDraw, current_section: str, current_speaker: str) -> None:
+    x0, y0, x1, y1 = 934, 496, 1232, 604
+    title_font = load_font(17, bold=True)
+    speaker_font = load_font(25, bold=True)
+    section_font = load_font(34, bold=True)
+    draw.rounded_rectangle((x0, y0, x1, y1), radius=24, fill=(0, 0, 0, 132), outline=(255, 255, 255, 76), width=2)
+    draw.text((x0 + 24, y0 + 11), "目前發言", fill=(238, 219, 178, 230), font=title_font)
+    speaker_width = draw.textlength(current_speaker, font=speaker_font)
+    draw.text((x0 + (x1 - x0 - speaker_width) / 2, y0 + 31), current_speaker, fill=(242, 212, 154, 255), font=speaker_font)
+    text_width = draw.textlength(current_section, font=section_font)
+    draw.text((x0 + (x1 - x0 - text_width) / 2, y0 + 64), current_section, fill=(255, 255, 255, 255), font=section_font)
 
 
 def draw_visual(draw: ImageDraw.ImageDraw, cue: dict[str, object], frame_index: int) -> None:
@@ -289,11 +302,28 @@ def cue_at(second: float, duration: float) -> dict[str, object]:
     return VISUAL_CUES[index]
 
 
-def caption_section_at(captions: list[dict[str, object]], second: float) -> str:
+def short_speaker_name(speaker: str) -> str:
+    if "Codex" in speaker or "OpenAI" in speaker:
+        return "OpenAI"
+    if "Gemini" in speaker:
+        return "Gemini"
+    if "Claude" in speaker:
+        return "Claude"
+    if "Grok" in speaker:
+        return "Grok"
+    if "DeepSeek" in speaker:
+        return "DeepSeek"
+    if "Copilot" in speaker:
+        return "Copilot"
+    return speaker.replace("正方 ", "").replace("反方 ", "").replace("裁判 ", "")
+
+
+def caption_state_at(captions: list[dict[str, object]], second: float) -> tuple[str, str]:
     for caption in captions:
         if float(caption["start"]) <= second < float(caption["end"]):
-            return str(caption["section"])
-    return str(captions[-1]["section"])
+            return str(caption["section"]), short_speaker_name(str(caption.get("speaker", "")))
+    last_caption = captions[-1]
+    return str(last_caption["section"]), short_speaker_name(str(last_caption.get("speaker", "")))
 
 
 def load_synced_captions(path: Path) -> list[dict[str, object]] | None:
@@ -303,7 +333,7 @@ def load_synced_captions(path: Path) -> list[dict[str, object]] | None:
     return list(data["items"])
 
 
-def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue: dict[str, object], current_section: str) -> None:
+def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue: dict[str, object], current_section: str, current_speaker: str) -> None:
     img = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 255))
     draw = ImageDraw.Draw(img)
     draw_background(draw, img, cue, frame_index)
@@ -312,7 +342,6 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
     meta_font = load_font(23)
     label_font = load_font(40, bold=True)
     kicker_font = load_font(25, bold=True)
-    small_font = load_font(20)
 
     draw.rounded_rectangle((58, 56, 800, 164), radius=22, fill=(0, 0, 0, 96))
     draw.text((84, 74), topic, fill=(255, 255, 255, 255), font=title_font)
@@ -322,16 +351,16 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
     draw.rounded_rectangle((86, 412, 680, 462), radius=20, fill=(0, 0, 0, 106))
     draw.text((112, 422), str(cue["kicker"]), fill=(242, 212, 154, 255), font=kicker_font)
 
-    draw.rounded_rectangle((118, 494, 955, 570), radius=28, fill=(0, 0, 0, 142), outline=(255, 255, 255, 72), width=2)
-    lines = wrap_text(draw, str(cue["label"]), label_font, 760)
+    draw.rounded_rectangle((118, 494, 900, 570), radius=28, fill=(0, 0, 0, 142), outline=(255, 255, 255, 72), width=2)
+    lines = wrap_text(draw, str(cue["label"]), label_font, 700)
     draw.text((150, 512), lines[0], fill=(255, 255, 255, 255), font=label_font)
-    draw.text((150, 468), f"目前段落：{current_section}", fill=(255, 244, 220, 215), font=small_font)
 
     progress = (frame_index / FPS) / duration
     draw.rounded_rectangle((84, 176, 800, 188), radius=6, fill=(255, 255, 255, 54))
     draw.rounded_rectangle((84, 176, 84 + int(716 * progress), 188), radius=6, fill=(238, 210, 151, 230))
 
     draw_host(draw, frame_index)
+    draw_section_badge(draw, current_section, current_speaker)
 
     img.convert("RGB").save(path, quality=92)
 
@@ -357,8 +386,8 @@ def make_video(slug: str) -> None:
     for frame_index in range(total_frames):
         second = frame_index
         cue = cue_at(second, duration)
-        current_section = caption_section_at(captions, second)
-        render_frame(frame_dir / f"frame_{frame_index:05}.jpg", frame_index * FPS, topic, duration, cue, current_section)
+        current_section, current_speaker = caption_state_at(captions, second)
+        render_frame(frame_dir / f"frame_{frame_index:05}.jpg", frame_index * FPS, topic, duration, cue, current_section, current_speaker)
 
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     video_no_subs = output_dir / "visual-track.mp4"
