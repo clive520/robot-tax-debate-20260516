@@ -24,11 +24,18 @@ const voiceMap = {
   judge: "裁判聲音：YunJhe"
 };
 
+const debateId = document.querySelector("[data-debate-id]")?.dataset.debateId || "";
+const segmentLikeState = new Map();
+
 function escapeHtml(text) {
   return text
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function segmentIdFor(section, index) {
+  return `${String(index + 1).padStart(2, "0")}-${section.title}`;
 }
 
 function inlineMarkdown(text) {
@@ -157,22 +164,120 @@ function parseSections(markdown) {
   return sections;
 }
 
-function cardFor(section) {
+function cardFor(section, index) {
   const [roleClass, roleLabel] = roleMap[section.title] || ["judge", "紀錄"];
   const audio = audioMap[section.title];
+  const segmentId = segmentIdFor(section, index);
+  const canLikeSegment = roleClass === "positive" || roleClass === "negative";
   const article = document.createElement("article");
   article.className = `card ${roleClass}`;
+  article.dataset.segmentId = segmentId;
   article.innerHTML = `
     <div class="card-head">
       <div>
         <span class="badge">${roleLabel}</span>
         <h3>${escapeHtml(section.title)}</h3>
       </div>
-      ${audio ? `<div class="audio-box"><span>${voiceMap[roleClass]}</span><audio controls preload="metadata" src="${audio}"></audio></div>` : ""}
+      <div class="card-actions">
+        ${canLikeSegment ? `<button type="button" class="segment-like" data-segment-like data-segment-id="${escapeHtml(segmentId)}" disabled>登入後認同</button><span class="segment-like-count" data-segment-like-count>0 人認同</span>` : ""}
+        ${audio ? `<div class="audio-box"><span>${voiceMap[roleClass]}</span><audio controls preload="metadata" src="${audio}"></audio></div>` : ""}
+      </div>
     </div>
     <div class="content">${renderMarkdownBlock(section.body.join("\n"))}</div>
   `;
   return article;
+}
+
+async function initSegmentLikes() {
+  const buttons = [...document.querySelectorAll("[data-segment-like]")];
+  if (!buttons.length || !debateId) return;
+
+  const config = window.DEBATE_SUPABASE_CONFIG || {};
+  const isConfigured =
+    Boolean(config.url) &&
+    Boolean(config.anonKey) &&
+    !config.url.includes("YOUR_") &&
+    !config.anonKey.includes("YOUR_");
+
+  if (!isConfigured) return;
+
+  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
+  const supabase = createClient(config.url, config.anonKey);
+  let session = (await supabase.auth.getSession()).data.session;
+
+  function setButtonState(button, liked) {
+    button.textContent = session ? (liked ? "已認同" : "認同這段") : "登入後認同";
+    button.disabled = !session;
+  }
+
+  function setAllButtonStates() {
+    buttons.forEach((button) => {
+      setButtonState(button, Boolean(segmentLikeState.get(button.dataset.segmentId)?.liked));
+    });
+  }
+
+  async function loadSegmentLikes() {
+    const segmentIds = buttons.map((button) => button.dataset.segmentId);
+    const { data, error } = await supabase
+      .from("debate_segment_likes")
+      .select("segment_id, user_id")
+      .eq("debate_id", debateId)
+      .in("segment_id", segmentIds);
+
+    if (error) {
+      buttons.forEach((button) => {
+        button.textContent = "段落按讚尚未啟用";
+        button.disabled = true;
+      });
+      return;
+    }
+
+    segmentLikeState.clear();
+    segmentIds.forEach((id) => segmentLikeState.set(id, { count: 0, liked: false }));
+    data?.forEach((row) => {
+      const state = segmentLikeState.get(row.segment_id) || { count: 0, liked: false };
+      state.count += 1;
+      state.liked = state.liked || row.user_id === session?.user?.id;
+      segmentLikeState.set(row.segment_id, state);
+    });
+
+    buttons.forEach((button) => {
+      const state = segmentLikeState.get(button.dataset.segmentId) || { count: 0, liked: false };
+      const count = button.parentElement.querySelector("[data-segment-like-count]");
+      count.textContent = `${state.count} 人認同`;
+      setButtonState(button, state.liked);
+    });
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      if (!session) return;
+      button.disabled = true;
+      const state = segmentLikeState.get(button.dataset.segmentId) || { liked: false };
+      const request = state.liked
+        ? supabase
+            .from("debate_segment_likes")
+            .delete()
+            .eq("debate_id", debateId)
+            .eq("segment_id", button.dataset.segmentId)
+            .eq("user_id", session.user.id)
+        : supabase.from("debate_segment_likes").insert({
+            debate_id: debateId,
+            segment_id: button.dataset.segmentId,
+            user_id: session.user.id
+          });
+      await request;
+      await loadSegmentLikes();
+    });
+  });
+
+  supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+    session = nextSession;
+    setAllButtonStates();
+    await loadSegmentLikes();
+  });
+
+  await loadSegmentLikes();
 }
 
 fetch("debate.md")
@@ -181,14 +286,15 @@ fetch("debate.md")
     const sections = parseSections(markdown);
     const debate = document.querySelector("#debate-sections");
     const judge = document.querySelector("#judge-section");
-    sections.forEach((section) => {
-      const card = cardFor(section);
+    sections.forEach((section, index) => {
+      const card = cardFor(section, index);
       if (section.title.includes("裁判")) {
         judge.appendChild(card);
       } else {
         debate.appendChild(card);
       }
     });
+    initSegmentLikes();
   })
   .catch(() => {
     document.querySelector("#debate-sections").innerHTML = `<article class="card"><p>無法載入 debate.md。</p></article>`;

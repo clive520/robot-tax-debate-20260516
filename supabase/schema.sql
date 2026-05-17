@@ -23,11 +23,59 @@ create table if not exists public.debate_comments (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.debate_segment_likes (
+  debate_id text not null,
+  segment_id text not null,
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (debate_id, segment_id, user_id)
+);
+
+create table if not exists public.debate_daily_views (
+  debate_id text not null,
+  view_date date not null default current_date,
+  view_count integer not null default 0 check (view_count >= 0),
+  updated_at timestamptz not null default now(),
+  primary key (debate_id, view_date)
+);
+
 create index if not exists debate_likes_debate_id_idx
   on public.debate_likes (debate_id);
 
 create index if not exists debate_comments_debate_id_created_at_idx
   on public.debate_comments (debate_id, created_at desc);
+
+create index if not exists debate_segment_likes_debate_segment_idx
+  on public.debate_segment_likes (debate_id, segment_id);
+
+create index if not exists debate_daily_views_debate_date_idx
+  on public.debate_daily_views (debate_id, view_date desc);
+
+create or replace function public.increment_debate_daily_view(input_debate_id text)
+returns table(today_count integer, total_count bigint)
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.debate_daily_views (debate_id, view_date, view_count)
+  values (input_debate_id, current_date, 1)
+  on conflict (debate_id, view_date)
+  do update
+  set
+    view_count = public.debate_daily_views.view_count + 1,
+    updated_at = now();
+
+  return query
+  select
+    coalesce(sum(view_count) filter (where view_date = current_date), 0)::integer as today_count,
+    coalesce(sum(view_count), 0)::bigint as total_count
+  from public.debate_daily_views
+  where debate_id = input_debate_id;
+end;
+$$;
+
+grant execute on function public.increment_debate_daily_view(text) to anon, authenticated;
 
 create or replace function public.handle_new_user()
 returns trigger
@@ -63,6 +111,8 @@ create trigger on_auth_user_created
 alter table public.profiles enable row level security;
 alter table public.debate_likes enable row level security;
 alter table public.debate_comments enable row level security;
+alter table public.debate_segment_likes enable row level security;
+alter table public.debate_daily_views enable row level security;
 
 drop policy if exists "Profiles are visible to everyone" on public.profiles;
 create policy "Profiles are visible to everyone"
@@ -116,3 +166,29 @@ create policy "Admins can delete comments"
         and profiles.is_admin = true
     )
   );
+
+drop policy if exists "Anyone can read segment likes" on public.debate_segment_likes;
+create policy "Anyone can read segment likes"
+  on public.debate_segment_likes
+  for select
+  using (true);
+
+drop policy if exists "Users can like debate segments" on public.debate_segment_likes;
+create policy "Users can like debate segments"
+  on public.debate_segment_likes
+  for insert
+  to authenticated
+  with check (auth.uid() = user_id);
+
+drop policy if exists "Users can remove their segment likes" on public.debate_segment_likes;
+create policy "Users can remove their segment likes"
+  on public.debate_segment_likes
+  for delete
+  to authenticated
+  using (auth.uid() = user_id);
+
+drop policy if exists "Anyone can read debate views" on public.debate_daily_views;
+create policy "Anyone can read debate views"
+  on public.debate_daily_views
+  for select
+  using (true);

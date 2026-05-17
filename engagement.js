@@ -45,6 +45,11 @@ function renderShell(root) {
         </div>
       </div>
 
+      <div class="view-row" aria-label="點閱統計">
+        <span>今日點閱 <strong data-view-today>--</strong></span>
+        <span>累積點閱 <strong data-view-total>--</strong></span>
+      </div>
+
       <div class="like-row">
         <button type="button" data-like disabled>按讚</button>
         <span data-like-count>0 個讚</span>
@@ -69,6 +74,8 @@ async function initEngagement(root, supabase) {
   const loginButton = root.querySelector("[data-login]");
   const logoutButton = root.querySelector("[data-logout]");
   const authLabel = root.querySelector("[data-auth-label]");
+  const viewToday = root.querySelector("[data-view-today]");
+  const viewTotal = root.querySelector("[data-view-total]");
   const likeButton = root.querySelector("[data-like]");
   const likeCount = root.querySelector("[data-like-count]");
   const form = root.querySelector("[data-comment-form]");
@@ -139,6 +146,22 @@ async function initEngagement(root, supabase) {
       liked = Boolean(data);
     }
     setAuthUi();
+  }
+
+  async function recordView() {
+    const { data, error } = await supabase.rpc("increment_debate_daily_view", {
+      input_debate_id: debateId
+    });
+
+    if (error) {
+      viewToday.textContent = "尚未啟用";
+      viewTotal.textContent = "尚未啟用";
+      return;
+    }
+
+    const row = Array.isArray(data) ? data[0] : data;
+    viewToday.textContent = String(row?.today_count ?? 0);
+    viewTotal.textContent = String(row?.total_count ?? 0);
   }
 
   function renderEmptyComments() {
@@ -217,7 +240,7 @@ async function initEngagement(root, supabase) {
     const { data } = await supabase.auth.getSession();
     session = data.session;
     await loadProfile();
-    await Promise.all([loadLikes(), loadComments()]);
+    await Promise.all([recordView(), loadLikes(), loadComments()]);
     setAuthUi();
     if (session && window.location.hash.includes("access_token")) {
       window.history.replaceState(null, "", `${window.location.pathname}#engagement`);

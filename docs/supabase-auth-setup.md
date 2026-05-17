@@ -17,6 +17,8 @@ Supabase Database 儲存按讚與留言
 3. 每篇辯論可留言。
 4. 留言顯示使用者名稱與時間。
 5. 管理者可以刪除留言。
+6. 每篇辯論顯示今日點閱與累積點閱。
+7. 正反方每個發言段落可獨立按「認同」。
 
 ## 二、建立 Supabase 專案
 
@@ -35,12 +37,15 @@ supabase/schema.sql
 | `profiles` | 儲存使用者公開名稱、頭像與管理者狀態 |
 | `debate_likes` | 儲存每篇辯論的按讚紀錄 |
 | `debate_comments` | 儲存每篇辯論的留言 |
+| `debate_daily_views` | 儲存每篇辯論每日點閱量 |
+| `debate_segment_likes` | 儲存每篇辯論各發言段落的認同數 |
 
 SQL 也會開啟 Row Level Security，確保：
 
-1. 未登入者可以讀取留言與讚數。
-2. 登入者只能用自己的帳號按讚與留言。
+1. 未登入者可以讀取留言、讚數、段落認同數與點閱量。
+2. 登入者只能用自己的帳號按讚、段落認同與留言。
 3. 只有 `profiles.is_admin = true` 的管理者可以刪除留言。
+4. 點閱量透過 `increment_debate_daily_view()` 函式累加，前端不直接更新資料表。
 
 ## 三、設定 Google 登入
 

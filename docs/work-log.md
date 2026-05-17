@@ -935,3 +935,29 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 待重新建置、提交並部署到 GitHub Pages 後，線上入口首頁會以「AI 辯論所」為主題呈現。
+
+### community：新增每日點閱與段落認同
+**目的**
+讓每篇辯論能顯示讀者每日點閱量，並讓讀者針對正反方每個發言段落按「認同」，用來觀察哪些論點最有說服力。
+
+**變更檔案**
+
+- `supabase/schema.sql`
+- `engagement.js`
+- `styles.css`
+- `debates/death-penalty/app.js`
+- `debates/euthanasia/app.js`
+- `debates/robot-tax/app.js`
+- `debates/school-phone/app.js`
+- `debates/death-penalty/index.html`
+- `debates/euthanasia/index.html`
+- `debates/robot-tax/index.html`
+- `debates/school-phone/index.html`
+- `docs/supabase-auth-setup.md`
+- `docs/work-log.md`
+
+**變更說明**
+新增 `debate_daily_views`、`debate_segment_likes` 與 `increment_debate_daily_view()`。互動區新增今日點閱與累積點閱顯示；正反方六個發言段落的卡片標題列新增「認同這段」按鈕與認同數。未登入者可看數字，登入者可按段落認同。若 Supabase 尚未套用新 schema，前端會顯示點閱或段落按讚尚未啟用。
+
+**目前狀態**
+待重新建置、提交並部署到 GitHub Pages。部署後仍需在 Supabase SQL Editor 重新執行 `supabase/schema.sql`，新點閱與段落認同功能才會正式寫入資料庫。

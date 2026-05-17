@@ -288,6 +288,35 @@ main {
   margin-bottom: 16px;
 }
 
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.segment-like {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 7px 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.segment-like:disabled {
+  cursor: not-allowed;
+  opacity: .64;
+}
+
+.segment-like-count {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -391,7 +420,8 @@ th {
 
 .auth-actions,
 .comment-form-actions,
-.like-row {
+.like-row,
+.view-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -422,6 +452,18 @@ th {
 
 .like-row {
   margin-top: 18px;
+}
+
+.view-row {
+  margin-top: 18px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: #fbfcfa;
+}
+
+.view-row strong {
+  margin-left: 4px;
+  color: var(--ink);
 }
 
 .like-row span,
