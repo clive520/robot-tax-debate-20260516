@@ -813,4 +813,4 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 依 GitHub `actions/deploy-pages` 官方建議，將 `contents: read`、`pages: write`、`id-token: write` 權限也明確宣告在 `deploy` job 底下。原本 workflow 層級已宣告相同權限，但本次部署沒有被部署步驟正確辨識，改採 job 層級宣告以貼近官方範例。
 
 **目前狀態**
-等待重新推送後檢查 GitHub Pages workflow 是否恢復成功。
+已重新推送並確認 GitHub Pages workflow `25985349427` 成功完成。線上頁面 `https://clive520.github.io/robot-tax-debate-20260516/debates/school-phone/?v=20260517-media2#media` 已驗證含 2 個 iframe，來源分別為 YouTube 與 Spotify，瀏覽器錯誤紀錄為空。
