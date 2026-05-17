@@ -41,13 +41,13 @@
 ## EP001：我國應廢除死刑
 
 - Slug：`death-penalty`
-- 狀態：`ready`
+- 狀態：`scheduled`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/`
 - 預計發布時間：2026-05-22 17:00（Asia/Taipei）
 - 正方：Claude
 - 反方：Gemini
 - 裁判：Codex / OpenAI
-- YouTube 標題：`我國應廢除死刑｜AI 辯論所`
+- YouTube 標題：`AI辯論所_EP04：我國應廢除死刑`
 - YouTube 說明：
 
 ```text
@@ -74,7 +74,7 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - YouTube 縮圖：`debates/death-penalty/publishing/youtube-thumbnail.png`
 - YouTube 影片檔：`debates/death-penalty/video/output/podcast-video.mp4`
 - YouTube 字幕檔：`debates/death-penalty/video/output/captions.srt`
-- YouTube URL：待上架
+- YouTube URL：`https://youtu.be/x9jDcUm1r64`
 - Podcast 標題：`我國應廢除死刑`
 - Podcast 說明：
 
@@ -91,4 +91,4 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - Podcast 音訊檔：`debates/death-penalty/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/death-penalty/publishing/podcast-cover.png`
 - Podcast URL：待上架
-- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面，可作為第一次上架測試集。2026-05-17 測試 Codex Chrome 上架時，Chrome 擴充連線回報 native pipe closed，需先恢復 Chrome 控制連線，或依 `debates/death-penalty/publishing/episode-notes.md` 手動上架。
+- 備註：本集已完成 Podcast 音訊、影片、SRT、YouTube 縮圖與 Podcast 封面。2026-05-17 重新連線 Chrome 後，確認 YouTube 影片已排程於 2026-05-22，影片連結為 `https://youtu.be/x9jDcUm1r64`，字幕已存在「中文（台灣）」時間碼內容。Codex 嘗試上傳自訂縮圖時被 Chrome Extension 檔案權限擋下，需在 Chrome Extension 設定中啟用 Allow access to file URLs 後再重試縮圖或其他本機檔案上傳。

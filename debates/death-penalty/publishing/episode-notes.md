@@ -2,17 +2,22 @@
 
 ## 狀態
 
-- 狀態：ready
+- 狀態：scheduled
 - 上架方式：先以手動 / Chrome 半自動上架
-- 目前阻礙：Codex Chrome Extension 連線管道關閉，暫時無法由 Codex 直接操作 YouTube Studio
+- 目前阻礙：YouTube 影片已排程且字幕已存在；Codex 上傳自訂縮圖時被 Chrome Extension 檔案權限擋下，需啟用 Allow access to file URLs 後再重試
 
 ## YouTube
 
 - 標題：`我國應廢除死刑｜AI 辯論所`
+- 實際 YouTube 標題：`AI辯論所_EP04：我國應廢除死刑`
 - 影片檔：`debates/death-penalty/video/output/podcast-video.mp4`
 - 字幕檔：`debates/death-penalty/video/output/captions.srt`
 - 縮圖：`debates/death-penalty/publishing/youtube-thumbnail.png`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/`
+- YouTube URL：`https://youtu.be/x9jDcUm1r64`
+- YouTube 狀態：已排程，2026-05-22
+- 字幕狀態：已確認存在「中文（台灣）」字幕與時間碼
+- 縮圖狀態：目前仍是自動產生縮圖；待 Chrome Extension 啟用本機檔案權限後上傳自訂縮圖
 
 ### YouTube 說明
 
@@ -59,10 +64,9 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 ## 實際上架檢查
 
 1. YouTube 影片是否完成上傳。
-2. YouTube 縮圖是否套用。
-3. YouTube SRT 字幕是否上傳並能預覽。
+2. YouTube 縮圖是否套用。`pending`
+3. YouTube SRT 字幕是否上傳並能預覽。`done`
 4. YouTube 影片是否加入「AI 辯論所」播放清單或 Podcast 播放清單。
 5. Podcast 平台是否完成 MP3 上傳。
 6. Podcast 封面是否套用。
 7. YouTube URL 與 Podcast URL 是否回填到 `docs/episode-publishing.md`。
-
