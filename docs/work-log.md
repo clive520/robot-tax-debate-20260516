@@ -1001,3 +1001,19 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 待重新建置、提交並部署到 GitHub Pages。訂閱數尚未呈現，因為目前網站尚未建立站內訂閱資料表，而 Spotify 節目頁連結也無法穩定提供可嵌入的公開訂閱數；若要顯示訂閱數，建議下一階段新增「站內訂閱 AI 辯論所」功能。
+
+### planning：建立資料庫與遷移規劃
+**目的**
+將 AI 辯論所從靜態檔案維護模式，規劃轉向以 Supabase 資料庫管理辯論內容、影音連結、發布排程與管理後台，降低後續每集上架與維護成本。
+
+**變更檔案**
+
+- `docs/database-plan.md`
+- `docs/migration-plan.md`
+- `docs/work-log.md`
+
+**變更說明**
+新增資料庫規劃文件，定義 `debates`、`debate_segments`、`debate_scorecards`、`debate_media`、留言、點閱、段落認同、站內訂閱與管理稽核等資料表方向。新增遷移計劃文件，規劃從現有靜態 HTML、Markdown、JSON 與影音檔逐步遷移到 Supabase 的階段、驗收條件與風險對策。
+
+**目前狀態**
+僅完成規劃文件，尚未修改 Supabase schema 或前台資料讀取方式。下一步應先審閱並確認資料表設計，再撰寫新版 schema 草案。
