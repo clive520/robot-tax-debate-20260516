@@ -1017,3 +1017,21 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 僅完成規劃文件，尚未修改 Supabase schema 或前台資料讀取方式。下一步應先審閱並確認資料表設計，再撰寫新版 schema 草案。
+
+### database：新增內容資料表 SQL 草案與 seed 產生器
+**目的**
+依照資料庫遷移計劃開始第一階段實作，先建立可審閱的內容資料表 SQL 草案，並把目前四篇靜態辯論整理成可匯入資料庫的中繼 JSON。
+
+**變更檔案**
+
+- `supabase/content-schema.sql`
+- `scripts/build-content-seed.mjs`
+- `migration/debates.seed.json`
+- `migration/README.md`
+- `docs/work-log.md`
+
+**變更說明**
+新增 `debates`、`debate_segments`、`debate_scorecards`、`debate_media`、`site_subscriptions`、`admin_audit_logs` 等內容資料表草案與 RLS policy，保留目前 slug-based 互動資料表不動。新增 seed 產生器，從 `site-data/debates.json`、各篇 `debate.md`、文章 HTML 與上架筆記整理出四篇辯論資料；每篇固定產生六段正反辯論、一段裁判評分與 YouTube、Spotify 節目頁、MP3、SRT 媒體資料。
+
+**目前狀態**
+已產生 `migration/debates.seed.json`，尚未將 SQL 套用到 Supabase，也尚未把 seed 匯入資料庫。下一步是審閱 `supabase/content-schema.sql`，確認後再建立匯入 SQL 或匯入腳本。
