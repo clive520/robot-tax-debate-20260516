@@ -723,3 +723,37 @@ YouTube 影片已排程且字幕存在。Codex 嘗試上傳自訂縮圖時，Chr
 
 **目前狀態**
 Spotify for Creators 單集清單已確認出現 `我國應廢除死刑`，狀態為 `Scheduled`，日期為 2026-05-22，格式為音訊，長度為 08:32。排程時間設定為 2026-05-22 17:00（GMT+8）。Podcast 公開 URL 需等平台發布後再回填。
+
+### frontend / docs：新增辯論頁影音內嵌區規則
+**目的**
+讓網站讀者能直接在辯論頁觀看 YouTube 影片或收聽 Podcast，並把影音內嵌納入之後每集的標準上架流程。
+
+**變更檔案**
+
+- `debates/death-penalty/index.html`
+- `styles.css`
+- `docs/publishing-workflow.md`
+- `docs/episode-publishing.md`
+- `docs/debate-workflow.md`
+- `docs/work-log.md`
+
+**變更說明**
+在「我國應廢除死刑」頁面新增「YouTube 與 Podcast」區塊，於辯論紀錄前方內嵌 YouTube 影片播放器，並保留 Spotify Podcast 的排程提示位置。新增響應式影音樣式，讓 YouTube iframe 維持 16:9，Podcast 狀態區在手機版可自然堆疊。流程文件同步補上：今後每集上架後都需將 YouTube 與 Podcast embed 回填到網站頁面；Podcast 尚未公開時不可推測網址，先顯示排程狀態。
+
+**目前狀態**
+YouTube 已可用 `https://www.youtube.com/embed/1sd9BKkhHWQ` 內嵌。Spotify 單集目前仍為排程狀態，公開 URL 與 embed code 待 2026-05-22 發布後回填。
+
+### deploy：排除本機影音輸出暫存資料夾
+**目的**
+修正本機建置時會把 `video/output` 的影片輸出與 frame 暫存檔複製進 `dist` 的問題，避免預覽與部署輸出過大或因雲端同步檔案鎖定而失敗。
+
+**變更檔案**
+
+- `scripts/build-site.mjs`
+- `docs/work-log.md`
+
+**變更說明**
+調整 `scripts/build-site.mjs` 的辯論資料夾複製流程，略過 `video/output/` 與 `podcast/caption-segments/`。這兩個資料夾屬於本機產出或暫存內容，不應進入 Git，也不需要進入 GitHub Pages 的靜態網站輸出。
+
+**目前狀態**
+後續執行 `node scripts/build-site.mjs` 時，網站仍會複製辯論頁、文字、互動腳本與網頁使用的分段音訊，但不再複製大型 Podcast 影片輸出與 TTS 分段暫存檔。

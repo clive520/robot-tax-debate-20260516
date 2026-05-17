@@ -11,6 +11,7 @@
 3. Codex 使用 Chrome 協助上傳、填寫標題、說明、封面、字幕與分類。
 4. 使用者在平台端做最後確認與發布。
 5. Codex 回填影片網址、Podcast 網址與上架狀態。
+6. Codex 將 YouTube 與 Podcast 播放器內嵌到該集網站頁面。
 
 等流程穩定後，再評估是否改為 API 或 RSS 自動化。
 
@@ -59,6 +60,7 @@ debates/
 9. 檢查影片預覽、字幕、標題、說明與封面。
 10. 由使用者確認發布或排程。
 11. 發布後回填 YouTube URL。
+12. 將 YouTube URL 轉成 `https://www.youtube.com/embed/{videoId}`，內嵌到該集網站頁面的影音區。
 
 YouTube 官方縮圖規格目前建議使用 16:9，解析度盡量高，桌面上傳縮圖大小限制為 50MB；Podcast 播放清單則建議 1:1 縮圖。參考：<https://support.google.com/youtube/answer/72431>
 
@@ -76,6 +78,7 @@ Podcast 平台以 Spotify for Creators 或其他支援 RSS 的主機為主。初
 8. 預覽單集頁面。
 9. 由使用者確認發布。
 10. 發布後回填 Podcast URL。
+11. 若平台提供單集 embed code，將 Podcast 播放器內嵌到該集網站頁面的影音區；若單集尚未公開，先顯示排程狀態與預計發布時間。
 
 Spotify 官方說明：若節目由 Spotify 託管，可以在設定中更新節目封面，也可在單集頁面更新 episode cover art；部分平台不一定顯示單集封面。參考：<https://support.spotify.com/us/creators/article/uploading-cover-art/>
 
@@ -141,7 +144,18 @@ YouTube Podcast 播放清單或 Podcast 平台封面：
 
 1. `docs/episode-publishing.md`
 2. 該集 `debates/<slug>/podcast/podcast-notes.md`
-3. `docs/work-log.md`
+3. 該集 `debates/<slug>/index.html` 的 YouTube / Podcast 內嵌區
+4. `docs/work-log.md`
 
 若 YouTube 或 Podcast 平台尚未發布，只填「待上架」或「已排程」，不要填推測網址。
 
+## 九、網站內嵌規則
+
+每一篇辯論頁面都應在辯論紀錄前方加入「YouTube 與 Podcast」影音區：
+
+1. YouTube 影片已取得網址時，使用 `iframe` 內嵌 YouTube 播放器。
+2. Podcast 單集已取得公開網址與平台 embed code 時，使用平台提供的播放器內嵌。
+3. Podcast 尚未公開時，不推測 embed URL；先顯示「已排程」與發布時間。
+4. 影音區應放在辯論紀錄之前，讓讀者進入文章後能先選擇觀看或收聽。
+5. 內嵌後需本機預覽確認桌面與手機寬度下播放器不超出頁面。
+6. 公開 URL 產生後，需回填 `docs/episode-publishing.md`、該集 `episode-notes.md` 與網站頁面。

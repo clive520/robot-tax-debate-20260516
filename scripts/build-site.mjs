@@ -32,7 +32,18 @@ function publicDebate(debate) {
 
 async function copyIfExists(from, to) {
   if (!existsSync(from)) return false;
-  await cp(from, to, { recursive: true });
+  await cp(from, to, {
+    recursive: true,
+    filter: (source) => {
+      const relative = path.relative(from, source).replaceAll(path.sep, "/");
+      return !(
+        relative === "video/output" ||
+        relative.startsWith("video/output/") ||
+        relative === "podcast/caption-segments" ||
+        relative.startsWith("podcast/caption-segments/")
+      );
+    }
+  });
   return true;
 }
 
