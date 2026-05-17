@@ -141,6 +141,61 @@ DEBATE_CONFIGS = {
             },
         ],
     },
+    "euthanasia": {
+        "topic": "我國應將「積極安樂死」合法化",
+        "positive_speaker": "正方 Codex",
+        "negative_speaker": "反方 Gemini",
+        "visual_cues": [
+            {
+                "section": "正方申論",
+                "label": "尊嚴不是只剩忍耐",
+                "kicker": "病人自主",
+                "visual": "candle",
+                "dark": (38, 39, 47),
+                "accent": (166, 135, 92),
+            },
+            {
+                "section": "反方申論",
+                "label": "合法死亡會壓迫弱勢",
+                "kicker": "生命價值",
+                "visual": "shield",
+                "dark": (45, 38, 42),
+                "accent": (147, 82, 84),
+            },
+            {
+                "section": "正方駁論",
+                "label": "制度化比地下化更透明",
+                "kicker": "嚴格審查",
+                "visual": "files",
+                "dark": (31, 47, 54),
+                "accent": (85, 132, 134),
+            },
+            {
+                "section": "反方駁論",
+                "label": "拒絕醫療不等於加工致死",
+                "kicker": "醫療倫理",
+                "visual": "meeting",
+                "dark": (39, 42, 48),
+                "accent": (138, 116, 86),
+            },
+            {
+                "section": "反方結辯",
+                "label": "先承接痛苦，而非授權死亡",
+                "kicker": "安寧與長照",
+                "visual": "dialogue",
+                "dark": (42, 45, 43),
+                "accent": (112, 130, 104),
+            },
+            {
+                "section": "正方結辯",
+                "label": "最後選擇必須有限且透明",
+                "kicker": "尊嚴出口",
+                "visual": "court",
+                "dark": (33, 40, 54),
+                "accent": (98, 121, 156),
+            },
+        ],
+    },
 }
 
 

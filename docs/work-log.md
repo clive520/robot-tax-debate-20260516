@@ -814,3 +814,25 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 已重新推送並確認 GitHub Pages workflow `25985349427` 成功完成。線上頁面 `https://clive520.github.io/robot-tax-debate-20260516/debates/school-phone/?v=20260517-media2#media` 已驗證含 2 個 iframe，來源分別為 YouTube 與 Spotify，瀏覽器錯誤紀錄為空。
+
+### media：產出 euthanasia Podcast、影片與上架素材
+**目的**
+接續補齊已公開辯論「我國應將『積極安樂死』合法化」的 Podcast 音訊、YouTube 影片、字幕、縮圖與 Podcast 封面，並準備後續上架 YouTube 與 Spotify。
+
+**變更檔案**
+
+- `scripts/build-synced-podcast.py`
+- `scripts/create-podcast-video.py`
+- `debates/euthanasia/podcast/debate-podcast.mp3`
+- `debates/euthanasia/podcast/captions-source.json`
+- `debates/euthanasia/publishing/youtube-thumbnail.png`
+- `debates/euthanasia/publishing/podcast-cover.png`
+- `debates/euthanasia/publishing/episode-notes.md`
+- `docs/episode-publishing.md`
+- `docs/work-log.md`
+
+**變更說明**
+將 Podcast 與影片產生腳本補上 `euthanasia` 的正方 Codex、反方 Gemini 角色設定，以及病人自主、生命價值、安寧長照與制度審查等主題視覺提示。已產出同步 Podcast 音訊、字幕來源、YouTube SRT、Podcast 影片、三張影片預覽圖、YouTube 縮圖與 Podcast 封面。新增 EP003 上架包並登錄於上架資料總表。
+
+**目前狀態**
+`euthanasia` Podcast 音訊長度約 21:32，SRT 共 229 格；影片預覽圖已抽查 30 秒畫面，OpenAI 發言牌、段落標示、主題視覺與底部字幕安全區正常。網站頁已加入影音區，目前先提供本機 Podcast 音訊播放與 YouTube 待上架提示。這一輪工具環境沒有可用的 Chrome 瀏覽器控制入口，因此尚無法操作 YouTube Studio / Spotify for Creators 上傳；待 Chrome 控制恢復或取得平台連結後，再回填正式 iframe。
