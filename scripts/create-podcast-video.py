@@ -20,7 +20,7 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 24
 
-PODCAST_ORDER = [
+DEFAULT_PODCAST_ORDER = [
     ("正方申論", "正方 Claude"),
     ("反方申論", "反方 Gemini"),
     ("正方駁論", "正方 Claude"),
@@ -29,7 +29,7 @@ PODCAST_ORDER = [
     ("正方結辯", "正方 Claude"),
 ]
 
-VISUAL_CUES = [
+DEFAULT_VISUAL_CUES = [
     {
         "section": "正方申論",
         "label": "司法錯誤不可逆",
@@ -79,6 +79,88 @@ VISUAL_CUES = [
         "accent": (184, 147, 90),
     },
 ]
+
+DEBATE_CONFIGS = {
+    "death-penalty": {
+        "positive_speaker": "正方 Claude",
+        "negative_speaker": "反方 Gemini",
+        "visual_cues": DEFAULT_VISUAL_CUES,
+    },
+    "school-phone": {
+        "topic": "學校是否應全面禁止學生帶手機到學校",
+        "positive_speaker": "正方 Codex",
+        "negative_speaker": "反方 Gemini",
+        "visual_cues": [
+            {
+                "section": "正方申論",
+                "label": "讓學習重新安靜下來",
+                "kicker": "專注與校園秩序",
+                "visual": "phone",
+                "dark": (28, 44, 48),
+                "accent": (68, 126, 112),
+            },
+            {
+                "section": "反方申論",
+                "label": "禁止不是數位素養",
+                "kicker": "引導與自律",
+                "visual": "classroom",
+                "dark": (42, 44, 38),
+                "accent": (150, 116, 68),
+            },
+            {
+                "section": "正方駁論",
+                "label": "教學科技不等於私人手機",
+                "kicker": "工具與干擾的界線",
+                "visual": "devices",
+                "dark": (31, 45, 58),
+                "accent": (83, 132, 154),
+            },
+            {
+                "section": "反方駁論",
+                "label": "通勤安全不能被流程取代",
+                "kicker": "即時聯繫",
+                "visual": "route",
+                "dark": (48, 39, 45),
+                "accent": (157, 89, 89),
+            },
+            {
+                "section": "反方結辯",
+                "label": "讓規範取代禁令",
+                "kicker": "教育現場",
+                "visual": "dialogue",
+                "dark": (39, 45, 46),
+                "accent": (128, 128, 82),
+            },
+            {
+                "section": "正方結辯",
+                "label": "未成熟的學生需要清楚邊界",
+                "kicker": "公平與安全",
+                "visual": "shield",
+                "dark": (38, 42, 52),
+                "accent": (90, 119, 158),
+            },
+        ],
+    },
+}
+
+
+def debate_config(slug: str) -> dict[str, object]:
+    return DEBATE_CONFIGS.get(slug, DEBATE_CONFIGS["death-penalty"])
+
+
+def podcast_order_for(slug: str) -> list[tuple[str, str]]:
+    config = debate_config(slug)
+    positive_speaker = str(config.get("positive_speaker", "正方 Claude"))
+    negative_speaker = str(config.get("negative_speaker", "反方 Gemini"))
+    order = []
+    for title, speaker in DEFAULT_PODCAST_ORDER:
+        if title.startswith("正方"):
+            order.append((title, positive_speaker))
+        elif title.startswith("反方"):
+            order.append((title, negative_speaker))
+        else:
+            order.append((title, speaker))
+    return order
 
 
 def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -135,7 +217,7 @@ def srt_time(seconds: float) -> str:
 
 def make_srt_captions(sections: dict[str, str], duration: float) -> list[dict[str, object]]:
     raw: list[dict[str, object]] = []
-    for title, speaker in PODCAST_ORDER:
+    for title, speaker in DEFAULT_PODCAST_ORDER:
         body = plain_text(sections[title])
         for chunk in split_chunks(body):
             raw.append({
@@ -295,11 +377,47 @@ def draw_visual(draw: ImageDraw.ImageDraw, cue: dict[str, object], frame_index: 
         flame = abs(math.sin(frame_index / 4)) * 10
         draw.ellipse((382 - flame / 2, 240, 426 + flame / 2, 318), fill=(255, 206, 103, 230))
         draw.ellipse((396, 266, 414, 306), fill=(255, 246, 202, 240))
+    elif visual == "phone":
+        draw.rounded_rectangle((310, 232, 466, 470), radius=28, fill=color)
+        draw.rounded_rectangle((332, 268, 444, 420), radius=12, fill=(38, 50, 54, 210))
+        draw.ellipse((378, 436, 398, 456), fill=(38, 50, 54, 210))
+        for i in range(4):
+            draw.arc((210 - i * 18, 248 - i * 18, 374 + i * 18, 412 + i * 18), 300, 52, fill=muted, width=5)
+    elif visual == "classroom":
+        draw.rectangle((160, 250, 620, 382), fill=(42, 60, 55, 210), outline=color, width=6)
+        draw.line((190, 292, 430, 292), fill=color, width=5)
+        draw.line((190, 326, 536, 326), fill=color, width=5)
+        for x in (210, 382, 552):
+            draw.rounded_rectangle((x, 420, x + 86, 464), radius=12, fill=color)
+            draw.line((x + 12, 464, x - 14, 500), fill=color, width=6)
+            draw.line((x + 74, 464, x + 100, 500), fill=color, width=6)
+    elif visual == "devices":
+        draw.rounded_rectangle((170, 280, 426, 430), radius=16, fill=color)
+        draw.rectangle((198, 306, 398, 390), fill=(36, 46, 58, 200))
+        draw.rounded_rectangle((478, 250, 590, 452), radius=24, fill=color)
+        draw.rectangle((496, 286, 572, 408), fill=(36, 46, 58, 200))
+        draw.line((146, 470, 626, 470), fill=color, width=10)
+    elif visual == "route":
+        draw.line((180, 430, 320, 300, 470, 392, 606, 260), fill=color, width=12)
+        for x, y in ((180, 430), (320, 300), (470, 392), (606, 260)):
+            draw.ellipse((x - 22, y - 22, x + 22, y + 22), fill=(255, 246, 202, 238))
+        draw.rounded_rectangle((250, 224, 348, 370), radius=18, fill=color)
+        draw.rectangle((268, 252, 330, 334), fill=(39, 45, 50, 210))
+    elif visual == "dialogue":
+        draw.rounded_rectangle((160, 260, 390, 358), radius=24, fill=color)
+        draw.polygon([(240, 358), (270, 358), (246, 394)], fill=color)
+        draw.rounded_rectangle((390, 330, 620, 428), radius=24, fill=(245, 232, 202, 176))
+        draw.polygon([(532, 428), (562, 428), (586, 464)], fill=(245, 232, 202, 176))
+        for x in (208, 250, 292, 438, 480, 522):
+            draw.ellipse((x, 304 if x < 390 else 374, x + 14, 318 if x < 390 else 388), fill=(46, 48, 50, 180))
+    elif visual == "shield":
+        draw.polygon([(386, 232), (548, 286), (520, 430), (386, 500), (252, 430), (224, 286)], fill=color)
+        draw.line((312, 360, 368, 416, 470, 306), fill=(45, 55, 66, 220), width=14)
 
 
-def cue_at(second: float, duration: float) -> dict[str, object]:
-    index = min(len(VISUAL_CUES) - 1, int(second / duration * len(VISUAL_CUES)))
-    return VISUAL_CUES[index]
+def cue_at(second: float, duration: float, visual_cues: list[dict[str, object]]) -> dict[str, object]:
+    index = min(len(visual_cues) - 1, int(second / duration * len(visual_cues)))
+    return visual_cues[index]
 
 
 def short_speaker_name(speaker: str) -> str:
@@ -367,6 +485,7 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
 
 def make_video(slug: str) -> None:
     debate_dir = ROOT / "debates" / slug
+    config = debate_config(slug)
     podcast = debate_dir / "podcast" / "debate-podcast.mp3"
     markdown = debate_dir / "debate.md"
     output_dir = debate_dir / "video" / "output"
@@ -381,11 +500,12 @@ def make_video(slug: str) -> None:
     srt_path = output_dir / "captions.srt"
     write_srt(captions, srt_path, include_speaker=not synced_manifest.exists())
 
-    topic = source.splitlines()[0].lstrip("# ").strip()
+    topic = str(config.get("topic") or source.splitlines()[0].lstrip("# ").strip())
+    visual_cues = list(config.get("visual_cues", DEFAULT_VISUAL_CUES))
     total_frames = math.ceil(duration)
     for frame_index in range(total_frames):
         second = frame_index
-        cue = cue_at(second, duration)
+        cue = cue_at(second, duration, visual_cues)
         current_section, current_speaker = caption_state_at(captions, second)
         render_frame(frame_dir / f"frame_{frame_index:05}.jpg", frame_index * FPS, topic, duration, cue, current_section, current_speaker)
 

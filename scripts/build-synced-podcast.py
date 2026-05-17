@@ -13,7 +13,7 @@ from mutagen.mp3 import MP3
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PODCAST_ORDER = [
+DEFAULT_PODCAST_ORDER = [
     {
         "title": "正方申論",
         "speaker": "正方 Claude",
@@ -57,6 +57,32 @@ PODCAST_ORDER = [
         "pitch": "-1Hz",
     },
 ]
+
+DEBATE_CONFIGS = {
+    "school-phone": {
+        "positive_speaker": "正方 Codex",
+        "negative_speaker": "反方 Gemini",
+    },
+    "death-penalty": {
+        "positive_speaker": "正方 Claude",
+        "negative_speaker": "反方 Gemini",
+    },
+}
+
+
+def podcast_order_for(slug: str) -> list[dict[str, str]]:
+    config = DEBATE_CONFIGS.get(slug, {})
+    positive_speaker = config.get("positive_speaker", "正方 Claude")
+    negative_speaker = config.get("negative_speaker", "反方 Gemini")
+    order = []
+    for item in DEFAULT_PODCAST_ORDER:
+        copied = dict(item)
+        if copied["title"].startswith("正方"):
+            copied["speaker"] = positive_speaker
+        elif copied["title"].startswith("反方"):
+            copied["speaker"] = negative_speaker
+        order.append(copied)
+    return order
 
 
 def parse_sections(markdown: str) -> dict[str, str]:
@@ -192,7 +218,7 @@ async def build_synced_podcast(slug: str, phrase_chars: int, trim_tail_seconds: 
 
     sections = parse_sections(markdown.read_text(encoding="utf-8"))
     planned: list[dict[str, object]] = []
-    for config in PODCAST_ORDER:
+    for config in podcast_order_for(slug):
         body = sections.get(config["title"])
         if body is None:
             raise RuntimeError(f"Missing section: {config['title']}")
