@@ -230,6 +230,67 @@ debates/
 
 初期可先手動上傳 YouTube。未來若流程穩定，再評估是否自動產生 YouTube 上傳素材、封面圖、章節時間戳與描述文字。
 
+### Podcast 影片製作準則
+
+每一篇辯論若要製作 YouTube 影片版，應沿用下列流程，避免音訊、字幕與畫面各自產生而導致時間軸不一致。
+
+#### 產出順序
+
+1. 先完成網站版辯論文字與正反方六個段落內容。
+2. 使用 `scripts/build-synced-podcast.py <slug>` 產生 Podcast 音訊、`captions-source.json` 與 YouTube 用 `captions.srt`。
+3. 使用 `scripts/create-podcast-video.py <slug>` 產生 `podcast-video.mp4`。
+4. 從影片擷取至少三張預覽圖，建議包含正方、反方與結辯段落。
+5. 檢查音訊、SRT 結尾時間、影片長度與預覽圖版面。
+6. 上傳 YouTube 時，使用 `podcast-video.mp4` 搭配 `captions.srt`，不要把逐字字幕直接燒進影片。
+
+#### 字幕與音訊規則
+
+1. Podcast 只包含正方與反方辯論，不包含裁判評分與勝負判定。
+2. 字幕以文句段落為主，不採固定 15 字硬切；若句子過長，再依逗號、頓號、分號、冒號等自然語氣點拆分。
+3. 時間軸必須由每段 TTS 音訊實際長度累積產生，避免用全文字數比例推估。
+4. 正方、反方應使用不同聲音，讓聽眾能分辨目前立場。
+5. 若分段 TTS 尾端有固定停頓，可用固定尾端裁切參數處理；目前預設為每段最多裁切約 `0.45` 秒。
+
+#### 影片畫面規則
+
+1. 影片比例固定為 16:9，解析度 1280 x 720。
+2. 影片不燒逐字字幕，底部保留乾淨安全區，供 YouTube 載入 SRT 字幕。
+3. 畫面需顯示辯論題目、進度列、段落重點、視覺提示與 AI 主持人。
+4. 人像下方需顯示發言狀態牌，包含「目前發言」、AI 名稱與辯論段落，例如 `Claude / 正方申論`。
+5. 發言狀態牌上緣應與左側重點文字框上緣對齊，避免漂浮感，也讓觀眾快速辨識目前段落。
+6. 右側人像與狀態牌不得壓到底部字幕安全區；左側重點文字不得與右側狀態牌重疊。
+7. 若未來加入照片或影片素材，素材應服務於當前段落重點，不應干擾字幕安全區或角色標示。
+
+#### 檔案位置
+
+```text
+debates/
+  topic-slug/
+    podcast/
+      debate-podcast.mp3
+      captions-source.json
+      captions.srt
+    video/
+      output/
+        podcast-video.mp4
+        captions.srt
+        preview-speaker-30s.jpg
+        preview-speaker-190s.jpg
+        preview-speaker-470s.jpg
+```
+
+`debates/<slug>/video/output/` 與 `debates/<slug>/podcast/caption-segments/` 屬於本機產出資料夾，不納入 Git。流程腳本、辯論文字、網站頁面與工作日誌才需要提交。
+
+#### 驗證標準
+
+1. `debate-podcast.mp3` 可完整播放，且涵蓋六個正反方段落。
+2. `captions.srt` 最後一格時間應接近 Podcast 音訊總長度。
+3. `podcast-video.mp4` 長度應接近 Podcast 音訊長度。
+4. 預覽圖需至少檢查正方、反方、結辯三種狀態。
+5. 預覽圖需確認底部字幕安全區乾淨。
+6. 發言狀態牌需正確顯示目前 AI 名稱與辯論段落。
+7. 影片與字幕上傳 YouTube 前，需抽查中段字幕是否仍與聲音相符。
+
 ## 十、延伸 AI 角色池
 
 目前正式候選池已包含 Codex / OpenAI、Gemini、Claude、xAI Grok、DeepSeek、Microsoft Copilot。以下補充各模型適合的角色定位，並列出未來可再納入的延伸候選。實際使用前應確認帳號可用性、使用限制與輸出品質。
