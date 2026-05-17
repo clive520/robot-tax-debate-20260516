@@ -126,7 +126,7 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 ## EP003：我國應將「積極安樂死」合法化
 
 - Slug：`euthanasia`
-- 狀態：`ready`
+- 狀態：`published`
 - 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/euthanasia/`
 - 預計發布時間：直接發布
 - 正方：Codex
@@ -136,13 +136,13 @@ https://clive520.github.io/robot-tax-debate-20260516/debates/death-penalty/
 - YouTube 縮圖：`debates/euthanasia/publishing/youtube-thumbnail.png`
 - YouTube 影片檔：`debates/euthanasia/video/output/podcast-video.mp4`
 - YouTube 字幕檔：`debates/euthanasia/video/output/captions.srt`
-- YouTube URL：待上架
-- YouTube Embed URL：待上架
+- YouTube URL：`https://youtu.be/5scD3rkMTo4`
+- YouTube Embed URL：`https://www.youtube.com/embed/5scD3rkMTo4`
 - Podcast 標題：`我國應將「積極安樂死」合法化`
 - Podcast 音訊檔：`debates/euthanasia/podcast/debate-podcast.mp3`
 - Podcast 封面：`debates/euthanasia/publishing/podcast-cover.png`
-- Podcast 平台：Spotify for Creators 待上架；網站可保留本機音訊備援播放
-- Podcast 狀態：`ready`
-- Podcast URL：待上架
-- Podcast Embed URL：待上架
-- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。待 YouTube 與 Spotify 上架後回填平台內嵌播放器。
+- Podcast 平台：Spotify for Creators；網站保留本機音訊備援播放
+- Podcast 狀態：`published`
+- Podcast URL：`https://open.spotify.com/episode/0vbCTCbCxpRPo8njxQgmgc?si=MDkD7l4_T7mmQXe1sYShBw`
+- Podcast Embed URL：`https://open.spotify.com/embed/episode/0vbCTCbCxpRPo8njxQgmgc?utm_source=generator`
+- 備註：2026-05-17 已完成 Podcast 音訊、`captions-source.json`、YouTube 用 `captions.srt`、Podcast 影片 `podcast-video.mp4`、YouTube 縮圖與 Podcast 封面。YouTube 與 Spotify 已公開上架，網站頁已回填兩個平台的內嵌播放器，並保留網頁 Podcast 音訊作為備援播放。
