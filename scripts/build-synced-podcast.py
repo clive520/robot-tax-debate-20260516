@@ -154,7 +154,31 @@ def concatenate_audio(segment_paths: list[Path], output: Path) -> None:
         list_path.unlink(missing_ok=True)
 
 
-async def build_synced_podcast(slug: str, phrase_chars: int) -> None:
+def trim_segment_tail(path: Path, tail_seconds: float) -> dict[str, float]:
+    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    original_duration = MP3(path).info.length
+    target_duration = max(0.6, original_duration - tail_seconds)
+    trimmed = path.with_name(f"{path.stem}-trimmed{path.suffix}")
+    subprocess.run([
+        ffmpeg,
+        "-y",
+        "-i", str(path),
+        "-t", f"{target_duration:.3f}",
+        "-ar", "24000",
+        "-ac", "1",
+        "-b:a", "48k",
+        str(trimmed),
+    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    trimmed.replace(path)
+    trimmed_duration = MP3(path).info.length
+    return {
+        "original_duration": original_duration,
+        "trimmed_duration": trimmed_duration,
+        "trimmed_seconds": max(0.0, original_duration - trimmed_duration),
+    }
+
+
+async def build_synced_podcast(slug: str, phrase_chars: int, trim_tail_seconds: float) -> None:
     debate_dir = ROOT / "debates" / slug
     markdown = debate_dir / "debate.md"
     podcast_dir = debate_dir / "podcast"
@@ -187,9 +211,12 @@ async def build_synced_podcast(slug: str, phrase_chars: int) -> None:
     for index, item in enumerate(planned, start=1):
         path = segment_dir / f"{index:04}.mp3"
         await synthesize_segment(item, path)
+        if trim_tail_seconds > 0:
+            item.update(trim_segment_tail(path, trim_tail_seconds))
         item["file"] = path.relative_to(ROOT).as_posix()
         item["duration"] = MP3(path).info.length
-        print(f"{index:04}/{len(planned)} {item['duration']:.2f}s {item['text']}")
+        trim_note = f" trim {item.get('trimmed_seconds', 0):.2f}s" if trim_tail_seconds > 0 else ""
+        print(f"{index:04}/{len(planned)} {item['duration']:.2f}s{trim_note} {item['text']}")
 
     cursor = 0.0
     for item in planned:
@@ -207,6 +234,7 @@ async def build_synced_podcast(slug: str, phrase_chars: int) -> None:
         "caption_count": len(planned),
         "max_caption_chars": max(int(item["char_count"]) for item in planned),
         "duration": MP3(podcast).info.length,
+        "trim_tail_seconds": trim_tail_seconds,
         "items": planned,
     }
     manifest_path = podcast_dir / "captions-source.json"
@@ -226,8 +254,14 @@ def main() -> None:
         default=42,
         help="Soft phrase length for very long sentences. Captions split by sentence punctuation first.",
     )
+    parser.add_argument(
+        "--trim-tail-seconds",
+        type=float,
+        default=0.45,
+        help="Fixed duration trimmed from the end of each synthesized segment.",
+    )
     args = parser.parse_args()
-    asyncio.run(build_synced_podcast(args.slug, args.phrase_chars))
+    asyncio.run(build_synced_podcast(args.slug, args.phrase_chars, args.trim_tail_seconds))
 
 
 if __name__ == "__main__":

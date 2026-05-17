@@ -4,7 +4,8 @@
   "phrase_chars": 42,
   "caption_count": 90,
   "max_caption_chars": 42,
-  "duration": 546.624,
+  "duration": 512.064,
+  "trim_tail_seconds": 0.45,
   "items": [
     {
       "section": "正方申論",
@@ -14,10 +15,13 @@
       "pitch": "-1Hz",
       "text": "正方主張：我國應廢除死刑，改以終身監禁、不得假釋或極嚴格假釋審查、",
       "char_count": 33,
+      "original_duration": 7.2,
+      "trimmed_duration": 6.816,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0001.mp3",
-      "duration": 7.2,
+      "duration": 6.816,
       "start": 0.0,
-      "end": 7.2
+      "end": 6.816
     },
     {
       "section": "正方申論",
@@ -27,10 +31,13 @@
       "pitch": "-1Hz",
       "text": "被害人支持制度與司法防錯機制，作為處理最嚴重犯罪的制度核心。",
       "char_count": 30,
+      "original_duration": 6.024,
+      "trimmed_duration": 5.64,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0002.mp3",
-      "duration": 6.024,
-      "start": 7.2,
-      "end": 13.224
+      "duration": 5.64,
+      "start": 6.816,
+      "end": 12.456
     },
     {
       "section": "正方申論",
@@ -40,10 +47,13 @@
       "pitch": "-1Hz",
       "text": "第一，死刑的不可逆性使司法錯誤無法補救。",
       "char_count": 20,
+      "original_duration": 4.464,
+      "trimmed_duration": 4.08,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0003.mp3",
-      "duration": 4.464,
-      "start": 13.224,
-      "end": 17.688000000000002
+      "duration": 4.08,
+      "start": 12.456,
+      "end": 16.536
     },
     {
       "section": "正方申論",
@@ -53,10 +63,13 @@
       "pitch": "-1Hz",
       "text": "刑事司法再嚴謹，仍可能受到偵查偏誤、證據污染、鑑定錯誤、辯護資源不均與社會輿論影響。",
       "char_count": 42,
+      "original_duration": 8.856,
+      "trimmed_duration": 8.472,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0004.mp3",
-      "duration": 8.856,
-      "start": 17.688000000000002,
-      "end": 26.544000000000004
+      "duration": 8.472,
+      "start": 16.536,
+      "end": 25.008000000000003
     },
     {
       "section": "正方申論",
@@ -66,10 +79,13 @@
       "pitch": "-1Hz",
       "text": "一般刑罰若判錯，至少仍有釋放、補償與名譽回復的空間；死刑一旦執行，",
       "char_count": 33,
+      "original_duration": 6.984,
+      "trimmed_duration": 6.6,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0005.mp3",
-      "duration": 6.984,
-      "start": 26.544000000000004,
-      "end": 33.528000000000006
+      "duration": 6.6,
+      "start": 25.008000000000003,
+      "end": 31.608000000000004
     },
     {
       "section": "正方申論",
@@ -79,10 +95,13 @@
       "pitch": "-1Hz",
       "text": "國家就沒有修正錯誤的能力。",
       "char_count": 13,
+      "original_duration": 3.192,
+      "trimmed_duration": 2.808,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0006.mp3",
-      "duration": 3.192,
-      "start": 33.528000000000006,
-      "end": 36.720000000000006
+      "duration": 2.808,
+      "start": 31.608000000000004,
+      "end": 34.416000000000004
     },
     {
       "section": "正方申論",
@@ -92,10 +111,13 @@
       "pitch": "-1Hz",
       "text": "第二，死刑無法證明是不可替代的嚇阻工具。",
       "char_count": 20,
+      "original_duration": 4.536,
+      "trimmed_duration": 4.152,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0007.mp3",
-      "duration": 4.536,
-      "start": 36.720000000000006,
-      "end": 41.25600000000001
+      "duration": 4.152,
+      "start": 34.416000000000004,
+      "end": 38.568000000000005
     },
     {
       "section": "正方申論",
@@ -105,10 +127,13 @@
       "pitch": "-1Hz",
       "text": "主張保留死刑者常說它可以預防重大犯罪，但重大暴力犯罪多發生在衝動、精神失衡、",
       "char_count": 38,
+      "original_duration": 7.824,
+      "trimmed_duration": 7.44,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0008.mp3",
-      "duration": 7.824,
-      "start": 41.25600000000001,
-      "end": 49.080000000000005
+      "duration": 7.44,
+      "start": 38.568000000000005,
+      "end": 46.008
     },
     {
       "section": "正方申論",
@@ -118,10 +143,13 @@
       "pitch": "-1Hz",
       "text": "親密關係崩解、組織犯罪或極端絕望情境中，行為人未必會理性計算刑度。",
       "char_count": 33,
+      "original_duration": 6.816,
+      "trimmed_duration": 6.432,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0009.mp3",
-      "duration": 6.816,
-      "start": 49.080000000000005,
-      "end": 55.89600000000001
+      "duration": 6.432,
+      "start": 46.008,
+      "end": 52.440000000000005
     },
     {
       "section": "正方申論",
@@ -131,10 +159,13 @@
       "pitch": "-1Hz",
       "text": "真正能降低犯罪的是警政效率、社會安全網、精神醫療、家暴防治、槍械與刀械管制、",
       "char_count": 38,
+      "original_duration": 8.28,
+      "trimmed_duration": 7.896,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0010.mp3",
-      "duration": 8.28,
-      "start": 55.89600000000001,
-      "end": 64.176
+      "duration": 7.896,
+      "start": 52.440000000000005,
+      "end": 60.336000000000006
     },
     {
       "section": "正方申論",
@@ -144,10 +175,13 @@
       "pitch": "-1Hz",
       "text": "再犯風險管理，而不是把刑罰推到最終極。",
       "char_count": 19,
+      "original_duration": 4.584,
+      "trimmed_duration": 4.2,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0011.mp3",
-      "duration": 4.584,
-      "start": 64.176,
-      "end": 68.76
+      "duration": 4.2,
+      "start": 60.336000000000006,
+      "end": 64.536
     },
     {
       "section": "正方申論",
@@ -157,10 +191,13 @@
       "pitch": "-1Hz",
       "text": "第三，國家不能用不可逆的殺人來宣示正義。",
       "char_count": 20,
+      "original_duration": 4.368,
+      "trimmed_duration": 3.984,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0012.mp3",
-      "duration": 4.368,
-      "start": 68.76,
-      "end": 73.128
+      "duration": 3.984,
+      "start": 64.536,
+      "end": 68.52
     },
     {
       "section": "正方申論",
@@ -170,10 +207,13 @@
       "pitch": "-1Hz",
       "text": "刑罰的目的應是保護社會、回應被害、矯正可能矯正者，並維持法治秩序。",
       "char_count": 33,
+      "original_duration": 7.176,
+      "trimmed_duration": 6.792,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0013.mp3",
-      "duration": 7.176,
-      "start": 73.128,
-      "end": 80.304
+      "duration": 6.792,
+      "start": 68.52,
+      "end": 75.312
     },
     {
       "section": "正方申論",
@@ -183,10 +223,13 @@
       "pitch": "-1Hz",
       "text": "死刑看似給出最強烈的譴責，卻也讓國家把人的生命排除在制度修復之外。",
       "char_count": 33,
+      "original_duration": 6.504,
+      "trimmed_duration": 6.12,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0014.mp3",
-      "duration": 6.504,
-      "start": 80.304,
-      "end": 86.808
+      "duration": 6.12,
+      "start": 75.312,
+      "end": 81.432
     },
     {
       "section": "正方申論",
@@ -196,10 +239,13 @@
       "pitch": "-1Hz",
       "text": "當憲法法庭已強調生命權受最高程度保障時，廢死不是縱容犯罪，而是要求國家用更成熟、",
       "char_count": 40,
+      "original_duration": 8.28,
+      "trimmed_duration": 7.896,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0015.mp3",
-      "duration": 8.28,
-      "start": 86.808,
-      "end": 95.08800000000001
+      "duration": 7.896,
+      "start": 81.432,
+      "end": 89.328
     },
     {
       "section": "正方申論",
@@ -209,10 +255,13 @@
       "pitch": "-1Hz",
       "text": "更不會犯下終局錯誤的方式處理極惡案件。",
       "char_count": 19,
+      "original_duration": 4.128,
+      "trimmed_duration": 3.744,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0016.mp3",
-      "duration": 4.128,
-      "start": 95.08800000000001,
-      "end": 99.21600000000001
+      "duration": 3.744,
+      "start": 89.328,
+      "end": 93.072
     },
     {
       "section": "正方申論",
@@ -222,10 +271,13 @@
       "pitch": "-1Hz",
       "text": "正方定義的「廢除」不是放任重罪犯回到社會，而是取消國家執行死刑的權力，",
       "char_count": 35,
+      "original_duration": 6.768,
+      "trimmed_duration": 6.384,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0017.mp3",
-      "duration": 6.768,
-      "start": 99.21600000000001,
-      "end": 105.98400000000001
+      "duration": 6.384,
+      "start": 93.072,
+      "end": 99.456
     },
     {
       "section": "正方申論",
@@ -235,10 +287,13 @@
       "pitch": "-1Hz",
       "text": "並同步建立三項配套：一是重大殺人案件可處終身監禁或長期隔離；",
       "char_count": 30,
+      "original_duration": 6.264,
+      "trimmed_duration": 5.88,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0018.mp3",
-      "duration": 6.264,
-      "start": 105.98400000000001,
-      "end": 112.248
+      "duration": 5.88,
+      "start": 99.456,
+      "end": 105.336
     },
     {
       "section": "正方申論",
@@ -248,10 +303,13 @@
       "pitch": "-1Hz",
       "text": "二是強化被害人與家屬的資訊、心理、經濟與訴訟支持；",
       "char_count": 25,
+      "original_duration": 5.808,
+      "trimmed_duration": 5.424,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0019.mp3",
-      "duration": 5.808,
-      "start": 112.248,
-      "end": 118.05600000000001
+      "duration": 5.424,
+      "start": 105.336,
+      "end": 110.76
     },
     {
       "section": "正方申論",
@@ -261,10 +319,13 @@
       "pitch": "-1Hz",
       "text": "三是建立嚴格的冤案複查與量刑審查制度。",
       "char_count": 19,
+      "original_duration": 4.2,
+      "trimmed_duration": 3.816,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0020.mp3",
-      "duration": 4.2,
-      "start": 118.05600000000001,
-      "end": 122.25600000000001
+      "duration": 3.816,
+      "start": 110.76,
+      "end": 114.57600000000001
     },
     {
       "section": "反方申論",
@@ -274,10 +335,13 @@
       "pitch": "+2Hz",
       "text": "反方主張：我國目前不應廢除死刑，而應保留極少數、最嚴格條件下適用的死刑制度。",
       "char_count": 38,
+      "original_duration": 8.232,
+      "trimmed_duration": 7.848,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0021.mp3",
-      "duration": 8.232,
-      "start": 122.25600000000001,
-      "end": 130.488
+      "duration": 7.848,
+      "start": 114.57600000000001,
+      "end": 122.424
     },
     {
       "section": "反方申論",
@@ -287,10 +351,13 @@
       "pitch": "+2Hz",
       "text": "理由不是崇尚報復，而是面對最嚴重犯罪時，國家仍需要最後手段來維持正義、",
       "char_count": 35,
+      "original_duration": 7.68,
+      "trimmed_duration": 7.296,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0022.mp3",
-      "duration": 7.68,
-      "start": 130.488,
-      "end": 138.168
+      "duration": 7.296,
+      "start": 122.424,
+      "end": 129.72
     },
     {
       "section": "反方申論",
@@ -300,10 +367,13 @@
       "pitch": "+2Hz",
       "text": "安定與人民對司法的信任。",
       "char_count": 12,
+      "original_duration": 3.024,
+      "trimmed_duration": 2.64,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0023.mp3",
-      "duration": 3.024,
-      "start": 138.168,
-      "end": 141.192
+      "duration": 2.64,
+      "start": 129.72,
+      "end": 132.35999999999999
     },
     {
       "section": "反方申論",
@@ -313,10 +383,13 @@
       "pitch": "+2Hz",
       "text": "第一，死刑具有極端案件中的應報正義功能。",
       "char_count": 20,
+      "original_duration": 4.56,
+      "trimmed_duration": 4.176,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0024.mp3",
-      "duration": 4.56,
-      "start": 141.192,
-      "end": 145.752
+      "duration": 4.176,
+      "start": 132.35999999999999,
+      "end": 136.53599999999997
     },
     {
       "section": "反方申論",
@@ -326,10 +399,13 @@
       "pitch": "+2Hz",
       "text": "某些案件不只是造成死亡，而是包含凌虐、隨機殺人、連續殺人、",
       "char_count": 29,
+      "original_duration": 7.056,
+      "trimmed_duration": 6.672,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0025.mp3",
-      "duration": 7.056,
-      "start": 145.752,
-      "end": 152.80800000000002
+      "duration": 6.672,
+      "start": 136.53599999999997,
+      "end": 143.20799999999997
     },
     {
       "section": "反方申論",
@@ -339,10 +415,13 @@
       "pitch": "+2Hz",
       "text": "殺害兒童或對社會安全造成巨大破壞。",
       "char_count": 17,
+      "original_duration": 4.2,
+      "trimmed_duration": 3.816,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0026.mp3",
-      "duration": 4.2,
-      "start": 152.80800000000002,
-      "end": 157.008
+      "duration": 3.816,
+      "start": 143.20799999999997,
+      "end": 147.02399999999997
     },
     {
       "section": "反方申論",
@@ -352,10 +431,13 @@
       "pitch": "+2Hz",
       "text": "若刑罰完全排除死刑，社會可能認為國家對最嚴重侵害生命的行為沒有相稱回應。",
       "char_count": 36,
+      "original_duration": 7.68,
+      "trimmed_duration": 7.296,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0027.mp3",
-      "duration": 7.68,
-      "start": 157.008,
-      "end": 164.68800000000002
+      "duration": 7.296,
+      "start": 147.02399999999997,
+      "end": 154.31999999999996
     },
     {
       "section": "反方申論",
@@ -365,10 +447,13 @@
       "pitch": "+2Hz",
       "text": "刑罰若失去相稱性，人民可能轉向私刑情緒，反而傷害法治。",
       "char_count": 27,
+      "original_duration": 6.408,
+      "trimmed_duration": 6.024,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0028.mp3",
-      "duration": 6.408,
-      "start": 164.68800000000002,
-      "end": 171.096
+      "duration": 6.024,
+      "start": 154.31999999999996,
+      "end": 160.34399999999997
     },
     {
       "section": "反方申論",
@@ -378,10 +463,13 @@
       "pitch": "+2Hz",
       "text": "第二，死刑仍有隔離與象徵性嚇阻功能。",
       "char_count": 18,
+      "original_duration": 4.416,
+      "trimmed_duration": 4.032,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0029.mp3",
-      "duration": 4.416,
-      "start": 171.096,
-      "end": 175.512
+      "duration": 4.032,
+      "start": 160.34399999999997,
+      "end": 164.37599999999998
     },
     {
       "section": "反方申論",
@@ -391,10 +479,13 @@
       "pitch": "+2Hz",
       "text": "雖然死刑的嚇阻效果難以用單一數據證明，但不能反過來說它完全沒有作用。",
       "char_count": 34,
+      "original_duration": 7.08,
+      "trimmed_duration": 6.696,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0030.mp3",
-      "duration": 7.08,
-      "start": 175.512,
-      "end": 182.592
+      "duration": 6.696,
+      "start": 164.37599999999998,
+      "end": 171.07199999999997
     },
     {
       "section": "反方申論",
@@ -404,10 +495,13 @@
       "pitch": "+2Hz",
       "text": "刑罰制度本來就包含一般預防、特別預防與價值宣示。",
       "char_count": 24,
+      "original_duration": 5.496,
+      "trimmed_duration": 5.112,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0031.mp3",
-      "duration": 5.496,
-      "start": 182.592,
-      "end": 188.08800000000002
+      "duration": 5.112,
+      "start": 171.07199999999997,
+      "end": 176.18399999999997
     },
     {
       "section": "反方申論",
@@ -417,10 +511,13 @@
       "pitch": "+2Hz",
       "text": "對蓄意計畫、組織性或恐怖性犯罪而言，最嚴重刑罰仍可能是行為人風險評估的一部分。",
       "char_count": 39,
+      "original_duration": 8.376,
+      "trimmed_duration": 7.992,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0032.mp3",
-      "duration": 8.376,
-      "start": 188.08800000000002,
-      "end": 196.46400000000003
+      "duration": 7.992,
+      "start": 176.18399999999997,
+      "end": 184.17599999999996
     },
     {
       "section": "反方申論",
@@ -430,10 +527,13 @@
       "pitch": "+2Hz",
       "text": "第三，台灣憲法法庭並未宣告死刑違憲，而是要求更高門檻。",
       "char_count": 27,
+      "original_duration": 6.408,
+      "trimmed_duration": 6.024,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0033.mp3",
-      "duration": 6.408,
-      "start": 196.46400000000003,
-      "end": 202.872
+      "duration": 6.024,
+      "start": 184.17599999999996,
+      "end": 190.19999999999996
     },
     {
       "section": "反方申論",
@@ -443,10 +543,13 @@
       "pitch": "+2Hz",
       "text": "這給出的方向不是立即廢除，而是限縮、審慎、程序強化。",
       "char_count": 26,
+      "original_duration": 6.312,
+      "trimmed_duration": 5.928,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0034.mp3",
-      "duration": 6.312,
-      "start": 202.872,
-      "end": 209.18400000000003
+      "duration": 5.928,
+      "start": 190.19999999999996,
+      "end": 196.12799999999996
     },
     {
       "section": "反方申論",
@@ -456,10 +559,13 @@
       "pitch": "+2Hz",
       "text": "也就是說，現階段最合憲、最符合民意與制度穩定的做法，",
       "char_count": 26,
+      "original_duration": 6.0,
+      "trimmed_duration": 5.616,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0035.mp3",
-      "duration": 6.0,
-      "start": 209.18400000000003,
-      "end": 215.18400000000003
+      "duration": 5.616,
+      "start": 196.12799999999996,
+      "end": 201.74399999999997
     },
     {
       "section": "反方申論",
@@ -469,10 +575,13 @@
       "pitch": "+2Hz",
       "text": "是保留死刑但讓它只存在於極端例外中。",
       "char_count": 18,
+      "original_duration": 4.248,
+      "trimmed_duration": 3.864,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0036.mp3",
-      "duration": 4.248,
-      "start": 215.18400000000003,
-      "end": 219.43200000000002
+      "duration": 3.864,
+      "start": 201.74399999999997,
+      "end": 205.60799999999998
     },
     {
       "section": "反方申論",
@@ -482,10 +591,13 @@
       "pitch": "+2Hz",
       "text": "反方承認冤案風險與程序保障的重要性，因此主張改革而非廢除：死刑案件必須有強制辯護、",
       "char_count": 41,
+      "original_duration": 8.928,
+      "trimmed_duration": 8.544,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0037.mp3",
-      "duration": 8.928,
-      "start": 219.43200000000002,
-      "end": 228.36
+      "duration": 8.544,
+      "start": 205.60799999999998,
+      "end": 214.152
     },
     {
       "section": "反方申論",
@@ -495,10 +607,13 @@
       "pitch": "+2Hz",
       "text": "言詞辯論、最嚴格證據法則、精神鑑定、量刑理由審查與非常救濟機制。",
       "char_count": 32,
+      "original_duration": 7.608,
+      "trimmed_duration": 7.224,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0038.mp3",
-      "duration": 7.608,
-      "start": 228.36,
-      "end": 235.96800000000002
+      "duration": 7.224,
+      "start": 214.152,
+      "end": 221.37599999999998
     },
     {
       "section": "反方申論",
@@ -508,10 +623,13 @@
       "pitch": "+2Hz",
       "text": "若程序不可靠，就不應判死；但若程序已達最高標準，仍應保留最後刑罰。",
       "char_count": 33,
+      "original_duration": 7.44,
+      "trimmed_duration": 7.056,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0039.mp3",
-      "duration": 7.44,
-      "start": 235.96800000000002,
-      "end": 243.40800000000002
+      "duration": 7.056,
+      "start": 221.37599999999998,
+      "end": 228.432
     },
     {
       "section": "正方駁論",
@@ -521,10 +639,13 @@
       "pitch": "-1Hz",
       "text": "反方的核心問題在於：它承認死刑有不可逆風險，卻仍要求國家保留不可逆權力。",
       "char_count": 36,
+      "original_duration": 7.152,
+      "trimmed_duration": 6.768,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0040.mp3",
-      "duration": 7.152,
-      "start": 243.40800000000002,
-      "end": 250.56
+      "duration": 6.768,
+      "start": 228.432,
+      "end": 235.2
     },
     {
       "section": "正方駁論",
@@ -534,10 +655,13 @@
       "pitch": "-1Hz",
       "text": "這裡存在制度矛盾。",
       "char_count": 9,
+      "original_duration": 2.808,
+      "trimmed_duration": 2.424,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0041.mp3",
-      "duration": 2.808,
-      "start": 250.56,
-      "end": 253.368
+      "duration": 2.424,
+      "start": 235.2,
+      "end": 237.624
     },
     {
       "section": "正方駁論",
@@ -547,10 +671,13 @@
       "pitch": "-1Hz",
       "text": "若我們真的相信司法可能出錯，合理回應應是移除無法補救的刑罰，",
       "char_count": 30,
+      "original_duration": 6.0,
+      "trimmed_duration": 5.616,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0042.mp3",
-      "duration": 6.0,
-      "start": 253.368,
-      "end": 259.368
+      "duration": 5.616,
+      "start": 237.624,
+      "end": 243.24
     },
     {
       "section": "正方駁論",
@@ -560,10 +687,13 @@
       "pitch": "-1Hz",
       "text": "而不是說「只要更小心就好」。",
       "char_count": 14,
+      "original_duration": 3.528,
+      "trimmed_duration": 3.144,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0043.mp3",
-      "duration": 3.528,
-      "start": 259.368,
-      "end": 262.896
+      "duration": 3.144,
+      "start": 243.24,
+      "end": 246.38400000000001
     },
     {
       "section": "正方駁論",
@@ -573,10 +703,13 @@
       "pitch": "-1Hz",
       "text": "因為死刑錯誤的成本不是金錢、時間或程序重開，而是一個人被國家永久消滅。",
       "char_count": 35,
+      "original_duration": 7.104,
+      "trimmed_duration": 6.72,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0044.mp3",
-      "duration": 7.104,
-      "start": 262.896,
-      "end": 270.0
+      "duration": 6.72,
+      "start": 246.38400000000001,
+      "end": 253.104
     },
     {
       "section": "正方駁論",
@@ -586,10 +719,13 @@
       "pitch": "-1Hz",
       "text": "反方說死刑維持相稱性，但相稱性不等於必須以命償命。",
       "char_count": 25,
+      "original_duration": 5.544,
+      "trimmed_duration": 5.16,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0045.mp3",
-      "duration": 5.544,
-      "start": 270.0,
-      "end": 275.544
+      "duration": 5.16,
+      "start": 253.104,
+      "end": 258.264
     },
     {
       "section": "正方駁論",
@@ -599,10 +735,13 @@
       "pitch": "-1Hz",
       "text": "現代刑罰可以用終身監禁、長期隔離、不得假釋或嚴格假釋審查，表達對重罪的最強譴責。",
       "char_count": 40,
+      "original_duration": 8.376,
+      "trimmed_duration": 7.992,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0046.mp3",
-      "duration": 8.376,
-      "start": 275.544,
-      "end": 283.91999999999996
+      "duration": 7.992,
+      "start": 258.264,
+      "end": 266.25600000000003
     },
     {
       "section": "正方駁論",
@@ -612,10 +751,13 @@
       "pitch": "-1Hz",
       "text": "真正的問題不是刑罰夠不夠重，而是制度能不能同時保護社會、避免冤錯、照顧被害人。",
       "char_count": 39,
+      "original_duration": 7.872,
+      "trimmed_duration": 7.488,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0047.mp3",
-      "duration": 7.872,
-      "start": 283.91999999999996,
-      "end": 291.792
+      "duration": 7.488,
+      "start": 266.25600000000003,
+      "end": 273.744
     },
     {
       "section": "正方駁論",
@@ -625,10 +767,13 @@
       "pitch": "-1Hz",
       "text": "把死刑當作正義的象徵，容易讓社會誤以為「槍決」就是結案，",
       "char_count": 28,
+      "original_duration": 5.544,
+      "trimmed_duration": 5.16,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0048.mp3",
-      "duration": 5.544,
-      "start": 291.792,
-      "end": 297.33599999999996
+      "duration": 5.16,
+      "start": 273.744,
+      "end": 278.90400000000005
     },
     {
       "section": "正方駁論",
@@ -638,10 +783,13 @@
       "pitch": "-1Hz",
       "text": "反而忽略被害家庭長期支持與犯罪預防。",
       "char_count": 18,
+      "original_duration": 4.176,
+      "trimmed_duration": 3.792,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0049.mp3",
-      "duration": 4.176,
-      "start": 297.33599999999996,
-      "end": 301.51199999999994
+      "duration": 3.792,
+      "start": 278.90400000000005,
+      "end": 282.696
     },
     {
       "section": "正方駁論",
@@ -651,10 +799,13 @@
       "pitch": "-1Hz",
       "text": "反方也沒有證明死刑的嚇阻效果優於替代制度。",
       "char_count": 21,
+      "original_duration": 4.608,
+      "trimmed_duration": 4.224,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0050.mp3",
-      "duration": 4.608,
-      "start": 301.51199999999994,
-      "end": 306.11999999999995
+      "duration": 4.224,
+      "start": 282.696,
+      "end": 286.92
     },
     {
       "section": "正方駁論",
@@ -664,10 +815,13 @@
       "pitch": "-1Hz",
       "text": "若一項刑罰不可逆、可能錯殺、對嚇阻效果又沒有穩定證明，國家就不應繼續依賴它。",
       "char_count": 38,
+      "original_duration": 7.368,
+      "trimmed_duration": 6.984,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0051.mp3",
-      "duration": 7.368,
-      "start": 306.11999999999995,
-      "end": 313.48799999999994
+      "duration": 6.984,
+      "start": 286.92,
+      "end": 293.904
     },
     {
       "section": "正方駁論",
@@ -677,10 +831,13 @@
       "pitch": "-1Hz",
       "text": "憲法法庭雖未宣告死刑全面違憲，但判決已大幅提高死刑適用門檻，",
       "char_count": 30,
+      "original_duration": 6.288,
+      "trimmed_duration": 5.904,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0052.mp3",
-      "duration": 6.288,
-      "start": 313.48799999999994,
-      "end": 319.77599999999995
+      "duration": 5.904,
+      "start": 293.904,
+      "end": 299.808
     },
     {
       "section": "正方駁論",
@@ -690,10 +847,13 @@
       "pitch": "-1Hz",
       "text": "並強調生命權受最高程度保障。",
       "char_count": 14,
+      "original_duration": 3.528,
+      "trimmed_duration": 3.144,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0053.mp3",
-      "duration": 3.528,
-      "start": 319.77599999999995,
-      "end": 323.304
+      "duration": 3.144,
+      "start": 299.808,
+      "end": 302.952
     },
     {
       "section": "正方駁論",
@@ -703,10 +863,13 @@
       "pitch": "-1Hz",
       "text": "正方的主張正是沿著這個方向往前走：把例外縮到制度上不再需要，最後以可補救、可審查、",
       "char_count": 41,
+      "original_duration": 8.064,
+      "trimmed_duration": 7.68,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0054.mp3",
-      "duration": 8.064,
-      "start": 323.304,
-      "end": 331.368
+      "duration": 7.68,
+      "start": 302.952,
+      "end": 310.632
     },
     {
       "section": "正方駁論",
@@ -716,10 +879,13 @@
       "pitch": "-1Hz",
       "text": "可持續的刑罰取代死刑。",
       "char_count": 11,
+      "original_duration": 3.096,
+      "trimmed_duration": 2.712,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0055.mp3",
-      "duration": 3.096,
-      "start": 331.368,
-      "end": 334.464
+      "duration": 2.712,
+      "start": 310.632,
+      "end": 313.344
     },
     {
       "section": "反方駁論",
@@ -729,10 +895,13 @@
       "pitch": "+2Hz",
       "text": "正方把「可能錯判」推論成「必須廢除」，但這個推論過度跳躍。",
       "char_count": 29,
+      "original_duration": 6.408,
+      "trimmed_duration": 6.024,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0056.mp3",
-      "duration": 6.408,
-      "start": 334.464,
-      "end": 340.872
+      "duration": 6.024,
+      "start": 313.344,
+      "end": 319.368
     },
     {
       "section": "反方駁論",
@@ -742,10 +911,13 @@
       "pitch": "+2Hz",
       "text": "任何刑罰都可能因錯判造成巨大傷害，包括長期監禁也可能毀掉一個人的人生。",
       "char_count": 35,
+      "original_duration": 7.344,
+      "trimmed_duration": 6.96,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0057.mp3",
-      "duration": 7.344,
-      "start": 340.872,
-      "end": 348.216
+      "duration": 6.96,
+      "start": 319.368,
+      "end": 326.328
     },
     {
       "section": "反方駁論",
@@ -755,10 +927,13 @@
       "pitch": "+2Hz",
       "text": "制度面對風險的方式，通常是提高證明標準、改善辯護品質、建立救濟程序，",
       "char_count": 34,
+      "original_duration": 7.752,
+      "trimmed_duration": 7.368,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0058.mp3",
-      "duration": 7.752,
-      "start": 348.216,
-      "end": 355.968
+      "duration": 7.368,
+      "start": 326.328,
+      "end": 333.69599999999997
     },
     {
       "section": "反方駁論",
@@ -768,10 +943,13 @@
       "pitch": "+2Hz",
       "text": "而不是取消最重刑罰。",
       "char_count": 10,
+      "original_duration": 2.784,
+      "trimmed_duration": 2.4,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0059.mp3",
-      "duration": 2.784,
-      "start": 355.968,
-      "end": 358.752
+      "duration": 2.4,
+      "start": 333.69599999999997,
+      "end": 336.09599999999995
     },
     {
       "section": "反方駁論",
@@ -781,10 +959,13 @@
       "pitch": "+2Hz",
       "text": "若因可能錯判就廢除死刑，那同樣邏輯也會動搖無期徒刑與長期自由刑。",
       "char_count": 32,
+      "original_duration": 7.224,
+      "trimmed_duration": 6.84,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0060.mp3",
-      "duration": 7.224,
-      "start": 358.752,
-      "end": 365.976
+      "duration": 6.84,
+      "start": 336.09599999999995,
+      "end": 342.9359999999999
     },
     {
       "section": "反方駁論",
@@ -794,10 +975,13 @@
       "pitch": "+2Hz",
       "text": "正方說終身監禁可以替代死刑，但沒有處理兩個問題。",
       "char_count": 24,
+      "original_duration": 5.52,
+      "trimmed_duration": 5.136,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0061.mp3",
-      "duration": 5.52,
-      "start": 365.976,
-      "end": 371.496
+      "duration": 5.136,
+      "start": 342.9359999999999,
+      "end": 348.07199999999995
     },
     {
       "section": "反方駁論",
@@ -807,10 +991,13 @@
       "pitch": "+2Hz",
       "text": "第一，若終身監禁未來仍有假釋或政治性減刑可能，社會對極端重罪的安全疑慮仍會存在。",
       "char_count": 40,
+      "original_duration": 8.496,
+      "trimmed_duration": 8.112,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0062.mp3",
-      "duration": 8.496,
-      "start": 371.496,
-      "end": 379.99199999999996
+      "duration": 8.112,
+      "start": 348.07199999999995,
+      "end": 356.18399999999997
     },
     {
       "section": "反方駁論",
@@ -820,10 +1007,13 @@
       "pitch": "+2Hz",
       "text": "第二，長期監禁本身也可能被批評為慢性折磨，並不必然比死刑更人道。",
       "char_count": 32,
+      "original_duration": 7.104,
+      "trimmed_duration": 6.72,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0063.mp3",
-      "duration": 7.104,
-      "start": 379.99199999999996,
-      "end": 387.09599999999995
+      "duration": 6.72,
+      "start": 356.18399999999997,
+      "end": 362.904
     },
     {
       "section": "反方駁論",
@@ -833,10 +1023,13 @@
       "pitch": "+2Hz",
       "text": "正方需要提出非常具體、可被社會信任的替代制度，而不只是說「終身隔離」。",
       "char_count": 35,
+      "original_duration": 7.488,
+      "trimmed_duration": 7.104,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0064.mp3",
-      "duration": 7.488,
-      "start": 387.09599999999995,
-      "end": 394.58399999999995
+      "duration": 7.104,
+      "start": 362.904,
+      "end": 370.008
     },
     {
       "section": "反方駁論",
@@ -846,10 +1039,13 @@
       "pitch": "+2Hz",
       "text": "正方也低估民意與司法信任。",
       "char_count": 13,
+      "original_duration": 3.36,
+      "trimmed_duration": 2.976,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0065.mp3",
-      "duration": 3.36,
-      "start": 394.58399999999995,
-      "end": 397.94399999999996
+      "duration": 2.976,
+      "start": 370.008,
+      "end": 372.984
     },
     {
       "section": "反方駁論",
@@ -859,10 +1055,13 @@
       "pitch": "+2Hz",
       "text": "刑罰制度不能完全由民意決定，但也不能完全無視人民對生命安全與公平報應的期待。",
       "char_count": 38,
+      "original_duration": 7.776,
+      "trimmed_duration": 7.392,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0066.mp3",
-      "duration": 7.776,
-      "start": 397.94399999999996,
-      "end": 405.71999999999997
+      "duration": 7.392,
+      "start": 372.984,
+      "end": 380.376
     },
     {
       "section": "反方駁論",
@@ -872,10 +1071,13 @@
       "pitch": "+2Hz",
       "text": "對被害人家屬而言，廢除死刑若沒有足夠配套，可能被理解成國家優先保護加害人。",
       "char_count": 37,
+      "original_duration": 8.04,
+      "trimmed_duration": 7.656,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0067.mp3",
-      "duration": 8.04,
-      "start": 405.71999999999997,
-      "end": 413.76
+      "duration": 7.656,
+      "start": 380.376,
+      "end": 388.032
     },
     {
       "section": "反方駁論",
@@ -885,10 +1087,13 @@
       "pitch": "+2Hz",
       "text": "現階段較穩健的改革路線，是把死刑限縮到最嚴重、證據最明確、程序最嚴格的案件，",
       "char_count": 38,
+      "original_duration": 8.544,
+      "trimmed_duration": 8.16,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0068.mp3",
-      "duration": 8.544,
-      "start": 413.76,
-      "end": 422.304
+      "duration": 8.16,
+      "start": 388.032,
+      "end": 396.192
     },
     {
       "section": "反方駁論",
@@ -898,10 +1103,13 @@
       "pitch": "+2Hz",
       "text": "而不是直接廢除。",
       "char_count": 8,
+      "original_duration": 2.328,
+      "trimmed_duration": 1.944,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0069.mp3",
-      "duration": 2.328,
-      "start": 422.304,
-      "end": 424.63199999999995
+      "duration": 1.944,
+      "start": 396.192,
+      "end": 398.136
     },
     {
       "section": "反方結辯",
@@ -911,10 +1119,13 @@
       "pitch": "+2Hz",
       "text": "反方最後強調：不應廢除死刑，不代表濫用死刑。",
       "char_count": 22,
+      "original_duration": 5.256,
+      "trimmed_duration": 4.872,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0070.mp3",
-      "duration": 5.256,
-      "start": 424.63199999999995,
-      "end": 429.8879999999999
+      "duration": 4.872,
+      "start": 398.136,
+      "end": 403.00800000000004
     },
     {
       "section": "反方結辯",
@@ -924,10 +1135,13 @@
       "pitch": "+2Hz",
       "text": "反方支持的是極端例外、嚴格審查、程序完備的保留死刑制度。",
       "char_count": 28,
+      "original_duration": 6.312,
+      "trimmed_duration": 5.928,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0071.mp3",
-      "duration": 6.312,
-      "start": 429.8879999999999,
-      "end": 436.19999999999993
+      "duration": 5.928,
+      "start": 403.00800000000004,
+      "end": 408.93600000000004
     },
     {
       "section": "反方結辯",
@@ -937,10 +1151,13 @@
       "pitch": "+2Hz",
       "text": "正方最大的矛盾，是一方面承認有極端惡性犯罪需要長期隔離，",
       "char_count": 28,
+      "original_duration": 6.024,
+      "trimmed_duration": 5.64,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0072.mp3",
-      "duration": 6.024,
-      "start": 436.19999999999993,
-      "end": 442.22399999999993
+      "duration": 5.64,
+      "start": 408.93600000000004,
+      "end": 414.576
     },
     {
       "section": "反方結辯",
@@ -950,10 +1167,13 @@
       "pitch": "+2Hz",
       "text": "另一方面卻否認社會可以保留最嚴重刑罰作為最後界線。",
       "char_count": 25,
+      "original_duration": 5.688,
+      "trimmed_duration": 5.304,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0073.mp3",
-      "duration": 5.688,
-      "start": 442.22399999999993,
-      "end": 447.9119999999999
+      "duration": 5.304,
+      "start": 414.576,
+      "end": 419.88
     },
     {
       "section": "反方結辯",
@@ -963,10 +1183,13 @@
       "pitch": "+2Hz",
       "text": "若國家完全取消死刑，面對最殘酷、最不可挽回的殺人案件時，",
       "char_count": 28,
+      "original_duration": 6.456,
+      "trimmed_duration": 6.072,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0074.mp3",
-      "duration": 6.456,
-      "start": 447.9119999999999,
-      "end": 454.36799999999994
+      "duration": 6.072,
+      "start": 419.88,
+      "end": 425.952
     },
     {
       "section": "反方結辯",
@@ -976,10 +1199,13 @@
       "pitch": "+2Hz",
       "text": "司法可能被認為失去最終回應能力。",
       "char_count": 16,
+      "original_duration": 3.96,
+      "trimmed_duration": 3.576,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0075.mp3",
-      "duration": 3.96,
-      "start": 454.36799999999994,
-      "end": 458.3279999999999
+      "duration": 3.576,
+      "start": 425.952,
+      "end": 429.528
     },
     {
       "section": "反方結辯",
@@ -989,10 +1215,13 @@
       "pitch": "+2Hz",
       "text": "我國憲法法庭的方向不是立刻廢死，而是要求死刑必須更加慎重。",
       "char_count": 29,
+      "original_duration": 6.336,
+      "trimmed_duration": 5.952,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0076.mp3",
-      "duration": 6.336,
-      "start": 458.3279999999999,
-      "end": 464.66399999999993
+      "duration": 5.952,
+      "start": 429.528,
+      "end": 435.48
     },
     {
       "section": "反方結辯",
@@ -1002,10 +1231,13 @@
       "pitch": "+2Hz",
       "text": "這正符合反方立場：改革程序、限縮適用、避免冤案，但仍保留最後手段。",
       "char_count": 33,
+      "original_duration": 7.68,
+      "trimmed_duration": 7.296,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0077.mp3",
-      "duration": 7.68,
-      "start": 464.66399999999993,
-      "end": 472.34399999999994
+      "duration": 7.296,
+      "start": 435.48,
+      "end": 442.776
     },
     {
       "section": "反方結辯",
@@ -1015,10 +1247,13 @@
       "pitch": "+2Hz",
       "text": "對於被害人、社會安全與法治信任而言，現階段不應倉促廢除死刑。",
       "char_count": 30,
+      "original_duration": 6.864,
+      "trimmed_duration": 6.48,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0078.mp3",
-      "duration": 6.864,
-      "start": 472.34399999999994,
-      "end": 479.2079999999999
+      "duration": 6.48,
+      "start": 442.776,
+      "end": 449.25600000000003
     },
     {
       "section": "正方結辯",
@@ -1028,10 +1263,13 @@
       "pitch": "-1Hz",
       "text": "正方最後要指出：反方說保留死刑是「最後手段」，但沒有回答最根本問題：",
       "char_count": 34,
+      "original_duration": 6.744,
+      "trimmed_duration": 6.36,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0079.mp3",
-      "duration": 6.744,
-      "start": 479.2079999999999,
-      "end": 485.9519999999999
+      "duration": 6.36,
+      "start": 449.25600000000003,
+      "end": 455.61600000000004
     },
     {
       "section": "正方結辯",
@@ -1041,10 +1279,13 @@
       "pitch": "-1Hz",
       "text": "如果最後手段錯了，誰來補救？",
       "char_count": 14,
+      "original_duration": 3.576,
+      "trimmed_duration": 3.192,
+      "trimmed_seconds": 0.3839999999999999,
       "file": "debates/death-penalty/podcast/caption-segments/0080.mp3",
-      "duration": 3.576,
-      "start": 485.9519999999999,
-      "end": 489.5279999999999
+      "duration": 3.192,
+      "start": 455.61600000000004,
+      "end": 458.80800000000005
     },
     {
       "section": "正方結辯",
@@ -1054,10 +1295,13 @@
       "pitch": "-1Hz",
       "text": "一個制度只要仍允許不可逆錯誤，就不能只靠「我們會更小心」來取得正當性。",
       "char_count": 35,
+      "original_duration": 6.384,
+      "trimmed_duration": 6.0,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0081.mp3",
-      "duration": 6.384,
-      "start": 489.5279999999999,
-      "end": 495.9119999999999
+      "duration": 6.0,
+      "start": 458.80800000000005,
+      "end": 464.80800000000005
     },
     {
       "section": "正方結辯",
@@ -1067,10 +1311,13 @@
       "pitch": "-1Hz",
       "text": "廢除死刑不是否定被害人的痛，也不是替加害人開脫。",
       "char_count": 24,
+      "original_duration": 5.112,
+      "trimmed_duration": 4.728,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0082.mp3",
-      "duration": 5.112,
-      "start": 495.9119999999999,
-      "end": 501.02399999999994
+      "duration": 4.728,
+      "start": 464.80800000000005,
+      "end": 469.53600000000006
     },
     {
       "section": "正方結辯",
@@ -1080,10 +1327,13 @@
       "pitch": "-1Hz",
       "text": "相反地，廢死要求國家把資源放在真正能保護人的地方：更可靠的偵查審判、",
       "char_count": 34,
+      "original_duration": 6.984,
+      "trimmed_duration": 6.6,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0083.mp3",
-      "duration": 6.984,
-      "start": 501.02399999999994,
-      "end": 508.0079999999999
+      "duration": 6.6,
+      "start": 469.53600000000006,
+      "end": 476.1360000000001
     },
     {
       "section": "正方結辯",
@@ -1093,10 +1343,13 @@
       "pitch": "-1Hz",
       "text": "更長期的被害人支持、更有效的犯罪預防、更嚴格的重罪隔離制度。",
       "char_count": 30,
+      "original_duration": 6.36,
+      "trimmed_duration": 5.976,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0084.mp3",
-      "duration": 6.36,
-      "start": 508.0079999999999,
-      "end": 514.3679999999999
+      "duration": 5.976,
+      "start": 476.1360000000001,
+      "end": 482.1120000000001
     },
     {
       "section": "正方結辯",
@@ -1106,10 +1359,13 @@
       "pitch": "-1Hz",
       "text": "死刑提供的是終局感，但不一定提供真正的安全。",
       "char_count": 22,
+      "original_duration": 4.752,
+      "trimmed_duration": 4.368,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0085.mp3",
-      "duration": 4.752,
-      "start": 514.3679999999999,
-      "end": 519.1199999999999
+      "duration": 4.368,
+      "start": 482.1120000000001,
+      "end": 486.4800000000001
     },
     {
       "section": "正方結辯",
@@ -1119,10 +1375,13 @@
       "pitch": "-1Hz",
       "text": "我國已走到關鍵門檻：憲法法庭承認生命權的最高保障，也承認死刑制度必須被嚴格限制。",
       "char_count": 40,
+      "original_duration": 7.8,
+      "trimmed_duration": 7.416,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0086.mp3",
-      "duration": 7.8,
-      "start": 519.1199999999999,
-      "end": 526.9199999999998
+      "duration": 7.416,
+      "start": 486.4800000000001,
+      "end": 493.8960000000001
     },
     {
       "section": "正方結辯",
@@ -1132,10 +1391,13 @@
       "pitch": "-1Hz",
       "text": "下一步應該是把這個限制推進成制度轉型。",
       "char_count": 19,
+      "original_duration": 4.296,
+      "trimmed_duration": 3.912,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0087.mp3",
-      "duration": 4.296,
-      "start": 526.9199999999998,
-      "end": 531.2159999999999
+      "duration": 3.912,
+      "start": 493.8960000000001,
+      "end": 497.80800000000005
     },
     {
       "section": "正方結辯",
@@ -1145,10 +1407,13 @@
       "pitch": "-1Hz",
       "text": "國家可以嚴厲懲罰重大犯罪，但不必保留殺人的權力。",
       "char_count": 24,
+      "original_duration": 5.184,
+      "trimmed_duration": 4.8,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0088.mp3",
-      "duration": 5.184,
-      "start": 531.2159999999999,
-      "end": 536.3999999999999
+      "duration": 4.8,
+      "start": 497.80800000000005,
+      "end": 502.60800000000006
     },
     {
       "section": "正方結辯",
@@ -1158,10 +1423,13 @@
       "pitch": "-1Hz",
       "text": "正方主張廢除死刑，正是為了讓司法更謹慎、更可補救，",
       "char_count": 25,
+      "original_duration": 5.76,
+      "trimmed_duration": 5.376,
+      "trimmed_seconds": 0.38399999999999945,
       "file": "debates/death-penalty/podcast/caption-segments/0089.mp3",
-      "duration": 5.76,
-      "start": 536.3999999999999,
-      "end": 542.1599999999999
+      "duration": 5.376,
+      "start": 502.60800000000006,
+      "end": 507.98400000000004
     },
     {
       "section": "正方結辯",
@@ -1171,10 +1439,13 @@
       "pitch": "-1Hz",
       "text": "也更符合現代法治對生命與人性尊嚴的要求。",
       "char_count": 20,
+      "original_duration": 4.464,
+      "trimmed_duration": 4.08,
+      "trimmed_seconds": 0.38400000000000034,
       "file": "debates/death-penalty/podcast/caption-segments/0090.mp3",
-      "duration": 4.464,
-      "start": 542.1599999999999,
-      "end": 546.6239999999999
+      "duration": 4.08,
+      "start": 507.98400000000004,
+      "end": 512.0640000000001
     }
   ]
 }
