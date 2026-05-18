@@ -1,20 +1,53 @@
 const roots = document.querySelectorAll("[data-engagement-root]");
 const config = window.DEBATE_SUPABASE_CONFIG || {};
-const isConfigured =
-  Boolean(config.url) &&
-  Boolean(config.anonKey) &&
-  !config.url.includes("YOUR_") &&
-  !config.anonKey.includes("YOUR_");
+const storageKey = "ai_debate_supabase_session";
+const isConfigured = Boolean(config.url) && Boolean(config.anonKey);
 
-const nestedTokenIndex = window.location.href.indexOf("#access_token=");
-if (nestedTokenIndex > -1 && !window.location.hash.startsWith("#access_token=")) {
-  window.history.replaceState(null, "", `${window.location.pathname}${window.location.href.slice(nestedTokenIndex)}`);
+function readSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (!session?.access_token) return null;
+    if (session.expires_at && Number(session.expires_at) * 1000 <= Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
+
+function authRedirectTo() {
+  return `${window.location.origin}${window.location.pathname}${window.location.search}`;
+}
+
+function oauthUrl() {
+  const url = new URL(`${config.url}/auth/v1/authorize`);
+  url.searchParams.set("provider", "google");
+  url.searchParams.set("redirect_to", authRedirectTo());
+  return url.toString();
+}
+
+async function rest(path, session, options = {}) {
+  const headers = {
+    apikey: config.anonKey,
+    Authorization: `Bearer ${session?.access_token || config.anonKey}`,
+    "Content-Type": "application/json",
+    Prefer: "return=representation",
+    ...(options.headers || {}),
+  };
+  const response = await fetch(`${config.url}${path}`, { ...options, headers });
+  if (!response.ok) throw new Error(await response.text());
+  if (response.status === 204) return null;
+  return response.json();
+}
+
+async function currentUser(session) {
+  if (!session) return null;
+  return rest("/auth/v1/user", session);
 }
 
 function formatDate(value) {
   return new Intl.DateTimeFormat("zh-TW", {
     dateStyle: "medium",
-    timeStyle: "short"
+    timeStyle: "short",
   }).format(new Date(value));
 }
 
@@ -24,7 +57,7 @@ function renderDisabled(root) {
       <div>
         <p class="eyebrow">Community</p>
         <h3>互動功能尚未啟用</h3>
-        <p>完成 Supabase 專案設定，並在 <code>supabase-config.js</code> 填入 Project URL 與 anon key 後，這裡會出現 Google 登入、按讚與留言功能。</p>
+        <p>完成 Supabase 專案設定後，這裡會出現 Google 登入、按讚與留言功能。</p>
       </div>
     </article>
   `;
@@ -69,7 +102,7 @@ function renderShell(root) {
   `;
 }
 
-async function initEngagement(root, supabase) {
+async function initEngagement(root) {
   const debateId = root.dataset.debateId;
   const loginButton = root.querySelector("[data-login]");
   const logoutButton = root.querySelector("[data-logout]");
@@ -84,7 +117,9 @@ async function initEngagement(root, supabase) {
   const status = root.querySelector("[data-comment-status]");
   const list = root.querySelector("[data-comment-list]");
 
-  let session = null;
+  let session = readSession();
+  let user = await currentUser(session).catch(() => null);
+  if (!user) session = null;
   let profile = null;
   let liked = false;
 
@@ -92,8 +127,15 @@ async function initEngagement(root, supabase) {
     status.textContent = message || "";
   }
 
+  async function loadProfile() {
+    profile = null;
+    if (!user) return;
+    const rows = await rest(`/rest/v1/profiles?select=display_name,avatar_url,is_admin&id=eq.${encodeURIComponent(user.id)}`, session).catch(() => []);
+    profile = rows?.[0] || null;
+  }
+
   function setAuthUi() {
-    const isSignedIn = Boolean(session);
+    const isSignedIn = Boolean(session && user);
     loginButton.hidden = isSignedIn;
     logoutButton.hidden = !isSignedIn;
     likeButton.disabled = !isSignedIn;
@@ -109,59 +151,33 @@ async function initEngagement(root, supabase) {
 
     const displayName =
       profile?.display_name ||
-      session.user.user_metadata?.full_name ||
-      session.user.email ||
+      user.user_metadata?.full_name ||
+      user.email ||
       "已登入使用者";
     authLabel.textContent = `目前登入：${displayName}${profile?.is_admin ? "（管理者）" : ""}`;
     likeButton.textContent = liked ? "已按讚" : "按讚";
   }
 
-  async function loadProfile() {
-    profile = null;
-    if (!session) return;
-    const { data } = await supabase
-      .from("profiles")
-      .select("display_name, avatar_url, is_admin")
-      .eq("id", session.user.id)
-      .maybeSingle();
-    profile = data;
-  }
-
   async function loadLikes() {
-    const { count } = await supabase
-      .from("debate_likes")
-      .select("*", { count: "exact", head: true })
-      .eq("debate_id", debateId);
-
-    likeCount.textContent = `${count || 0} 個讚`;
-    liked = false;
-
-    if (session) {
-      const { data } = await supabase
-        .from("debate_likes")
-        .select("user_id")
-        .eq("debate_id", debateId)
-        .eq("user_id", session.user.id)
-        .maybeSingle();
-      liked = Boolean(data);
-    }
+    const rows = await rest(`/rest/v1/debate_likes?select=user_id&debate_id=eq.${encodeURIComponent(debateId)}`, null).catch(() => []);
+    likeCount.textContent = `${rows.length || 0} 個讚`;
+    liked = Boolean(user && rows.some((row) => row.user_id === user.id));
     setAuthUi();
   }
 
   async function recordView() {
-    const { data, error } = await supabase.rpc("increment_debate_daily_view", {
-      input_debate_id: debateId
-    });
-
-    if (error) {
+    try {
+      const rows = await rest("/rest/v1/rpc/increment_debate_daily_view", null, {
+        method: "POST",
+        body: JSON.stringify({ input_debate_id: debateId }),
+      });
+      const row = Array.isArray(rows) ? rows[0] : rows;
+      viewToday.textContent = String(row?.today_count ?? 0);
+      viewTotal.textContent = String(row?.total_count ?? 0);
+    } catch {
       viewToday.textContent = "尚未啟用";
       viewTotal.textContent = "尚未啟用";
-      return;
     }
-
-    const row = Array.isArray(data) ? data[0] : data;
-    viewToday.textContent = String(row?.today_count ?? 0);
-    viewTotal.textContent = String(row?.total_count ?? 0);
   }
 
   function renderEmptyComments() {
@@ -186,7 +202,6 @@ async function initEngagement(root, supabase) {
 
     const body = document.createElement("p");
     body.textContent = comment.body;
-
     item.append(meta, body);
 
     if (profile?.is_admin) {
@@ -196,17 +211,14 @@ async function initEngagement(root, supabase) {
       deleteButton.textContent = "刪除";
       deleteButton.addEventListener("click", async () => {
         deleteButton.disabled = true;
-        const { error } = await supabase
-          .from("debate_comments")
-          .delete()
-          .eq("id", comment.id);
-        if (error) {
+        try {
+          await rest(`/rest/v1/debate_comments?id=eq.${encodeURIComponent(comment.id)}`, session, { method: "DELETE" });
+          setStatus("留言已刪除。");
+          await loadComments();
+        } catch {
           deleteButton.disabled = false;
           setStatus("刪除失敗，請稍後再試。");
-          return;
         }
-        setStatus("留言已刪除。");
-        await loadComments();
       });
       item.append(deleteButton);
     }
@@ -215,75 +227,55 @@ async function initEngagement(root, supabase) {
   }
 
   async function loadComments() {
-    const { data, error } = await supabase
-      .from("debate_comments")
-      .select("id, body, created_at, user_id, profiles(display_name, avatar_url)")
-      .eq("debate_id", debateId)
-      .order("created_at", { ascending: false })
-      .limit(50);
-
+    const path = `/rest/v1/debate_comments?select=id,body,created_at,user_id,profiles(display_name,avatar_url)&debate_id=eq.${encodeURIComponent(debateId)}&order=created_at.desc&limit=50`;
+    const rows = await rest(path, null).catch(() => null);
     list.innerHTML = "";
-    if (error) {
+    if (!rows) {
       list.innerHTML = `<p class="empty-comments">留言暫時無法載入。</p>`;
       return;
     }
-
-    if (!data?.length) {
+    if (!rows.length) {
       renderEmptyComments();
       return;
     }
-
-    data.forEach(appendComment);
+    rows.forEach(appendComment);
   }
 
-  async function refresh() {
-    const { data } = await supabase.auth.getSession();
-    session = data.session;
-    await loadProfile();
-    await Promise.all([recordView(), loadLikes(), loadComments()]);
-    setAuthUi();
-    if (session && window.location.hash.includes("access_token")) {
-      window.history.replaceState(null, "", `${window.location.pathname}#engagement`);
-    }
-  }
-
-  loginButton.addEventListener("click", async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}${window.location.pathname}`
-      }
-    });
+  loginButton.addEventListener("click", () => {
+    window.location.href = oauthUrl();
   });
 
-  logoutButton.addEventListener("click", async () => {
-    await supabase.auth.signOut();
+  logoutButton.addEventListener("click", () => {
+    localStorage.removeItem(storageKey);
+    session = null;
+    user = null;
+    profile = null;
+    liked = false;
+    setAuthUi();
   });
 
   likeButton.addEventListener("click", async () => {
-    if (!session) return;
+    if (!session || !user) return;
     likeButton.disabled = true;
-
-    const request = liked
-      ? supabase
-          .from("debate_likes")
-          .delete()
-          .eq("debate_id", debateId)
-          .eq("user_id", session.user.id)
-      : supabase.from("debate_likes").insert({
-          debate_id: debateId,
-          user_id: session.user.id
+    try {
+      if (liked) {
+        await rest(`/rest/v1/debate_likes?debate_id=eq.${encodeURIComponent(debateId)}&user_id=eq.${encodeURIComponent(user.id)}`, session, { method: "DELETE" });
+      } else {
+        await rest("/rest/v1/debate_likes", session, {
+          method: "POST",
+          body: JSON.stringify({ debate_id: debateId, user_id: user.id }),
         });
-
-    const { error } = await request;
-    if (error) setStatus("按讚狀態更新失敗，請稍後再試。");
+      }
+    } catch {
+      setStatus("按讚狀態更新失敗，請稍後再試。");
+    }
     await loadLikes();
     likeButton.disabled = false;
   });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!session) return;
+    if (!session || !user) return;
 
     const body = textarea.value.trim();
     if (!body) {
@@ -293,37 +285,27 @@ async function initEngagement(root, supabase) {
 
     submitButton.disabled = true;
     setStatus("留言送出中...");
-    const { error } = await supabase.from("debate_comments").insert({
-      debate_id: debateId,
-      user_id: session.user.id,
-      body
-    });
-
-    if (error) {
+    try {
+      await rest("/rest/v1/debate_comments", session, {
+        method: "POST",
+        body: JSON.stringify({ debate_id: debateId, user_id: user.id, body }),
+      });
+      textarea.value = "";
+      setStatus("留言已送出。");
+      await loadComments();
+    } catch {
       setStatus("留言送出失敗，請稍後再試。");
-      submitButton.disabled = false;
-      return;
     }
-
-    textarea.value = "";
-    setStatus("留言已送出。");
-    await loadComments();
     submitButton.disabled = false;
   });
 
-  supabase.auth.onAuthStateChange(async (_event, nextSession) => {
-    session = nextSession;
-    await loadProfile();
-    await Promise.all([loadLikes(), loadComments()]);
-    setAuthUi();
-  });
-
-  await refresh();
+  await loadProfile();
+  await Promise.all([recordView(), loadLikes(), loadComments()]);
+  setAuthUi();
 }
 
 async function main() {
   if (!roots.length) return;
-
   roots.forEach(renderShell);
 
   if (!isConfigured) {
@@ -331,11 +313,8 @@ async function main() {
     return;
   }
 
-  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
-  const supabase = createClient(config.url, config.anonKey);
-
   roots.forEach((root) => {
-    initEngagement(root, supabase).catch(() => {
+    initEngagement(root).catch(() => {
       root.innerHTML = `
         <article class="engagement-card">
           <h3>互動功能暫時無法載入</h3>

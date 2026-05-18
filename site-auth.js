@@ -27,7 +27,9 @@ function readStoredSession() {
 
 function storeSessionFromHash() {
   if (!window.location.hash.includes("access_token")) return readStoredSession();
-  const params = new URLSearchParams(window.location.hash.slice(1));
+  const tokenIndex = window.location.hash.indexOf("access_token=");
+  const hash = tokenIndex > -1 ? window.location.hash.slice(tokenIndex) : window.location.hash.slice(1);
+  const params = new URLSearchParams(hash);
   const session = {
     access_token: params.get("access_token"),
     refresh_token: params.get("refresh_token"),

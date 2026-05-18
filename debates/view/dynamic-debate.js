@@ -1,6 +1,7 @@
 const config = window.DEBATE_SUPABASE_CONFIG || {};
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug") || "";
+const storageKey = "ai_debate_supabase_session";
 
 const nodes = {
   title: document.querySelector("[data-debate-title]"),
@@ -17,8 +18,8 @@ const nodes = {
   engagementRoot: document.querySelector("[data-engagement-root]"),
 };
 const segmentLikeState = new Map();
-let activeClient;
 let activeSession = null;
+let activeUser = null;
 
 function escapeHtml(value) {
   return String(value || "")
@@ -134,21 +135,44 @@ function spotifyEmbedUrl(value) {
   return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
 }
 
-async function createSupabaseClient() {
-  if (!config.url || !config.anonKey) throw new Error("Supabase is not configured");
-  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
-  return createClient(config.url, config.anonKey);
+function readSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (!session?.access_token) return null;
+    if (session.expires_at && Number(session.expires_at) * 1000 <= Date.now()) return null;
+    return session;
+  } catch {
+    return null;
+  }
 }
 
-async function supabaseRest(path) {
+async function supabaseRest(path, session = null, options = {}) {
   if (!config.url || !config.anonKey) throw new Error("Supabase is not configured");
+  const headers = {
+    apikey: config.anonKey,
+    Authorization: `Bearer ${session?.access_token || config.anonKey}`,
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
   const response = await fetch(`${config.url}/rest/v1/${path}`, {
-    headers: {
-      apikey: config.anonKey,
-      Authorization: `Bearer ${config.anonKey}`,
-    },
+    ...options,
+    headers,
   });
   if (!response.ok) throw new Error(`Supabase REST error ${response.status}`);
+  if (response.status === 204) return null;
+  return response.json();
+}
+
+async function currentUser(session) {
+  if (!session) return null;
+  if (!config.url || !config.anonKey) throw new Error("Supabase is not configured");
+  const response = await fetch(`${config.url}/auth/v1/user`, {
+    headers: {
+      apikey: config.anonKey,
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  });
+  if (!response.ok) return null;
   return response.json();
 }
 
@@ -293,8 +317,8 @@ function renderSegments(segments) {
 }
 
 function setSegmentButtonState(button, liked) {
-  button.textContent = activeSession ? (liked ? "已認同" : "認同這段") : "登入後認同";
-  button.disabled = !activeSession;
+  button.textContent = activeSession && activeUser ? (liked ? "已認同" : "認同這段") : "登入後認同";
+  button.disabled = !(activeSession && activeUser);
 }
 
 function setAllSegmentButtonStates() {
@@ -305,16 +329,17 @@ function setAllSegmentButtonStates() {
 
 async function loadSegmentLikes() {
   const buttons = [...document.querySelectorAll("[data-segment-like]")];
-  if (!buttons.length || !activeClient || !slug) return;
+  if (!buttons.length || !slug) return;
 
   const segmentIds = buttons.map((button) => button.dataset.segmentId);
-  const { data, error } = await activeClient
-    .from("debate_segment_likes")
-    .select("segment_id, user_id")
-    .eq("debate_id", slug)
-    .in("segment_id", segmentIds);
-
-  if (error) {
+  const idList = segmentIds.map((id) => `"${id.replaceAll('"', '\\"')}"`).join(",");
+  let data = [];
+  try {
+    data = await supabaseRest(
+      `debate_segment_likes?select=segment_id,user_id&debate_id=eq.${encodeURIComponent(slug)}&segment_id=in.(${idList})`,
+      null,
+    );
+  } catch {
     buttons.forEach((button) => {
       button.textContent = "段落按讚尚未啟用";
       button.disabled = true;
@@ -327,7 +352,7 @@ async function loadSegmentLikes() {
   data?.forEach((row) => {
     const state = segmentLikeState.get(row.segment_id) || { count: 0, liked: false };
     state.count += 1;
-    state.liked = state.liked || row.user_id === activeSession?.user?.id;
+    state.liked = state.liked || row.user_id === activeUser?.id;
     segmentLikeState.set(row.segment_id, state);
   });
 
@@ -339,40 +364,37 @@ async function loadSegmentLikes() {
   });
 }
 
-async function initSegmentLikes(client) {
+async function initSegmentLikes() {
   const buttons = [...document.querySelectorAll("[data-segment-like]")];
   if (!buttons.length) return;
 
-  activeClient = client;
-  activeSession = (await client.auth.getSession()).data.session;
+  activeSession = readSession();
+  activeUser = await currentUser(activeSession).catch(() => null);
+  if (!activeUser) activeSession = null;
 
   buttons.forEach((button) => {
     button.addEventListener("click", async () => {
-      if (!activeSession) return;
+      if (!activeSession || !activeUser) return;
       button.disabled = true;
       const state = segmentLikeState.get(button.dataset.segmentId) || { liked: false };
-      const request = state.liked
-        ? client
-            .from("debate_segment_likes")
-            .delete()
-            .eq("debate_id", slug)
-            .eq("segment_id", button.dataset.segmentId)
-            .eq("user_id", activeSession.user.id)
-        : client.from("debate_segment_likes").insert({
+      if (state.liked) {
+        await supabaseRest(
+          `debate_segment_likes?debate_id=eq.${encodeURIComponent(slug)}&segment_id=eq.${encodeURIComponent(button.dataset.segmentId)}&user_id=eq.${encodeURIComponent(activeUser.id)}`,
+          activeSession,
+          { method: "DELETE" },
+        );
+      } else {
+        await supabaseRest("debate_segment_likes", activeSession, {
+          method: "POST",
+          body: JSON.stringify({
             debate_id: slug,
             segment_id: button.dataset.segmentId,
-            user_id: activeSession.user.id,
-          });
-
-      await request;
+            user_id: activeUser.id,
+          }),
+        });
+      }
       await loadSegmentLikes();
     });
-  });
-
-  client.auth.onAuthStateChange(async (_event, nextSession) => {
-    activeSession = nextSession;
-    setAllSegmentButtonStates();
-    await loadSegmentLikes();
   });
 
   await loadSegmentLikes();
@@ -434,9 +456,7 @@ async function init() {
     renderMedia(media);
     renderSegments(segments);
     renderScorecards(scorecards);
-    createSupabaseClient()
-      .then((client) => initSegmentLikes(client))
-      .catch(() => {});
+    initSegmentLikes().catch(() => {});
   } catch {
     renderError("目前無法從資料庫讀取這篇辯論，或文章尚未發布。");
   }
