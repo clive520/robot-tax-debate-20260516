@@ -88,6 +88,22 @@ function mediaFor(debate, type) {
   return (debate.debate_media || []).find((item) => item.media_type === type) || {};
 }
 
+function spotifyEmbedUrl(value) {
+  if (!value) return "";
+  const match = value.match(/open\.spotify\.com\/(episode|show)\/([^?/#]+)/);
+  if (!match) return "";
+  return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
+}
+
+function youtubeEmbedUrl(value) {
+  if (!value) return "";
+  const shortMatch = value.match(/youtu\.be\/([^?&#/]+)/);
+  const watchMatch = value.match(/[?&]v=([^?&#/]+)/);
+  const embedMatch = value.match(/youtube\.com\/embed\/([^?&#/]+)/);
+  const id = shortMatch?.[1] || watchMatch?.[1] || embedMatch?.[1];
+  return id ? `https://www.youtube.com/embed/${id}` : "";
+}
+
 function statusSelect(current) {
   return `
     <select data-field="status">
@@ -276,14 +292,22 @@ async function saveDebate(card) {
 
 function mediaPayload(field, debateId) {
   const url = field.querySelector("[data-media-url]").value.trim();
-  const embedUrl = field.querySelector("[data-media-embed-url]").value.trim();
+  const manualEmbedUrl = field.querySelector("[data-media-embed-url]").value.trim();
+  const generatedEmbedUrl =
+    field.dataset.mediaType === "spotify_episode"
+      ? spotifyEmbedUrl(manualEmbedUrl || url)
+      : field.dataset.mediaType === "youtube"
+        ? youtubeEmbedUrl(manualEmbedUrl || url)
+        : "";
+  const embedUrl = manualEmbedUrl || generatedEmbedUrl;
+  const selectedStatus = field.querySelector("[data-media-status]").value;
   return {
     debate_id: debateId,
     media_type: field.dataset.mediaType,
     title: mediaLabels[field.dataset.mediaType] || field.dataset.mediaType,
     url: url || null,
     embed_url: embedUrl || null,
-    status: field.querySelector("[data-media-status]").value,
+    status: (url || embedUrl) && selectedStatus === "pending" ? "available" : selectedStatus,
     updated_at: new Date().toISOString(),
   };
 }

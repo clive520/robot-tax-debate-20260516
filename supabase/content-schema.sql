@@ -133,6 +133,9 @@ create index if not exists debate_scorecards_debate_order_idx
 create index if not exists debate_media_debate_type_idx
   on public.debate_media (debate_id, media_type, status);
 
+create unique index if not exists debate_media_debate_type_unique
+  on public.debate_media (debate_id, media_type);
+
 create index if not exists site_subscriptions_status_idx
   on public.site_subscriptions (status);
 
@@ -271,4 +274,3 @@ from public.site_subscriptions
 where status = 'active';
 
 grant select on public.public_site_subscription_count to anon, authenticated;
-

@@ -127,6 +127,13 @@ function mediaByType(media, type) {
   return media.find((item) => item.media_type === type && item.status === "available");
 }
 
+function spotifyEmbedUrl(value) {
+  if (!value) return "";
+  const match = value.match(/open\.spotify\.com\/(episode|show)\/([^?/#]+)/);
+  if (!match) return value;
+  return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
+}
+
 async function createSupabaseClient() {
   if (!config.url || !config.anonKey) throw new Error("Supabase is not configured");
   const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
@@ -217,8 +224,9 @@ function renderMedia(media) {
     : `<p>影片製作中。</p>`;
 
   let podcastPanel = `<p>Podcast 製作中。</p>`;
-  if (spotifyEpisode?.embed_url) {
-    podcastPanel = `<div class="video-frame spotify-frame"><iframe src="${escapeHtml(spotifyEpisode.embed_url)}" title="${escapeHtml(spotifyEpisode.title)}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>`;
+  const spotifyEpisodeEmbed = spotifyEmbedUrl(spotifyEpisode?.embed_url || spotifyEpisode?.url);
+  if (spotifyEpisodeEmbed) {
+    podcastPanel = `<div class="video-frame spotify-frame"><iframe src="${escapeHtml(spotifyEpisodeEmbed)}" title="${escapeHtml(spotifyEpisode.title)}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>`;
   } else if (mp3?.url) {
     podcastPanel = `<div class="podcast-player"><p>Spotify 單集網址尚未設定時，先使用網頁 MP3 備援播放。</p><audio controls preload="metadata" src="${escapeHtml(mp3.url)}"></audio></div>`;
   }
