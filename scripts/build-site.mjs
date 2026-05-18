@@ -55,6 +55,7 @@ async function main() {
   for (const file of publicFiles) {
     await cp(path.join(root, file), path.join(dist, file));
   }
+  await cp(path.join(root, "admin"), path.join(dist, "admin"), { recursive: true });
 
   const source = JSON.parse(
     await readFile(path.join(root, "site-data", "debates.json"), "utf8")

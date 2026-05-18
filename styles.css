@@ -816,6 +816,34 @@ footer {
   background: var(--accent);
 }
 
+.admin-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-card {
+  grid-template-columns: 1fr;
+}
+
+.admin-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-field {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.admin-field input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  font: inherit;
+}
+
 @media (max-width: 760px) {
   .site-header {
     grid-template-columns: 1fr;
