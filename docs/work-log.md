@@ -43,6 +43,26 @@
 **驗證狀態**
 目前為內容準備階段，尚未產生正式辯論稿、影音或網站資料。
 
+### content：完成 EP06 外部 AI 辯論與裁判評分
+
+**摘要**
+恢復 Chrome 控制橋接後，依 SOP 實際操作 Gemini、xAI Grok、DeepSeek 三個外部 AI 網站。Gemini 完成正方申論、正方駁論與正方結辯；xAI Grok 完成反方申論、反方駁論與反方結辯；DeepSeek 完成裁判評分。裁判結果為反方 xAI Grok 勝，正方 66 / 90，反方 78 / 90。已保存原始回覆與整理後的 `debate.md`。
+
+**影響範圍**
+
+- `debates/nuclear-four/raw/gemini-affirmative.txt`
+- `debates/nuclear-four/raw/grok-negative.txt`
+- `debates/nuclear-four/raw/gemini-affirmative-closing.txt`
+- `debates/nuclear-four/raw/deepseek-judgment.txt`
+- `debates/nuclear-four/debate.md`
+- `debates/nuclear-four/prompts/affirmative-closing-gemini.md`
+- `debates/nuclear-four/prompts/judge-deepseek-with-debate.md`
+- `debates/nuclear-four/prompts/negative-grok-with-affirmative.md`
+- `docs/work-log.md`
+
+**驗證狀態**
+已確認三方外部 AI 回覆均已取得並落檔；尚未進入資料庫匯入、網頁發布、語音、Podcast 或影片製作。
+
 ### frontend：修正段落語音播放器被壓縮
 
 **摘要**
