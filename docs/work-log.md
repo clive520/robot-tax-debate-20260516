@@ -25,6 +25,37 @@
 
 ## 2026-05-18
 
+### content / media：新增最低工資辯論 EP005
+
+**摘要**
+依 `docs/ai-debate-sop.md` 啟動新題目「台灣應大幅調高基本工資以解決低薪問題」。角色抽籤為正方 Codex / OpenAI、反方 Claude、裁判 DeepSeek；辯論結果由 DeepSeek 判定反方勝，比分 55 比 51。已建立辯論原稿、Podcast 上架文案、集數資料、Supabase 資料、Podcast 音訊、YouTube SRT、Podcast 影片、預覽圖、YouTube 縮圖與 Podcast 封面。發布時間暫定 2026-05-29 17:00（Asia/Taipei），目前資料庫狀態為 `scheduled`。
+
+**影響範圍**
+
+- `debates/minimum-wage/debate.md`
+- `debates/minimum-wage/generate-audio.py`
+- `debates/minimum-wage/audio/*.mp3`
+- `debates/minimum-wage/podcast/debate-podcast.mp3`
+- `debates/minimum-wage/podcast/captions-source.json`
+- `debates/minimum-wage/podcast/podcast-notes.md`
+- `debates/minimum-wage/publishing/episode-notes.md`
+- `debates/minimum-wage/publishing/youtube-thumbnail.png`
+- `debates/minimum-wage/publishing/podcast-cover.png`
+- `debates/minimum-wage/video/output/podcast-video.mp4`（本機輸出，不納入 Git）
+- `debates/minimum-wage/video/output/captions.srt`（本機輸出，不納入 Git）
+- `docs/episode-publishing.md`
+- `site-data/debates.json`
+- `styles.css`
+- `scripts/build-synced-podcast.py`
+- `scripts/create-podcast-video.py`
+- Supabase `debates`、`debate_segments`、`debate_scorecards`、`debate_media`
+
+**驗證狀態**
+已用勞動部官方資料確認 2026 年最低工資背景為月薪 29,500 元、時薪 196 元。已產生 7 段網站語音、Podcast 音訊、164 格 SRT 與 15 分 23 秒 Podcast 影片。已透過 Supabase CLI 確認 `minimum-wage` 有 7 段辯論、7 筆評分與 3 筆可用媒體。已通過 Python 編譯檢查，並執行一般建置確認目前正式輸出仍為 3 篇；以 `PUBLISH_NOW=2026-05-29T17:01:00+08:00` 模擬發布時，建置輸出為 5 篇且包含 `minimum-wage` 的 MP3、段落音訊與縮圖。曾誤將兩次建置平行執行，造成 `dist` 清理互相鎖定；已改為序列建置並恢復正常。
+
+**後續事項**
+需在 YouTube 與 Spotify 上架或排程本集，回填 YouTube URL、YouTube embed URL 與平台狀態。若要在 2026-05-29 17:00 自動出現在資料庫首頁，需在發布前由後台或管理流程將 Supabase `debates.status` 從 `scheduled` 改為 `published`，或另行實作資料庫排程發布邏輯。
+
 ### docs：整併單一標準製作流程
 
 **摘要**

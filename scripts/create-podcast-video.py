@@ -251,6 +251,61 @@ DEBATE_CONFIGS = {
             },
         ],
     },
+    "minimum-wage": {
+        "topic": "台灣應大幅調高基本工資以解決低薪問題",
+        "positive_speaker": "正方 Codex / OpenAI",
+        "negative_speaker": "反方 Claude",
+        "visual_cues": [
+            {
+                "section": "正方申論",
+                "label": "讓全職工作撐起基本生活",
+                "kicker": "薪資底線",
+                "visual": "files",
+                "dark": (34, 45, 50),
+                "accent": (90, 145, 132),
+            },
+            {
+                "section": "反方申論",
+                "label": "低薪不是單一底線問題",
+                "kicker": "結構改革",
+                "visual": "meeting",
+                "dark": (45, 40, 48),
+                "accent": (138, 112, 166),
+            },
+            {
+                "section": "正方駁論",
+                "label": "底線提高才有改革起點",
+                "kicker": "薪資外溢",
+                "visual": "shield",
+                "dark": (32, 46, 57),
+                "accent": (88, 125, 166),
+            },
+            {
+                "section": "反方駁論",
+                "label": "政策鈍器可能誤傷弱勢",
+                "kicker": "就業風險",
+                "visual": "dialogue",
+                "dark": (48, 42, 39),
+                "accent": (166, 112, 82),
+            },
+            {
+                "section": "反方結辯",
+                "label": "用精準工具重建市場",
+                "kicker": "替代方案",
+                "visual": "route",
+                "dark": (42, 45, 48),
+                "accent": (118, 132, 92),
+            },
+            {
+                "section": "正方結辯",
+                "label": "沒有底線，改革會漂浮",
+                "kicker": "工作尊嚴",
+                "visual": "court",
+                "dark": (36, 42, 55),
+                "accent": (98, 124, 170),
+            },
+        ],
+    },
 }
 
 

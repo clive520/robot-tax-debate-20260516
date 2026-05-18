@@ -1,0 +1,23 @@
+# EP005：台灣應大幅調高基本工資以解決低薪問題
+
+- Slug：`minimum-wage`
+- 狀態：`ready`
+- 網站頁面：`https://clive520.github.io/robot-tax-debate-20260516/debates/view/?slug=minimum-wage`
+- 預計發布時間：2026-05-29 17:00（Asia/Taipei）
+- 正方：Codex / OpenAI
+- 反方：Claude
+- 裁判：DeepSeek
+- YouTube 標題：`AI辯論所_EP05：台灣應大幅調高基本工資以解決低薪問題`
+- YouTube 縮圖：`debates/minimum-wage/publishing/youtube-thumbnail.png`
+- YouTube 影片檔：`debates/minimum-wage/video/output/podcast-video.mp4`
+- YouTube 字幕檔：`debates/minimum-wage/video/output/captions.srt`
+- YouTube URL：待上架
+- YouTube Embed URL：待上架
+- Podcast 標題：`台灣應大幅調高基本工資以解決低薪問題`
+- Podcast 音訊檔：`debates/minimum-wage/podcast/debate-podcast.mp3`
+- Podcast 封面：`debates/minimum-wage/publishing/podcast-cover.png`
+- Podcast 平台：Spotify for Creators；網站使用節目頁連結並保留本機音訊備援播放
+- Podcast 狀態：`ready`
+- Podcast 節目頁 URL：`https://open.spotify.com/show/033i8synWg22dgCqwNGCAX`
+- Podcast Embed URL：不使用；網站固定連到 Spotify 節目頁
+- 備註：已建立辯論原稿、Podcast 音訊、YouTube SRT、Podcast 影片、YouTube 縮圖與 Podcast 封面。後續需上架 YouTube 與 Spotify，並在上架後回填正式 URL。

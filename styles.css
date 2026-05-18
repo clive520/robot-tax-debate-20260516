@@ -727,6 +727,12 @@ footer {
     url("https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=900&q=80") center / cover;
 }
 
+.debate-card-minimum-wage .debate-card-media {
+  background:
+    linear-gradient(rgba(28, 36, 48, .10), rgba(28, 36, 48, .22)),
+    url("https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=900&q=80") center / cover;
+}
+
 .debate-card-body {
   display: grid;
   align-content: center;

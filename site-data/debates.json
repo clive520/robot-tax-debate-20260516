@@ -74,5 +74,24 @@
     "negativeScore": "70",
     "scoreTotal": "90",
     "coverClass": "debate-card-death-penalty"
+  },
+  {
+    "id": "minimum-wage",
+    "slug": "minimum-wage",
+    "sourceDir": "debates/minimum-wage",
+    "status": "scheduled",
+    "publishAt": "2026-05-29T17:00:00+08:00",
+    "dateLabel": "2026-05-29",
+    "category": "勞動政策",
+    "title": "台灣應大幅調高基本工資以解決低薪問題",
+    "summary": "正方 Codex / OpenAI、反方 Claude、裁判 DeepSeek。議題聚焦低薪、最低工資、薪資外溢、微型企業與產業升級。",
+    "winner": "反方勝",
+    "affirmative": "Codex / OpenAI",
+    "negative": "Claude",
+    "judge": "DeepSeek",
+    "affirmativeScore": "51",
+    "negativeScore": "55",
+    "scoreTotal": "70",
+    "coverClass": "debate-card-minimum-wage"
   }
 ]

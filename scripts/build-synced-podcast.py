@@ -75,6 +75,10 @@ DEBATE_CONFIGS = {
         "positive_speaker": "正方 Claude",
         "negative_speaker": "反方 Gemini",
     },
+    "minimum-wage": {
+        "positive_speaker": "正方 Codex / OpenAI",
+        "negative_speaker": "反方 Claude",
+    },
 }
 
 
