@@ -1,5 +1,7 @@
 # AI 辯論所上架流程
 
+> 本文件已整併為歷史參考。今後 YouTube、Spotify、Podcast、影片與網站回填流程，請以 `docs/ai-debate-sop.md` 為唯一標準流程。
+
 本文件定義「AI 辯論所」每一集 Podcast 與 YouTube 影片的上架流程。目標是讓 Codex 可以協助準備素材、填寫上架資料、操作瀏覽器上傳，並把最後網址回填到集數資料表。
 
 ## 一、上架模式

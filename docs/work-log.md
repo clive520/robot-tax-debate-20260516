@@ -23,6 +23,28 @@
 
 ---
 
+## 2026-05-18
+
+### docs：整併單一標準製作流程
+
+**摘要**
+新增 `docs/ai-debate-sop.md` 作為今後「AI 辯論所」新增題目、產生辯論、寫入資料庫、製作 Podcast、製作 YouTube 影片、上架、回填媒體網址與部署網站的唯一標準流程。
+
+**影響範圍**
+
+- `docs/ai-debate-sop.md`
+- `docs/debate-workflow.md`
+- `docs/publishing-workflow.md`
+- `docs/episode-publishing.md`
+- `docs/database-plan.md`
+- `docs/work-log.md`
+
+**驗證狀態**
+已將原本分散在辯論流程、影音上架、集數資料與資料庫規劃中的操作規則整理成單一 SOP。舊文件保留為歷史參考，並在檔案開頭標註今後以 `docs/ai-debate-sop.md` 為準。
+
+**後續事項**
+之後新增辯論主題時，依 `docs/ai-debate-sop.md` 執行；每次流程調整先更新 SOP，再登錄工作日誌。
+
 ## 2026-05-16
 
 ### docs：建立 AI 辯論網站流程文件
