@@ -327,13 +327,14 @@ function setSegmentButtonState(button, liked) {
 }
 
 function renderSegmentLikeState(segmentId) {
-  const button = document.querySelector(`[data-segment-like][data-segment-id="${CSS.escape(segmentId)}"]`);
-  if (!button) return;
   const state = segmentLikeState.get(segmentId) || { count: 0, liked: false };
-  const article = button.closest("[data-segment-id]");
-  const count = article?.querySelector("[data-segment-like-count]");
-  if (count) count.textContent = `${state.count} 人認同`;
-  setSegmentButtonState(button, state.liked);
+  document.querySelectorAll("[data-segment-like]").forEach((button) => {
+    if (button.dataset.segmentId !== segmentId) return;
+    const feedback = button.closest(".segment-feedback");
+    const count = feedback?.querySelector("[data-segment-like-count]");
+    if (count) count.textContent = `${state.count} 人認同`;
+    setSegmentButtonState(button, state.liked);
+  });
 }
 
 function setAllSegmentButtonStates() {
@@ -352,7 +353,7 @@ async function loadSegmentLikes() {
   try {
     data = await supabaseRest(
       `debate_segment_likes?select=segment_id,user_id&debate_id=eq.${encodeURIComponent(slug)}&segment_id=in.(${idList})`,
-      null,
+      activeSession,
     );
   } catch {
     buttons.forEach((button) => {
@@ -418,7 +419,8 @@ async function initSegmentLikes() {
           });
         }
       } catch {
-        segmentLikeState.set(segmentId, previous);
+        await loadSegmentLikes();
+        return;
       } finally {
         renderSegmentLikeState(segmentId);
       }

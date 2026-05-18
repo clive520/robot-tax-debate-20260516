@@ -27,6 +27,23 @@
 
 ## 2026-05-19
 
+### frontend：修正段落認同登入者狀態判斷
+
+**摘要**
+補強「認同這段」即時更新問題。段落認同清單載入時改用目前登入者的 access token 查詢，避免匿名查詢無法穩定判斷使用者是否已認同，造成點擊後被資料庫回應拉回舊狀態。同步將畫面更新函式改為依 `data-segment-id` 比對所有按鈕，不再依賴 `CSS.escape` 組 selector，降低瀏覽器相容性風險。
+
+**影響範圍**
+
+- `debates/view/dynamic-debate.js`
+- `debates/view/index.html`
+- `docs/work-log.md`
+
+**驗證狀態**
+已通過 `node --check debates/view/dynamic-debate.js`、`git diff --check` 與 `node scripts/build-site.mjs`。
+
+**後續事項**
+部署後需請登入使用者實測：已認同的段落初始應顯示「已認同」，點擊後人數與文字應立即切換。
+
 ### frontend：改善段落認同即時回饋與位置
 
 **摘要**
