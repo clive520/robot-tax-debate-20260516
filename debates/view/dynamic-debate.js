@@ -133,10 +133,20 @@ async function createSupabaseClient() {
   return createClient(config.url, config.anonKey);
 }
 
-async function loadDebate(client) {
-  const { data, error } = await client
-    .from("debates")
-    .select(`
+async function supabaseRest(path) {
+  if (!config.url || !config.anonKey) throw new Error("Supabase is not configured");
+  const response = await fetch(`${config.url}/rest/v1/${path}`, {
+    headers: {
+      apikey: config.anonKey,
+      Authorization: `Bearer ${config.anonKey}`,
+    },
+  });
+  if (!response.ok) throw new Error(`Supabase REST error ${response.status}`);
+  return response.json();
+}
+
+async function loadDebate() {
+  const select = `
       id,
       slug,
       title,
@@ -176,12 +186,11 @@ async function loadDebate(client) {
         status,
         sort_order
       )
-    `)
-    .eq("slug", slug)
-    .single();
+    `.replace(/\s+/g, "");
+  const data = await supabaseRest(`debates?select=${encodeURIComponent(select)}&slug=eq.${encodeURIComponent(slug)}`);
 
-  if (error) throw error;
-  return data;
+  if (!data?.[0]) throw new Error("Debate not found");
+  return data[0];
 }
 
 function renderHero(debate) {
@@ -408,8 +417,7 @@ async function init() {
   }
 
   try {
-    const client = await createSupabaseClient();
-    const debate = await loadDebate(client);
+    const debate = await loadDebate();
     const segments = debate.debate_segments || [];
     const scorecards = debate.debate_scorecards || [];
     const media = debate.debate_media || [];
@@ -418,7 +426,9 @@ async function init() {
     renderMedia(media);
     renderSegments(segments);
     renderScorecards(scorecards);
-    await initSegmentLikes(client);
+    createSupabaseClient()
+      .then((client) => initSegmentLikes(client))
+      .catch(() => {});
   } catch {
     renderError("目前無法從資料庫讀取這篇辯論，或文章尚未發布。");
   }
