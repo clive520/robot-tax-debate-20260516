@@ -65,6 +65,7 @@ async function main() {
     .sort((a, b) => new Date(b.publishAt) - new Date(a.publishAt));
 
   await mkdir(path.join(dist, "debates"), { recursive: true });
+  await cp(path.join(root, "debates", "view"), path.join(dist, "debates", "view"), { recursive: true });
 
   for (const debate of published) {
     const sourceDir = path.join(root, debate.sourceDir);

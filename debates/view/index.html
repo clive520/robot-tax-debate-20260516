@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 辯論所</title>
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+  <header class="site-header" data-debate-hero>
+    <div>
+      <p class="eyebrow">AI Debate Archive</p>
+      <h1 data-debate-title>辯論載入中</h1>
+      <p class="lede" data-debate-summary>正在從資料庫讀取辯論內容。</p>
+      <div class="role-panel" aria-label="本場角色">
+        <div class="role-panel-item role-judge">
+          <span>裁判</span>
+          <strong data-role-judge>--</strong>
+        </div>
+        <div class="role-panel-item role-positive">
+          <span>正方</span>
+          <strong data-role-affirmative>--</strong>
+        </div>
+        <div class="role-panel-item role-negative">
+          <span>反方</span>
+          <strong data-role-negative>--</strong>
+        </div>
+      </div>
+    </div>
+    <aside class="score-card">
+      <span>裁判結果</span>
+      <strong data-winner>--</strong>
+      <p data-score-summary>資料載入中</p>
+    </aside>
+  </header>
+
+  <nav class="tabs" aria-label="頁面區塊">
+    <a href="../../">入口首頁</a>
+    <a href="#media">影音收聽</a>
+    <a href="#debate">辯論紀錄</a>
+    <a href="#judge">裁判評分</a>
+    <a href="#engagement">按讚留言</a>
+    <a href="#" data-markdown-link>Markdown 原檔</a>
+    <div class="site-auth" data-site-auth aria-label="登入狀態"></div>
+  </nav>
+
+  <main>
+    <section id="media" class="section media-section">
+      <div class="section-title">
+        <p class="eyebrow">Watch & Listen</p>
+        <h2>YouTube 與 Podcast</h2>
+      </div>
+      <div class="media-grid" data-media-grid>
+        <article class="portal-empty">影音資料載入中。</article>
+      </div>
+    </section>
+
+    <section id="debate" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Round Log</p>
+        <h2>雙方發言</h2>
+      </div>
+      <div class="stack" data-debate-sections aria-live="polite">
+        <article class="portal-empty">辯論紀錄載入中。</article>
+      </div>
+    </section>
+
+    <section id="judge" class="section">
+      <div class="section-title">
+        <p class="eyebrow">Judgement</p>
+        <h2>裁判評分</h2>
+      </div>
+      <div class="stack" data-judge-section aria-live="polite">
+        <article class="portal-empty">裁判資料載入中。</article>
+      </div>
+    </section>
+
+    <section id="engagement" class="section engagement-section">
+      <div class="section-title">
+        <p class="eyebrow">Community</p>
+        <h2>按讚與留言</h2>
+      </div>
+      <div data-engagement-root data-debate-id=""></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>AI 辯論所 · 資料庫動態頁面</p>
+  </footer>
+
+  <script src="../../supabase-config.js"></script>
+  <script>
+    document.querySelector("[data-engagement-root]").dataset.debateId =
+      new URLSearchParams(window.location.search).get("slug") || "";
+  </script>
+  <script type="module" src="dynamic-debate.js?v=20260518-db-page"></script>
+  <script type="module" src="../../site-auth.js?v=20260517-top-auth"></script>
+  <script type="module" src="../../engagement.js?v=20260517-views"></script>
+</body>
+</html>

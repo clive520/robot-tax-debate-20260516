@@ -60,8 +60,8 @@ function debateStats(debate) {
 }
 
 function debateCard(debate) {
-  const href = `debates/${encodeURIComponent(debate.slug)}/`;
-  const markdownHref = `${href}debate.md`;
+  const href = `debates/view/?slug=${encodeURIComponent(debate.slug)}`;
+  const markdownHref = `debates/${encodeURIComponent(debate.slug)}/debate.md`;
   const cardClass = ["debate-card", debate.coverClass].filter(Boolean).join(" ");
 
   return `
