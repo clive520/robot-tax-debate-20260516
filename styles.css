@@ -830,18 +830,42 @@ footer {
   gap: 12px;
 }
 
+.admin-main-grid {
+  grid-template-columns: minmax(260px, 2fr) minmax(180px, 1fr) minmax(140px, .6fr) minmax(220px, 1fr);
+}
+
+.admin-media-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .admin-field {
   display: grid;
   gap: 6px;
   color: var(--muted);
 }
 
-.admin-field input {
+.admin-field input,
+.admin-field select,
+.admin-field textarea {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid var(--line);
   padding: 10px 12px;
   font: inherit;
+  background: #fff;
+}
+
+.admin-media-field {
+  border: 1px solid var(--line);
+  padding: 12px;
+  margin: 0;
+}
+
+.admin-media-field legend {
+  color: var(--ink);
+  font-weight: 800;
 }
 
 @media (max-width: 760px) {
@@ -869,6 +893,11 @@ footer {
   }
 
   .media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-main-grid,
+  .admin-media-grid {
     grid-template-columns: 1fr;
   }
 
