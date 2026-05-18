@@ -294,11 +294,16 @@ function renderSegments(segments) {
           <h3>${escapeHtml(segment.title)}</h3>
         </div>
         <div class="card-actions">
-          ${isLikableSegment(segment) ? `<button type="button" class="segment-like" data-segment-like data-segment-id="${escapeHtml(segment.round_key)}" disabled>登入後認同</button><span class="segment-like-count" data-segment-like-count>0 人認同</span>` : ""}
           ${segment.audio_url ? `<div class="audio-box"><span>段落語音</span><audio controls preload="metadata" src="${escapeHtml(segment.audio_url)}"></audio></div>` : ""}
         </div>
       </div>
       <div class="content">${renderMarkdownBlock(segment.content)}</div>
+      ${isLikableSegment(segment) ? `
+        <div class="segment-feedback">
+          <button type="button" class="segment-like" data-segment-like data-segment-id="${escapeHtml(segment.round_key)}" disabled>登入後認同</button>
+          <span class="segment-like-count" data-segment-like-count>0 人認同</span>
+        </div>
+      ` : ""}
     </article>
   `).join("");
 
@@ -319,6 +324,16 @@ function renderSegments(segments) {
 function setSegmentButtonState(button, liked) {
   button.textContent = activeSession && activeUser ? (liked ? "已認同" : "認同這段") : "登入後認同";
   button.disabled = !(activeSession && activeUser);
+}
+
+function renderSegmentLikeState(segmentId) {
+  const button = document.querySelector(`[data-segment-like][data-segment-id="${CSS.escape(segmentId)}"]`);
+  if (!button) return;
+  const state = segmentLikeState.get(segmentId) || { count: 0, liked: false };
+  const article = button.closest("[data-segment-id]");
+  const count = article?.querySelector("[data-segment-like-count]");
+  if (count) count.textContent = `${state.count} 人認同`;
+  setSegmentButtonState(button, state.liked);
 }
 
 function setAllSegmentButtonStates() {
@@ -358,9 +373,8 @@ async function loadSegmentLikes() {
 
   buttons.forEach((button) => {
     const state = segmentLikeState.get(button.dataset.segmentId) || { count: 0, liked: false };
-    const count = button.parentElement.querySelector("[data-segment-like-count]");
-    if (count) count.textContent = `${state.count} 人認同`;
-    setSegmentButtonState(button, state.liked);
+    segmentLikeState.set(button.dataset.segmentId, state);
+    renderSegmentLikeState(button.dataset.segmentId);
   });
 }
 
@@ -375,25 +389,39 @@ async function initSegmentLikes() {
   buttons.forEach((button) => {
     button.addEventListener("click", async () => {
       if (!activeSession || !activeUser) return;
+      const segmentId = button.dataset.segmentId;
+      const previous = segmentLikeState.get(segmentId) || { count: 0, liked: false };
+      const next = {
+        liked: !previous.liked,
+        count: Math.max(0, previous.count + (previous.liked ? -1 : 1)),
+      };
+
+      segmentLikeState.set(segmentId, next);
+      renderSegmentLikeState(segmentId);
       button.disabled = true;
-      const state = segmentLikeState.get(button.dataset.segmentId) || { liked: false };
-      if (state.liked) {
-        await supabaseRest(
-          `debate_segment_likes?debate_id=eq.${encodeURIComponent(slug)}&segment_id=eq.${encodeURIComponent(button.dataset.segmentId)}&user_id=eq.${encodeURIComponent(activeUser.id)}`,
-          activeSession,
-          { method: "DELETE" },
-        );
-      } else {
-        await supabaseRest("debate_segment_likes", activeSession, {
-          method: "POST",
-          body: JSON.stringify({
-            debate_id: slug,
-            segment_id: button.dataset.segmentId,
-            user_id: activeUser.id,
-          }),
-        });
+
+      try {
+        if (previous.liked) {
+          await supabaseRest(
+            `debate_segment_likes?debate_id=eq.${encodeURIComponent(slug)}&segment_id=eq.${encodeURIComponent(segmentId)}&user_id=eq.${encodeURIComponent(activeUser.id)}`,
+            activeSession,
+            { method: "DELETE" },
+          );
+        } else {
+          await supabaseRest("debate_segment_likes", activeSession, {
+            method: "POST",
+            body: JSON.stringify({
+              debate_id: slug,
+              segment_id: segmentId,
+              user_id: activeUser.id,
+            }),
+          });
+        }
+      } catch {
+        segmentLikeState.set(segmentId, previous);
+      } finally {
+        renderSegmentLikeState(segmentId);
       }
-      await loadSegmentLikes();
     });
   });
 

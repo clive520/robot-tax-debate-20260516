@@ -300,6 +300,16 @@ main {
   gap: 10px;
 }
 
+.segment-feedback {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
 .segment-like {
   min-height: 36px;
   border: 1px solid var(--line);
