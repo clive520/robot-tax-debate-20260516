@@ -306,6 +306,61 @@ DEBATE_CONFIGS = {
             },
         ],
     },
+    "nuclear-four": {
+        "topic": "考量台灣未來能源需求與減碳目標，台灣政府應重啟核四",
+        "positive_speaker": "正方 Gemini",
+        "negative_speaker": "反方 xAI Grok",
+        "visual_cues": [
+            {
+                "section": "正方申論",
+                "label": "穩定電力支撐減碳",
+                "kicker": "供電安全",
+                "visual": "devices",
+                "dark": (30, 44, 52),
+                "accent": (82, 145, 156),
+            },
+            {
+                "section": "反方申論",
+                "label": "核四不是現成解方",
+                "kicker": "政策可行性",
+                "visual": "files",
+                "dark": (45, 40, 46),
+                "accent": (150, 112, 82),
+            },
+            {
+                "section": "正方駁論",
+                "label": "風險可管，不該放棄選項",
+                "kicker": "能源韌性",
+                "visual": "shield",
+                "dark": (31, 47, 56),
+                "accent": (90, 128, 168),
+            },
+            {
+                "section": "反方駁論",
+                "label": "重啟成本會排擠轉型",
+                "kicker": "投資效率",
+                "visual": "meeting",
+                "dark": (46, 43, 39),
+                "accent": (166, 123, 82),
+            },
+            {
+                "section": "反方結辯",
+                "label": "能源安全要靠可執行路線",
+                "kicker": "制度信任",
+                "visual": "route",
+                "dark": (39, 45, 47),
+                "accent": (120, 137, 94),
+            },
+            {
+                "section": "正方結辯",
+                "label": "保留核四，保留未來彈性",
+                "kicker": "減碳工具箱",
+                "visual": "court",
+                "dark": (34, 41, 54),
+                "accent": (96, 126, 166),
+            },
+        ],
+    },
 }
 
 
@@ -621,14 +676,18 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
     draw = ImageDraw.Draw(img)
     draw_background(draw, img, cue, frame_index)
 
-    title_font = load_font(44, bold=True)
+    title_font = load_font(36 if len(topic) > 24 else 44, bold=True)
     meta_font = load_font(23)
     label_font = load_font(40, bold=True)
     kicker_font = load_font(25, bold=True)
 
-    draw.rounded_rectangle((58, 56, 800, 164), radius=22, fill=(0, 0, 0, 96))
-    draw.text((84, 74), topic, fill=(255, 255, 255, 255), font=title_font)
-    draw.text((86, 130), "Podcast Video｜AI Debate Archive", fill=(236, 226, 208, 230), font=meta_font)
+    title_lines = wrap_text(draw, topic, title_font, 670)[:2]
+    title_bottom = 126 + (len(title_lines) - 1) * 42
+    header_bottom = title_bottom + 38
+    draw.rounded_rectangle((58, 56, 800, header_bottom), radius=22, fill=(0, 0, 0, 96))
+    for index, line in enumerate(title_lines):
+        draw.text((84, 74 + index * 42), line, fill=(255, 255, 255, 255), font=title_font)
+    draw.text((86, title_bottom), "Podcast Video｜AI Debate Archive", fill=(236, 226, 208, 230), font=meta_font)
 
     draw_visual(draw, cue, frame_index)
     draw.rounded_rectangle((86, 412, 680, 462), radius=20, fill=(0, 0, 0, 106))
@@ -639,8 +698,9 @@ def render_frame(path: Path, frame_index: int, topic: str, duration: float, cue:
     draw.text((150, 512), lines[0], fill=(255, 255, 255, 255), font=label_font)
 
     progress = (frame_index / FPS) / duration
-    draw.rounded_rectangle((84, 176, 800, 188), radius=6, fill=(255, 255, 255, 54))
-    draw.rounded_rectangle((84, 176, 84 + int(716 * progress), 188), radius=6, fill=(238, 210, 151, 230))
+    progress_y = header_bottom + 12
+    draw.rounded_rectangle((84, progress_y, 800, progress_y + 12), radius=6, fill=(255, 255, 255, 54))
+    draw.rounded_rectangle((84, progress_y, 84 + int(716 * progress), progress_y + 12), radius=6, fill=(238, 210, 151, 230))
 
     draw_host(draw, frame_index)
     draw_section_badge(draw, current_section, current_speaker)

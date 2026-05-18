@@ -63,6 +63,33 @@
 **驗證狀態**
 已確認三方外部 AI 回覆均已取得並落檔；尚未進入資料庫匯入、網頁發布、語音、Podcast 或影片製作。
 
+### content：完成 EP06 核四重啟網站資料、語音與影音素材
+
+**摘要**
+將 EP06 `nuclear-four` 辯論稿整理成標準七段格式，清除外部 AI 網頁回覆中的 UI 殘留與不可見字元。新增網站資料設定並排程於 2026-06-05 17:00（Asia/Taipei）發布；重新產生內容 seed 與 SQL，並成功匯入 Supabase。同步完成每段網頁語音、Podcast 主音檔、YouTube SRT、Podcast 影片、YouTube 縮圖、Podcast 封面與上架說明草稿。修正內容種子產生器中的 SRT URL，統一指向 `video/output/captions.srt`。
+
+**影響範圍**
+
+- `debates/nuclear-four/debate.md`
+- `debates/nuclear-four/audio/`
+- `debates/nuclear-four/podcast/`
+- `debates/nuclear-four/video/output/`
+- `debates/nuclear-four/publishing/`
+- `debates/nuclear-four/generate-audio.py`
+- `site-data/debates.json`
+- `migration/debates.seed.json`
+- `migration/import-content-seed.sql`
+- `scripts/build-content-seed.mjs`
+- `scripts/build-synced-podcast.py`
+- `scripts/create-podcast-video.py`
+- `docs/work-log.md`
+
+**驗證狀態**
+已執行 `python debates\nuclear-four\generate-audio.py`、`python scripts\build-synced-podcast.py nuclear-four --phrase-chars 42 --trim-tail-seconds 0.45`、`python scripts\create-podcast-video.py nuclear-four`、`node scripts\build-content-seed.mjs`、`node scripts\build-content-import-sql.mjs`、`supabase db query --linked --file migration\import-content-seed.sql`、`node scripts\build-site.mjs`。已抽查影片預覽圖，並修正長標題溢出問題。Supabase 查詢確認 `nuclear-four` 狀態為 `scheduled`，發布時間為 `2026-06-05 09:00:00+00`，即台灣時間 2026-06-05 17:00。
+
+**後續事項**
+上架 YouTube 與 Spotify 後，需將正式 YouTube URL、YouTube Embed URL 與 Spotify 單集資訊回填至 `debates/nuclear-four/publishing/episode-notes.md`，再重新匯入資料庫並部署網站。
+
 ### frontend：修正段落語音播放器被壓縮
 
 **摘要**

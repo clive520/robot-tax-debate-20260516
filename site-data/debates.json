@@ -93,5 +93,24 @@
     "negativeScore": "55",
     "scoreTotal": "70",
     "coverClass": "debate-card-minimum-wage"
+  },
+  {
+    "id": "nuclear-four",
+    "slug": "nuclear-four",
+    "sourceDir": "debates/nuclear-four",
+    "status": "scheduled",
+    "publishAt": "2026-06-05T17:00:00+08:00",
+    "dateLabel": "2026-06-05",
+    "category": "能源政策",
+    "title": "考量台灣未來能源需求與減碳目標，台灣政府應重啟核四",
+    "summary": "正方 Gemini、反方 xAI Grok、裁判 DeepSeek，針對核四重啟、能源安全、減碳目標與政策可行性展開辯論。",
+    "winner": "反方勝",
+    "affirmative": "Gemini",
+    "negative": "xAI Grok",
+    "judge": "DeepSeek",
+    "affirmativeScore": "66",
+    "negativeScore": "78",
+    "scoreTotal": "90",
+    "coverClass": "debate-card-nuclear-four"
   }
 ]

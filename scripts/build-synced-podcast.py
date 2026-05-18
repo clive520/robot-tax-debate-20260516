@@ -79,6 +79,10 @@ DEBATE_CONFIGS = {
         "positive_speaker": "正方 Codex / OpenAI",
         "negative_speaker": "反方 Claude",
     },
+    "nuclear-four": {
+        "positive_speaker": "正方 Gemini",
+        "negative_speaker": "反方 xAI Grok",
+    },
 }
 
 
@@ -108,6 +112,7 @@ def plain_text(markdown: str) -> str:
     text = re.sub(r"(?m)^\|.*\|$", " ", text)
     text = re.sub(r"(?m)^\s*[-:| ]+\s*$", " ", text)
     text = re.sub(r"\d+\.\s*", "", text)
+    text = re.sub(r"[\u200b-\u200f\u2060\ufeff]", "", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 

@@ -133,7 +133,7 @@ async function buildMedia(debate) {
     {
       media_type: "srt",
       title: `${debate.title} 字幕`,
-      url: `${siteOrigin}/${debate.sourceDir}/video/output/debate-video.srt`,
+      url: `${siteOrigin}/${debate.sourceDir}/video/output/captions.srt`,
       embed_url: "",
       status: "pending",
       sort_order: 30,
