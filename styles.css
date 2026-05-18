@@ -288,8 +288,13 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 18px;
   margin-bottom: 16px;
+}
+
+.card-head > div:first-child {
+  flex: 1 1 320px;
 }
 
 .card-actions {
@@ -297,6 +302,8 @@ main {
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
+  flex: 0 1 380px;
+  width: min(380px, 100%);
   gap: 10px;
 }
 
@@ -352,7 +359,13 @@ audio {
 .audio-box {
   display: grid;
   gap: 6px;
-  min-width: min(360px, 100%);
+  width: min(360px, 100%);
+}
+
+.audio-box audio {
+  display: block;
+  width: 100%;
+  min-width: min(260px, 100%);
 }
 
 .audio-box span {
