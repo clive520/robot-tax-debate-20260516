@@ -1069,3 +1069,19 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 Supabase 已有新版內容資料表與四篇辯論資料。下一步可以開始改首頁資料來源，從 Supabase `debates` 讀取已發布且已到發布時間的辯論，並保留 `site-data/debates.json` 作為 fallback。
+
+### frontend：首頁改為優先讀取 Supabase
+**目的**
+讓入口首頁正式進入資料庫驅動模式，文章列表優先由 Supabase `debates` 表提供，為後續管理後台排程發布鋪路。
+
+**變更檔案**
+
+- `portal.js`
+- `index.html`
+- `docs/work-log.md`
+
+**變更說明**
+首頁啟動時會動態載入 Supabase client，優先查詢 `debates` 中 `status = published` 的文章，並轉換成既有卡片格式。若 Supabase 無法連線或查詢失敗，會退回 `debates.json`，保留目前 GitHub Pages 靜態資料作為備援。首頁點閱數也改用同一個 Supabase client 載入，修正先前未載入 Supabase JS 時只能顯示 `--` 的問題。
+
+**目前狀態**
+已通過 `node --check portal.js`、`node scripts/build-site.mjs`，並以 Supabase REST 匿名金鑰確認首頁查詢可讀取 3 篇 `published` 辯論。待提交並部署後，首頁文章來源會優先使用 Supabase；尚未改動每篇辯論頁內容來源。

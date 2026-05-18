@@ -2,6 +2,7 @@ const debateList = document.querySelector("[data-debate-list]");
 const topicCount = document.querySelector("[data-topic-count]");
 const latestLink = document.querySelector("[data-latest-link]");
 const supabaseConfig = window.DEBATE_SUPABASE_CONFIG;
+let supabaseClientPromise;
 
 function escapeHtml(value) {
   return String(value)
@@ -19,6 +20,35 @@ function scoreLabel(debate) {
       <span>${escapeHtml(debate.negative)} <strong>${escapeHtml(debate.negativeScore)}</strong></span>
     </div>
   `;
+}
+
+function dateLabel(value) {
+  if (!value) return "";
+  return new Intl.DateTimeFormat("zh-Hant-TW", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Asia/Taipei",
+  }).format(new Date(value)).replaceAll("/", "-");
+}
+
+function normalizeDebate(row) {
+  return {
+    slug: row.slug,
+    publishAt: row.publish_at,
+    dateLabel: dateLabel(row.publish_at),
+    category: row.category || "",
+    title: row.title || "",
+    summary: row.summary || "",
+    winner: row.winner_label || "",
+    affirmative: row.affirmative_model || "",
+    negative: row.negative_model || "",
+    judge: row.judge_model || "",
+    affirmativeScore: row.affirmative_score == null ? "" : String(row.affirmative_score),
+    negativeScore: row.negative_score == null ? "" : String(row.negative_score),
+    scoreTotal: row.score_total == null ? "" : String(row.score_total),
+    coverClass: row.cover_class || "",
+  };
 }
 
 function debateStats(debate) {
@@ -76,11 +106,14 @@ function renderDebates(debates) {
   loadPortalViewCounts(items);
 }
 
-function createSupabaseClient() {
-  if (!supabaseConfig?.url || !supabaseConfig?.anonKey || !window.supabase?.createClient) {
-    return null;
+async function createSupabaseClient() {
+  if (!supabaseConfig?.url || !supabaseConfig?.anonKey) return null;
+  if (!supabaseClientPromise) {
+    supabaseClientPromise = import("https://esm.sh/@supabase/supabase-js@2")
+      .then(({ createClient }) => createClient(supabaseConfig.url, supabaseConfig.anonKey))
+      .catch(() => null);
   }
-  return window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
+  return supabaseClientPromise;
 }
 
 function formatCount(value) {
@@ -88,7 +121,7 @@ function formatCount(value) {
 }
 
 async function loadPortalViewCounts(debates) {
-  const client = createSupabaseClient();
+  const client = await createSupabaseClient();
   if (!client || !debates.length) return;
 
   const debateIds = debates.map((debate) => debate.slug);
@@ -110,14 +143,55 @@ async function loadPortalViewCounts(debates) {
   });
 }
 
-fetch("debates.json", { cache: "no-store" })
-  .then((response) => {
-    if (!response.ok) throw new Error("Unable to load debates.json");
-    return response.json();
-  })
-  .then(renderDebates)
-  .catch(() => {
-    if (debateList) {
-      debateList.innerHTML = `<article class="portal-empty">目前無法載入議題清單。</article>`;
+async function loadDebatesFromSupabase() {
+  const client = await createSupabaseClient();
+  if (!client) throw new Error("Supabase client unavailable");
+
+  const { data, error } = await client
+    .from("debates")
+    .select(`
+      slug,
+      title,
+      summary,
+      category,
+      status,
+      publish_at,
+      cover_class,
+      affirmative_model,
+      negative_model,
+      judge_model,
+      winner_label,
+      affirmative_score,
+      negative_score,
+      score_total
+    `)
+    .eq("status", "published")
+    .order("publish_at", { ascending: false });
+
+  if (error) throw error;
+  return (data || []).map(normalizeDebate);
+}
+
+async function loadDebatesFromFallback() {
+  const response = await fetch("debates.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Unable to load debates.json");
+  return response.json();
+}
+
+async function initPortal() {
+  try {
+    renderDebates(await loadDebatesFromSupabase());
+    return;
+  } catch {
+    try {
+      renderDebates(await loadDebatesFromFallback());
+      return;
+    } catch {
+      if (debateList) {
+        debateList.innerHTML = `<article class="portal-empty">目前無法載入議題清單。</article>`;
+      }
     }
-  });
+  }
+}
+
+initPortal();
