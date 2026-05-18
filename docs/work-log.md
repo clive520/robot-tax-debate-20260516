@@ -684,6 +684,7 @@ YouTube 影片已排程且字幕存在。Codex 嘗試上傳自訂縮圖時，Chr
 
 **變更檔案**
 
+- `.gitignore`
 - `docs/work-log.md`
 
 **變更說明**
@@ -1054,3 +1055,17 @@ EP002 網站影音區已改為 YouTube + Spotify 雙播放器。已執行 `node 
 
 **目前狀態**
 尚未套用到 Supabase。下一步可將 `migration/apply-content-database.sql` 貼到 Supabase SQL Editor 執行，完成內容資料表與四篇資料的首次建立。
+
+### database：套用內容資料庫與匯入四篇辯論
+**目的**
+將內容資料庫遷移從本機 SQL 草案推進到 Supabase 遠端專案，讓後續首頁與文章頁可以開始改為從資料庫讀取辯論內容與媒體資料。
+
+**變更檔案**
+
+- `docs/work-log.md`
+
+**變更說明**
+透過 Supabase CLI 登入狀態確認專案 `AI Debate Archive` 已 linked，使用 `supabase db query --linked --file migration/apply-content-database.sql` 套用內容資料表與四篇 seed 資料。執行後資料庫回報四篇辯論皆已建立：`school-phone`、`euthanasia`、`robot-tax` 各為 `published`，`death-penalty` 為 `scheduled`；每篇皆包含 7 個段落、1 筆評分、4 筆媒體資料。另將 Supabase CLI 產生的本機暫存目錄 `supabase/.temp/` 加入 `.gitignore`。
+
+**目前狀態**
+Supabase 已有新版內容資料表與四篇辯論資料。下一步可以開始改首頁資料來源，從 Supabase `debates` 讀取已發布且已到發布時間的辯論，並保留 `site-data/debates.json` 作為 fallback。
