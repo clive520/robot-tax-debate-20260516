@@ -16,6 +16,9 @@ const nodes = {
   judgeSection: document.querySelector("[data-judge-section]"),
   engagementRoot: document.querySelector("[data-engagement-root]"),
 };
+const segmentLikeState = new Map();
+let activeClient;
+let activeSession = null;
 
 function escapeHtml(value) {
   return String(value || "")
@@ -114,6 +117,10 @@ function roleLabel(segment) {
   if (segment.speaker_role === "affirmative") return `正方 ${segment.speaker_name}`;
   if (segment.speaker_role === "negative") return `反方 ${segment.speaker_name}`;
   return `裁判 ${segment.speaker_name}`;
+}
+
+function isLikableSegment(segment) {
+  return segment.speaker_role === "affirmative" || segment.speaker_role === "negative";
 }
 
 function mediaByType(media, type) {
@@ -239,13 +246,16 @@ function renderSegments(segments) {
     .sort((a, b) => a.sort_order - b.sort_order);
 
   nodes.debateSections.innerHTML = debateSegments.map((segment) => `
-    <article class="card ${roleClass(segment.speaker_role)}">
+    <article class="card ${roleClass(segment.speaker_role)}" data-segment-id="${escapeHtml(segment.round_key)}">
       <div class="card-head">
         <div>
           <span class="badge">${escapeHtml(roleLabel(segment))}</span>
           <h3>${escapeHtml(segment.title)}</h3>
         </div>
-        ${segment.audio_url ? `<div class="audio-box"><span>段落語音</span><audio controls preload="metadata" src="${escapeHtml(segment.audio_url)}"></audio></div>` : ""}
+        <div class="card-actions">
+          ${isLikableSegment(segment) ? `<button type="button" class="segment-like" data-segment-like data-segment-id="${escapeHtml(segment.round_key)}" disabled>登入後認同</button><span class="segment-like-count" data-segment-like-count>0 人認同</span>` : ""}
+          ${segment.audio_url ? `<div class="audio-box"><span>段落語音</span><audio controls preload="metadata" src="${escapeHtml(segment.audio_url)}"></audio></div>` : ""}
+        </div>
       </div>
       <div class="content">${renderMarkdownBlock(segment.content)}</div>
     </article>
@@ -263,6 +273,92 @@ function renderSegments(segments) {
       <div class="content">${renderMarkdownBlock(segment.content)}</div>
     </article>
   `).join("");
+}
+
+function setSegmentButtonState(button, liked) {
+  button.textContent = activeSession ? (liked ? "已認同" : "認同這段") : "登入後認同";
+  button.disabled = !activeSession;
+}
+
+function setAllSegmentButtonStates() {
+  document.querySelectorAll("[data-segment-like]").forEach((button) => {
+    setSegmentButtonState(button, Boolean(segmentLikeState.get(button.dataset.segmentId)?.liked));
+  });
+}
+
+async function loadSegmentLikes() {
+  const buttons = [...document.querySelectorAll("[data-segment-like]")];
+  if (!buttons.length || !activeClient || !slug) return;
+
+  const segmentIds = buttons.map((button) => button.dataset.segmentId);
+  const { data, error } = await activeClient
+    .from("debate_segment_likes")
+    .select("segment_id, user_id")
+    .eq("debate_id", slug)
+    .in("segment_id", segmentIds);
+
+  if (error) {
+    buttons.forEach((button) => {
+      button.textContent = "段落按讚尚未啟用";
+      button.disabled = true;
+    });
+    return;
+  }
+
+  segmentLikeState.clear();
+  segmentIds.forEach((id) => segmentLikeState.set(id, { count: 0, liked: false }));
+  data?.forEach((row) => {
+    const state = segmentLikeState.get(row.segment_id) || { count: 0, liked: false };
+    state.count += 1;
+    state.liked = state.liked || row.user_id === activeSession?.user?.id;
+    segmentLikeState.set(row.segment_id, state);
+  });
+
+  buttons.forEach((button) => {
+    const state = segmentLikeState.get(button.dataset.segmentId) || { count: 0, liked: false };
+    const count = button.parentElement.querySelector("[data-segment-like-count]");
+    if (count) count.textContent = `${state.count} 人認同`;
+    setSegmentButtonState(button, state.liked);
+  });
+}
+
+async function initSegmentLikes(client) {
+  const buttons = [...document.querySelectorAll("[data-segment-like]")];
+  if (!buttons.length) return;
+
+  activeClient = client;
+  activeSession = (await client.auth.getSession()).data.session;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      if (!activeSession) return;
+      button.disabled = true;
+      const state = segmentLikeState.get(button.dataset.segmentId) || { liked: false };
+      const request = state.liked
+        ? client
+            .from("debate_segment_likes")
+            .delete()
+            .eq("debate_id", slug)
+            .eq("segment_id", button.dataset.segmentId)
+            .eq("user_id", activeSession.user.id)
+        : client.from("debate_segment_likes").insert({
+            debate_id: slug,
+            segment_id: button.dataset.segmentId,
+            user_id: activeSession.user.id,
+          });
+
+      await request;
+      await loadSegmentLikes();
+    });
+  });
+
+  client.auth.onAuthStateChange(async (_event, nextSession) => {
+    activeSession = nextSession;
+    setAllSegmentButtonStates();
+    await loadSegmentLikes();
+  });
+
+  await loadSegmentLikes();
 }
 
 function renderScorecards(scorecards) {
@@ -322,6 +418,7 @@ async function init() {
     renderMedia(media);
     renderSegments(segments);
     renderScorecards(scorecards);
+    await initSegmentLikes(client);
   } catch {
     renderError("目前無法從資料庫讀取這篇辯論，或文章尚未發布。");
   }
