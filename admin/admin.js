@@ -15,6 +15,16 @@ const mediaLabels = {
   mp3: "MP3 備援",
 };
 
+const defaultSegments = [
+  ["affirmative_opening", "affirmative", "正方申論", 1],
+  ["negative_opening", "negative", "反方申論", 2],
+  ["affirmative_rebuttal", "affirmative", "正方駁論", 3],
+  ["negative_rebuttal", "negative", "反方駁論", 4],
+  ["negative_closing", "negative", "反方結辯", 5],
+  ["affirmative_closing", "affirmative", "正方結辯", 6],
+  ["judge_decision", "judge", "裁判段落", 7],
+];
+
 let adminSession = null;
 let allDebates = [];
 let currentMode = "list";
@@ -197,7 +207,10 @@ function renderList() {
         <p class="eyebrow">Debate Admin</p>
         <h2>辯論文章列表</h2>
       </div>
-      <button type="button" data-refresh-list>重新整理</button>
+      <div class="admin-row-actions">
+        <button type="button" data-new-debate>新增辯論</button>
+        <button type="button" data-refresh-list>重新整理</button>
+      </div>
     </div>
     <div class="admin-table-wrap">
       <table class="admin-table">
@@ -237,6 +250,7 @@ function renderList() {
   `;
 
   adminRoot.querySelector("[data-refresh-list]").addEventListener("click", refreshList);
+  adminRoot.querySelector("[data-new-debate]").addEventListener("click", renderNewDebateForm);
   adminRoot.querySelectorAll("[data-edit-debate]").forEach((button) => {
     button.addEventListener("click", () => {
       renderEditor(findDebate(button.closest("[data-debate-id]").dataset.debateId));
@@ -245,6 +259,167 @@ function renderList() {
   adminRoot.querySelectorAll("[data-archive-debate]").forEach((button) => {
     button.addEventListener("click", () => archiveDebate(button.closest("[data-debate-id]").dataset.debateId));
   });
+}
+
+function renderNewDebateForm() {
+  currentMode = "new";
+  adminRoot.innerHTML = `
+    <article class="debate-card admin-card">
+      <div class="debate-card-body">
+        <div class="admin-list-toolbar">
+          <div>
+            <p class="eyebrow">New Debate</p>
+            <h2>新增辯論草稿</h2>
+          </div>
+          <button type="button" data-back-list>回列表</button>
+        </div>
+        <div class="admin-grid admin-main-grid">
+          <label class="admin-field">
+            <span>slug</span>
+            <input type="text" data-new-slug placeholder="例如 ai-education-202606" required>
+          </label>
+          <label class="admin-field">
+            <span>分類</span>
+            <input type="text" data-new-category placeholder="例如 教育政策">
+          </label>
+          <label class="admin-field">
+            <span>狀態</span>
+            <select data-new-status>
+              <option value="draft">草稿</option>
+              <option value="scheduled">排程</option>
+              <option value="published">已發布</option>
+            </select>
+          </label>
+          <label class="admin-field">
+            <span>發布時間</span>
+            <input type="datetime-local" data-new-publish-at>
+          </label>
+        </div>
+        <label class="admin-field">
+          <span>標題</span>
+          <input type="text" data-new-title placeholder="輸入辯論題目" required>
+        </label>
+        <label class="admin-field">
+          <span>摘要</span>
+          <textarea data-new-summary rows="3" placeholder="首頁卡片摘要"></textarea>
+        </label>
+        <div class="admin-grid admin-main-grid">
+          <label class="admin-field">
+            <span>正方</span>
+            <input type="text" data-new-affirmative value="Codex">
+          </label>
+          <label class="admin-field">
+            <span>反方</span>
+            <input type="text" data-new-negative value="Gemini">
+          </label>
+          <label class="admin-field">
+            <span>裁判</span>
+            <input type="text" data-new-judge value="Claude">
+          </label>
+          <label class="admin-field">
+            <span>勝方</span>
+            <select data-new-winner>
+              <option value="">未判定</option>
+              <option value="affirmative">正方</option>
+              <option value="negative">反方</option>
+              <option value="tie">平手</option>
+            </select>
+          </label>
+        </div>
+        <div class="debate-card-actions">
+          <button type="button" class="primary-link" data-create-debate>建立草稿</button>
+        </div>
+        <p data-admin-status></p>
+      </div>
+    </article>
+  `;
+  adminRoot.querySelector("[data-back-list]").addEventListener("click", renderList);
+  adminRoot.querySelector("[data-create-debate]").addEventListener("click", createDebateFromForm);
+}
+
+function slugIsValid(slug) {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
+}
+
+function newDebatePayload() {
+  const slug = adminRoot.querySelector("[data-new-slug]").value.trim();
+  const title = adminRoot.querySelector("[data-new-title]").value.trim();
+  const winner = adminRoot.querySelector("[data-new-winner]").value;
+  return {
+    slug,
+    title,
+    summary: adminRoot.querySelector("[data-new-summary]").value.trim(),
+    category: adminRoot.querySelector("[data-new-category]").value.trim(),
+    status: adminRoot.querySelector("[data-new-status]").value,
+    publish_at: fromLocalDateTime(adminRoot.querySelector("[data-new-publish-at]").value),
+    affirmative_model: adminRoot.querySelector("[data-new-affirmative]").value.trim(),
+    negative_model: adminRoot.querySelector("[data-new-negative]").value.trim(),
+    judge_model: adminRoot.querySelector("[data-new-judge]").value.trim(),
+    winner,
+    winner_label: winner === "affirmative" ? "正方勝" : winner === "negative" ? "反方勝" : winner === "tie" ? "平手" : "",
+    affirmative_score: null,
+    negative_score: null,
+    score_total: null,
+    source_markdown_url: "",
+  };
+}
+
+function defaultSegmentRows(debate) {
+  return defaultSegments.map(([roundKey, role, title, sortOrder]) => ({
+    debate_id: debate.id,
+    round_key: roundKey,
+    speaker_role: role,
+    speaker_name:
+      role === "affirmative"
+        ? debate.affirmative_model
+        : role === "negative"
+          ? debate.negative_model
+          : debate.judge_model,
+    title,
+    content: `${title}\n\n請在這裡輸入內容。`,
+    sort_order: sortOrder,
+    audio_url: null,
+  }));
+}
+
+async function createDebateFromForm() {
+  const status = adminRoot.querySelector("[data-admin-status]");
+  const payload = newDebatePayload();
+  if (!slugIsValid(payload.slug)) {
+    status.textContent = "slug 只能使用小寫英文、數字與連字號，例如 new-topic-202606。";
+    return;
+  }
+  if (!payload.title) {
+    status.textContent = "請先輸入標題。";
+    return;
+  }
+
+  status.textContent = "建立中...";
+  try {
+    const rows = await rest("/rest/v1/debates", adminSession, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    const debate = rows?.[0];
+    await rest("/rest/v1/debate_segments", adminSession, {
+      method: "POST",
+      body: JSON.stringify(defaultSegmentRows(debate)),
+    });
+    await rest("/rest/v1/debate_media", adminSession, {
+      method: "POST",
+      body: JSON.stringify(["youtube", "spotify_episode", "mp3"].map((type, index) => ({
+        debate_id: debate.id,
+        media_type: type,
+        title: mediaLabels[type],
+        status: "pending",
+        sort_order: index + 1,
+      }))),
+    });
+    allDebates = await loadDebates(adminSession);
+    renderEditor(findDebate(debate.id));
+  } catch (error) {
+    status.textContent = `建立失敗：${error.message}`;
+  }
 }
 
 function renderMediaSummary(debate) {
