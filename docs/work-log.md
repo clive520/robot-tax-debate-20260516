@@ -27,6 +27,22 @@
 
 ## 2026-05-19
 
+### content：啟動 EP06 核四重啟辯論資料準備
+
+**摘要**
+建立 `nuclear-four` 辯論題目的外部 AI 提示詞準備資料夾。依新版 SOP 隨機分配角色：Gemini 擔任正方、xAI Grok 擔任反方、DeepSeek 擔任裁判；已整理核四重啟、核二核三再運轉、台灣能源需求與減碳目標等背景資料摘要，供後續貼入外部 AI 網頁取得實際回覆。
+
+**影響範圍**
+
+- `debates/nuclear-four/prompts/briefing.md`
+- `debates/nuclear-four/prompts/affirmative-gemini.md`
+- `debates/nuclear-four/prompts/negative-grok.md`
+- `debates/nuclear-four/prompts/judge-deepseek.md`
+- `docs/work-log.md`
+
+**驗證狀態**
+目前為內容準備階段，尚未產生正式辯論稿、影音或網站資料。
+
 ### frontend：修正段落語音播放器被壓縮
 
 **摘要**
