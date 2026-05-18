@@ -63,7 +63,7 @@ async function loadProfile(user, session) {
 
 async function loadDebates(session) {
   return rest(
-    "/rest/v1/debates?select=id,slug,title,summary,category,status,publish_at,updated_at,debate_media(id,media_type,title,url,embed_url,status,sort_order)&order=publish_at.desc",
+    "/rest/v1/debates?select=id,slug,title,summary,category,status,publish_at,updated_at,debate_media(id,media_type,title,url,embed_url,status,sort_order),debate_segments(id,round_key,speaker_role,speaker_name,title,content,sort_order,audio_url)&order=publish_at.desc",
     session,
   );
 }
@@ -134,6 +134,58 @@ function mediaField(debate, type) {
         </select>
       </label>
     </fieldset>
+  `;
+}
+
+function segmentRoleLabel(role) {
+  if (role === "affirmative") return "正方";
+  if (role === "negative") return "反方";
+  return "裁判";
+}
+
+function segmentEditor(segment) {
+  return `
+    <fieldset class="admin-segment-field" data-segment-id="${escapeHtml(segment.id)}">
+      <legend>${escapeHtml(segment.sort_order)}. ${escapeHtml(segment.title)} · ${escapeHtml(segmentRoleLabel(segment.speaker_role))}</legend>
+      <div class="admin-grid admin-segment-meta">
+        <label class="admin-field">
+          <span>段落標題</span>
+          <input type="text" data-segment-title value="${escapeHtml(segment.title)}">
+        </label>
+        <label class="admin-field">
+          <span>說話者</span>
+          <input type="text" data-segment-speaker value="${escapeHtml(segment.speaker_name)}">
+        </label>
+        <label class="admin-field">
+          <span>音檔 URL</span>
+          <input type="url" data-segment-audio value="${escapeHtml(segment.audio_url || "")}">
+        </label>
+      </div>
+      <label class="admin-field">
+        <span>內容</span>
+        <textarea data-segment-content rows="12">${escapeHtml(segment.content)}</textarea>
+      </label>
+    </fieldset>
+  `;
+}
+
+function segmentsEditor(debate) {
+  const segments = [...(debate.debate_segments || [])].sort((a, b) => a.sort_order - b.sort_order);
+  if (!segments.length) {
+    return `<article class="portal-empty">這篇文章目前沒有段落內容。</article>`;
+  }
+  return `
+    <section class="admin-editor-section">
+      <div class="admin-list-toolbar">
+        <div>
+          <p class="eyebrow">Transcript</p>
+          <h3>辯論與裁判內容</h3>
+        </div>
+      </div>
+      <div class="admin-segment-stack">
+        ${segments.map(segmentEditor).join("")}
+      </div>
+    </section>
   `;
 }
 
@@ -254,10 +306,12 @@ function renderEditor(debate) {
           ${mediaField(debate, "spotify_episode")}
           ${mediaField(debate, "mp3")}
         </div>
+        ${segmentsEditor(debate)}
         <div class="debate-card-actions">
           <button type="button" class="primary-link" data-save-all>全部儲存</button>
           <button type="button" data-save-debate>只存文章資料</button>
           <button type="button" data-save-media>只存媒體連結</button>
+          <button type="button" data-save-segments>只存段落內容</button>
           <a href="../debates/view/?slug=${encodeURIComponent(debate.slug)}">預覽</a>
         </div>
         <p data-admin-status></p>
@@ -269,6 +323,7 @@ function renderEditor(debate) {
   adminRoot.querySelector("[data-save-all]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "all"));
   adminRoot.querySelector("[data-save-debate]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "debate"));
   adminRoot.querySelector("[data-save-media]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "media"));
+  adminRoot.querySelector("[data-save-segments]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "segments"));
 }
 
 function debatePayload(card) {
@@ -332,6 +387,25 @@ async function saveMedia(card) {
   }
 }
 
+function segmentPayload(field) {
+  return {
+    title: field.querySelector("[data-segment-title]").value.trim(),
+    speaker_name: field.querySelector("[data-segment-speaker]").value.trim(),
+    audio_url: field.querySelector("[data-segment-audio]").value.trim() || null,
+    content: field.querySelector("[data-segment-content]").value.trim(),
+    updated_at: new Date().toISOString(),
+  };
+}
+
+async function saveSegments(card) {
+  for (const field of card.querySelectorAll("[data-segment-id]")) {
+    await rest(`/rest/v1/debate_segments?id=eq.${encodeURIComponent(field.dataset.segmentId)}`, adminSession, {
+      method: "PATCH",
+      body: JSON.stringify(segmentPayload(field)),
+    });
+  }
+}
+
 function updateCachedDebate(nextDebate) {
   if (!nextDebate) return;
   allDebates = allDebates.map((debate) => debate.id === nextDebate.id ? { ...debate, ...nextDebate } : debate);
@@ -343,6 +417,7 @@ async function runSave(card, mode) {
   try {
     if (mode === "all" || mode === "debate") await saveDebate(card);
     if (mode === "all" || mode === "media") await saveMedia(card);
+    if (mode === "all" || mode === "segments") await saveSegments(card);
     allDebates = await loadDebates(adminSession);
     status.textContent = "已儲存。";
   } catch (error) {

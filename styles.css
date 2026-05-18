@@ -963,6 +963,33 @@ footer {
   background: #f7f7f7;
 }
 
+.admin-editor-section {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.admin-segment-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-segment-field {
+  border: 1px solid var(--line);
+  padding: 14px;
+  margin: 0;
+  background: #fff;
+}
+
+.admin-segment-field legend {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.admin-segment-meta {
+  grid-template-columns: minmax(180px, 1fr) minmax(160px, .7fr) minmax(240px, 1.2fr);
+}
+
 @media (max-width: 760px) {
   .site-header {
     grid-template-columns: 1fr;
@@ -992,7 +1019,8 @@ footer {
   }
 
   .admin-main-grid,
-  .admin-media-grid {
+  .admin-media-grid,
+  .admin-segment-meta {
     grid-template-columns: 1fr;
   }
 
