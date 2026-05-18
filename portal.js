@@ -116,21 +116,35 @@ async function createSupabaseClient() {
   return supabaseClientPromise;
 }
 
+async function supabaseRest(path) {
+  if (!supabaseConfig?.url || !supabaseConfig?.anonKey) {
+    throw new Error("Supabase is not configured");
+  }
+  const response = await fetch(`${supabaseConfig.url}/rest/v1/${path}`, {
+    headers: {
+      apikey: supabaseConfig.anonKey,
+      Authorization: `Bearer ${supabaseConfig.anonKey}`,
+    },
+  });
+  if (!response.ok) throw new Error(`Supabase REST error ${response.status}`);
+  return response.json();
+}
+
 function formatCount(value) {
   return new Intl.NumberFormat("zh-Hant-TW").format(value);
 }
 
 async function loadPortalViewCounts(debates) {
-  const client = await createSupabaseClient();
-  if (!client || !debates.length) return;
+  if (!debates.length) return;
 
   const debateIds = debates.map((debate) => debate.slug);
-  const { data, error } = await client
-    .from("debate_daily_views")
-    .select("debate_id, view_count")
-    .in("debate_id", debateIds);
-
-  if (error || !data) return;
+  let data;
+  try {
+    const ids = debateIds.map((id) => `"${id.replaceAll('"', '\\"')}"`).join(",");
+    data = await supabaseRest(`debate_daily_views?select=debate_id,view_count&debate_id=in.(${encodeURIComponent(ids)})`);
+  } catch {
+    return;
+  }
 
   const totals = data.reduce((result, row) => {
     result[row.debate_id] = (result[row.debate_id] || 0) + Number(row.view_count || 0);
@@ -144,12 +158,7 @@ async function loadPortalViewCounts(debates) {
 }
 
 async function loadDebatesFromSupabase() {
-  const client = await createSupabaseClient();
-  if (!client) throw new Error("Supabase client unavailable");
-
-  const { data, error } = await client
-    .from("debates")
-    .select(`
+  const select = `
       slug,
       title,
       summary,
@@ -164,11 +173,8 @@ async function loadDebatesFromSupabase() {
       affirmative_score,
       negative_score,
       score_total
-    `)
-    .eq("status", "published")
-    .order("publish_at", { ascending: false });
-
-  if (error) throw error;
+    `.replace(/\s+/g, "");
+  const data = await supabaseRest(`debates?select=${encodeURIComponent(select)}&status=eq.published&order=publish_at.desc`);
   return (data || []).map(normalizeDebate);
 }
 
