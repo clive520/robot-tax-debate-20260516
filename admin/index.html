@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI 辯論所管理後台</title>
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../styles.css?v=20260528-admin-sticky-save">
 </head>
 <body class="portal">
   <header class="portal-topbar">
@@ -14,6 +14,17 @@
     </nav>
     <div class="site-auth" data-site-auth aria-label="登入狀態"></div>
   </header>
+
+  <div class="admin-global-savebar" data-admin-savebar aria-label="快速儲存工具列">
+    <div class="admin-global-savebar-inner">
+      <span class="admin-global-savebar-label">快速儲存</span>
+      <button type="button" class="primary-link" data-savebar-action="all">全部儲存</button>
+      <button type="button" data-savebar-action="debate">只存文章資料</button>
+      <button type="button" data-savebar-action="media">只存媒體連結</button>
+      <button type="button" data-savebar-action="segments">只存段落內容</button>
+      <a href="#" data-savebar-preview>預覽</a>
+    </div>
+  </div>
 
   <main class="portal-shell">
     <section class="portal-section">
@@ -29,6 +40,55 @@
 
   <script src="../supabase-config.js"></script>
   <script src="../site-auth.js?v=20260518-auth-hash"></script>
-  <script src="admin.js?v=20260518-new-debate"></script>
+  <script src="admin.js?v=20260528-admin-sticky-save"></script>
+  <script>
+    (() => {
+      const savebar = document.querySelector("[data-admin-savebar]");
+      if (!savebar) return;
+
+      const actionToSelector = {
+        all: "[data-save-all]",
+        debate: "[data-save-debate]",
+        media: "[data-save-media]",
+        segments: "[data-save-segments]",
+      };
+
+      function syncSavebar() {
+        const inEditor = !!document.querySelector("[data-admin-root] [data-debate-id]");
+        savebar.dataset.mode = inEditor ? "editor" : "list";
+        savebar.querySelectorAll("[data-savebar-action]").forEach((button) => {
+          const selector = actionToSelector[button.dataset.savebarAction];
+          button.disabled = !document.querySelector(selector);
+        });
+        const previewLink = savebar.querySelector("[data-savebar-preview]");
+        const livePreviewLink = document.querySelector('.debate-card-actions a[href*="../debates/view/"]');
+        previewLink.href = livePreviewLink?.href || "#";
+      }
+
+      savebar.addEventListener("click", (event) => {
+        const actionButton = event.target.closest("[data-savebar-action]");
+        if (actionButton) {
+          const selector = actionToSelector[actionButton.dataset.savebarAction];
+          const target = document.querySelector(selector);
+          if (target) target.click();
+          return;
+        }
+
+        const preview = event.target.closest("[data-savebar-preview]");
+        if (preview && preview.getAttribute("href") === "#") {
+          event.preventDefault();
+        }
+      });
+
+      const root = document.querySelector("[data-admin-root]");
+      if (root) {
+        const observer = new MutationObserver(syncSavebar);
+        observer.observe(root, { childList: true, subtree: true });
+      }
+
+      syncSavebar();
+      window.addEventListener("load", syncSavebar);
+    })();
+  </script>
 </body>
 </html>

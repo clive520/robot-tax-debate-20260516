@@ -434,6 +434,33 @@ function findDebate(id) {
   return allDebates.find((debate) => debate.id === id);
 }
 
+function editorActionsMarkup(slug, placement = "bottom") {
+  return `
+    <div class="debate-card-actions admin-editor-actions admin-editor-actions-${placement}">
+      <button type="button" class="primary-link" data-save-all>全部儲存</button>
+      <button type="button" data-save-debate>只存文章資料</button>
+      <button type="button" data-save-media>只存媒體連結</button>
+      <button type="button" data-save-segments>只存段落內容</button>
+      <a href="../debates/view/?slug=${encodeURIComponent(slug)}">預覽</a>
+    </div>
+  `;
+}
+
+function bindEditorActions(card) {
+  card.querySelectorAll("[data-save-all]").forEach((button) => {
+    button.addEventListener("click", () => runSave(card, "all"));
+  });
+  card.querySelectorAll("[data-save-debate]").forEach((button) => {
+    button.addEventListener("click", () => runSave(card, "debate"));
+  });
+  card.querySelectorAll("[data-save-media]").forEach((button) => {
+    button.addEventListener("click", () => runSave(card, "media"));
+  });
+  card.querySelectorAll("[data-save-segments]").forEach((button) => {
+    button.addEventListener("click", () => runSave(card, "segments"));
+  });
+}
+
 function renderEditor(debate) {
   if (!debate) {
     renderList();
@@ -482,23 +509,14 @@ function renderEditor(debate) {
           ${mediaField(debate, "mp3")}
         </div>
         ${segmentsEditor(debate)}
-        <div class="debate-card-actions">
-          <button type="button" class="primary-link" data-save-all>全部儲存</button>
-          <button type="button" data-save-debate>只存文章資料</button>
-          <button type="button" data-save-media>只存媒體連結</button>
-          <button type="button" data-save-segments>只存段落內容</button>
-          <a href="../debates/view/?slug=${encodeURIComponent(debate.slug)}">預覽</a>
-        </div>
+        ${editorActionsMarkup(debate.slug, "bottom")}
         <p data-admin-status></p>
       </div>
     </article>
   `;
 
   adminRoot.querySelector("[data-back-list]").addEventListener("click", renderList);
-  adminRoot.querySelector("[data-save-all]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "all"));
-  adminRoot.querySelector("[data-save-debate]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "debate"));
-  adminRoot.querySelector("[data-save-media]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "media"));
-  adminRoot.querySelector("[data-save-segments]").addEventListener("click", () => runSave(adminRoot.querySelector("[data-debate-id]"), "segments"));
+  bindEditorActions(adminRoot.querySelector("[data-debate-id]"));
 }
 
 function debatePayload(card) {

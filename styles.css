@@ -998,6 +998,66 @@ footer {
   margin-top: 18px;
 }
 
+.admin-editor-actions {
+  margin: 8px 0 4px;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-editor-actions-bottom {
+  margin-top: 18px;
+}
+
+.admin-global-savebar {
+  position: sticky;
+  top: 10px;
+  z-index: 40;
+  padding: 0 24px;
+  margin: 12px auto 0;
+}
+
+.admin-global-savebar-inner {
+  width: min(1180px, calc(100vw - 48px));
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(28, 32, 40, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.admin-global-savebar-label {
+  font-size: .86rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-right: 2px;
+}
+
+.admin-global-savebar a,
+.admin-global-savebar button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 10px;
+  text-decoration: none;
+  font: inherit;
+}
+
+.admin-global-savebar button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.admin-editor-actions + .admin-media-grid {
+  margin-top: 8px;
+}
+
 .admin-segment-stack {
   display: grid;
   gap: 14px;
@@ -1051,6 +1111,15 @@ footer {
   .admin-media-grid,
   .admin-segment-meta {
     grid-template-columns: 1fr;
+  }
+
+  .admin-global-savebar {
+    top: 0;
+    padding: 0 12px;
+  }
+
+  .admin-global-savebar-inner {
+    width: 100%;
   }
 
   .portal-topbar {
