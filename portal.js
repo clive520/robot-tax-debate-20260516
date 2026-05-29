@@ -4,6 +4,16 @@ const latestLink = document.querySelector("[data-latest-link]");
 const supabaseConfig = window.DEBATE_SUPABASE_CONFIG;
 let supabaseClientPromise;
 
+function episodeLabelFromIndex(index) {
+  return `EP${String(index + 1).padStart(2, "0")}`;
+}
+
+function titleWithEpisode(title, episodeLabel) {
+  if (!episodeLabel) return title || "";
+  if (/^EP\d{2}\b/.test(String(title || ""))) return String(title || "");
+  return `${episodeLabel}｜${title || ""}`;
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -51,6 +61,15 @@ function normalizeDebate(row) {
   };
 }
 
+function withEpisodeLabels(debates) {
+  const ordered = [...debates].sort((a, b) => new Date(a.publishAt) - new Date(b.publishAt));
+  return ordered.map((debate, index) => ({
+    ...debate,
+    episodeLabel: episodeLabelFromIndex(index),
+    displayTitle: titleWithEpisode(debate.title, episodeLabelFromIndex(index)),
+  }));
+}
+
 function debateStats(debate) {
   return `
     <div class="debate-card-stats" aria-label="讀者互動統計">
@@ -69,11 +88,12 @@ function debateCard(debate) {
       <a class="debate-card-media" href="${href}" aria-label="查看${escapeHtml(debate.title)}辯論內容"></a>
       <div class="debate-card-body">
         <div class="debate-meta-row">
+          <span>${escapeHtml(debate.episodeLabel || "")}</span>
           <span>${escapeHtml(debate.dateLabel)}</span>
           <span>${escapeHtml(debate.category)}</span>
           <span>${escapeHtml(debate.winner)}</span>
         </div>
-        <h3>${escapeHtml(debate.title)}</h3>
+        <h3>${escapeHtml(debate.displayTitle || debate.title)}</h3>
         <p>${escapeHtml(debate.summary)}</p>
         ${debateStats(debate)}
         ${scoreLabel(debate)}
@@ -87,7 +107,7 @@ function debateCard(debate) {
 }
 
 function renderDebates(debates) {
-  const items = [...debates].sort((a, b) => new Date(b.publishAt) - new Date(a.publishAt));
+  const items = withEpisodeLabels(debates).sort((a, b) => new Date(b.publishAt) - new Date(a.publishAt));
 
   if (topicCount) topicCount.textContent = String(items.length);
 
@@ -174,7 +194,8 @@ async function loadDebatesFromSupabase() {
       negative_score,
       score_total
     `.replace(/\s+/g, "");
-  const data = await supabaseRest(`debates?select=${encodeURIComponent(select)}&status=eq.published&order=publish_at.desc`);
+  // RLS exposes only public debates, including scheduled debates whose publish time has arrived.
+  const data = await supabaseRest(`debates?select=${encodeURIComponent(select)}&order=publish_at.desc`);
   return (data || []).map(normalizeDebate);
 }
 

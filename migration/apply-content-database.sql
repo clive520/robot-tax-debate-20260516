@@ -155,7 +155,7 @@ create policy "Public can read published debates"
   on public.debates
   for select
   using (
-    status = 'published'
+    status in ('published', 'scheduled')
     and (publish_at is null or publish_at <= now())
   );
 
@@ -176,7 +176,7 @@ create policy "Public can read published debate segments"
       select 1
       from public.debates
       where debates.id = debate_segments.debate_id
-        and debates.status = 'published'
+        and debates.status in ('published', 'scheduled')
         and (debates.publish_at is null or debates.publish_at <= now())
     )
   );
@@ -198,7 +198,7 @@ create policy "Public can read published scorecards"
       select 1
       from public.debates
       where debates.id = debate_scorecards.debate_id
-        and debates.status = 'published'
+        and debates.status in ('published', 'scheduled')
         and (debates.publish_at is null or debates.publish_at <= now())
     )
   );
@@ -221,7 +221,7 @@ create policy "Public can read published media"
       select 1
       from public.debates
       where debates.id = debate_media.debate_id
-        and debates.status = 'published'
+        and debates.status in ('published', 'scheduled')
         and (debates.publish_at is null or debates.publish_at <= now())
     )
   );
@@ -1020,4 +1020,3 @@ where debates.slug in (
 )
 group by debates.slug, debates.status
 order by debates.slug;
-
